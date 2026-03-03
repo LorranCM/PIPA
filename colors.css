@@ -1,0 +1,23 @@
+:root {
+    /* Primary Colors */
+    --primary-color: #F9FFE;
+    --secondary-color: #2E8E5A;
+    --mobile-color: #3CB059;
+  
+    /* Neutral Colors */
+    --off-white: #FAFAFA;
+    --graphite: #272727;
+    --black: #000000;
+    --white: #FFFFFF;
+  
+    /* Accent Colors */
+    --red: #FF0000;
+    --grayish-green: #2D322F;
+  
+    /* Text Colors */
+    --text-green: #2E8E5A;
+    --text-white: #FFFFFF;
+  
+    /* Button Colors */
+    --button-green: #2E8E5A;
+}

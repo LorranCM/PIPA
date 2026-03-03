@@ -1,0 +1,48 @@
+/*Estou colocando um background em cada parte, apenas para dividir corretamente cada secao, pois ainda nao temos as imagens que usaremos*/
+
+/*Cabecalho*/
+.barra_naveg {
+    display: flex;
+    grid-template-columns: auto;
+    background-color: bisque;
+    margin: 0%;
+    padding: 1%;
+}
+
+.pipa {
+    margin-right: 70%;
+    margin-left: 5%;
+}
+
+.ifes {
+    margin-right: 3%;
+}
+
+/*Parte do aluno (banner, foto de perfil, nome, etc*/
+.perfil_aluno {
+    display: grid;
+    grid-template-rows: auto;
+    background-color: aqua;
+}
+
+.banner {
+    background-color: blue;
+    border-style: solid;
+    padding: 1%;
+}
+
+.coisas {
+    display: flex;
+    grid-template-columns: auto;
+}
+
+.perfil {
+    margin-right: 1%;
+    margin-left: 3%;
+}
+
+.nome_aluno {
+    margin-right: 67%;
+}
+
+/**/

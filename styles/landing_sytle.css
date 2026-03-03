@@ -1,0 +1,16 @@
+@import url(/colors.css);
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
+
+
+body {
+    background-color: var(--black);
+    color: var(--white);
+    margin: 0;
+    font-family: "Encode Sans";
+}
+
+#navbar{
+    background-color: var(--white);
+    color: var(--black);
+    padding-block: 2vh;
+}

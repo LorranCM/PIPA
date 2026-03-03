@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
+
+.header {
+    background-color: #FAFAFA;
+    border: solid red 1px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 10px;
+    
+}
+
+.home-login {
+    font-family: "Encode Sans";
+    background-color: #2E8E5A;
+
+}
+
+.form-login {
+    background-color: #FAFAFA;
+    padding: 4em;
+    padding-bottom: 60px;
+    margin-top: 40px;
+    border-radius: 20px;
+    align-items: center;
+    margin-left: 50em;
+    margin-right: 10em;
+    box-shadow: 2px 2px 8px #272727;
+}
+
+.button-login {
+    background-color: #2E8E5A;
+    border-radius: 2em;
+    height: 6em;
+    width: 24em;
+    align-self: center;
+    border-style: none;
+    font-size: large;
+    font-weight:800;
+    color: #FAFAFA;
+    transition: all 0.4s;
+    margin:auto;
+}
+
+.button-login:hover {
+    background-color: #2d8053;
+    font-size: 19px;
+    transition: all 0.4s;
+}
