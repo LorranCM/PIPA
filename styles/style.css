@@ -2,8 +2,22 @@
 
 .footer {
     background-color: #2D322F;
-    padding: 1em;
+    padding: 2em;
     margin-top: 10em;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    gap: 3em;
+    align-items: flex-start;
+}
+
+.contact {
+    flex: 1;
+}
+
+.social-media {
+    flex: 1;
 }
 
 .home-login {
@@ -12,7 +26,7 @@
 
 }
 .side-image {
-    max-width: 40%;
+    max-width: 30%;
     height: auto;
     object-fit: cover;
     margin-right: 2rem;
@@ -37,32 +51,34 @@
     align-items: center;
     box-shadow: 2px 2px 8px #272727;
     color: black;
-    max-width: 480px;
-    width: 35%;
-    margin: 0;
+    /* wider form and center horizontally */
+    max-width: 700px;
+    width: 50%;
+    margin: 0 auto;
     box-sizing: border-box;
-    margin-right: 10em;
+    /* removed fixed right margin */
 }
 
 .button-login {
     background-color: #2E8E5A;
     border-radius: 2em;
     height: 6em;
-    width: 100%;
-    max-width: 24em;
+    max-width: 80em;
+    width: 20em;
     align-self: center;
     border-style: none;
     font-size: large;
     font-weight:800;
     color: #FAFAFA;
     transition: all 0.4s;
-    margin:auto;
+    margin:auto;      
 }
 
 .button-login:hover {
     background-color: #2d8053;
-    font-size: 110%;
+    transform: scale(1.1);
     transition: all 0.4s;
+    cursor: pointer;
 }
 
 .container-login {
@@ -75,5 +91,37 @@
 .container-inputs {
     display: flex;
     flex-direction: column;
-    
+    align-items: flex-start;   /* left-align input elements */
+    width: 100%;              /* span full form width */
+}
+
+.container-inputs input {
+    width: 100%;              /* inputs fill the container */
+    box-sizing: border-box;
+}
+
+.container-inputs > div:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    width: auto;              /* only as wide as needed */
+}
+
+.container-inputs > div:has(input[type="checkbox"]) label {
+    white-space: nowrap;      /* prevent label from wrapping */
+}
+
+.input-text {
+    margin-bottom: 0.5em;
+    width: 20em;
+}
+
+.input-text input {
+    border-radius: 5px;
+    height: 2.2em;
+    border-width: 1px;
+}
+
+.container-inputs a {
+    align-self: center;
 }

@@ -16,40 +16,44 @@
         </ul>
     </nav>
 
-    <form action="login" class="form-login">
-        <h1>Portal de Informação Para Alunos</h1>
-        <!-- apagar essa parte depois -->
-        <h3>Recuperação de Senha</h3>
-        <input type="text" name="matricula" placeholder="Matrícula"><br>
-        <input type="email" name="email" placeholder="E-mail"><br>
-        <p>Já possui uma conta? <a href="./login.html">Faça Login</a></p>
-        <button type="submit" class="button-login">Recuperar</button>
-    </form>
+    <div class="page-content">
+        <img src="assets/images/boy_holding_book.png" alt="menino segurando um livro" class="side-image">
+
+        <form action="login" class="form-login">
+            <div class="container-login">
+                <h1>Portal de Informação Para Alunos</h1>
+                <div class="container-inputs">
+                    <h3>Recuperação de Senha</h3>
+                    <div class="input-text">
+                        <label for="matricula">Matrícula</label>
+                        <input type="text" name="matricula" id="matricula" placeholder="Matrícula">
+                    </div>
+                    <div class="input-text">
+                        <label for="email">E-mail</label>
+                        <input type="email" name="email" id="email" placeholder="E-mail">
+                    </div>
+                    <p>Já possui uma conta? <a href="./login.html">Faça Login</a></p>
+                    <button type="submit" class="button-login">Recuperar</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
     
-    <footer>
-        <img src="" alt="logo pipa">
+    <footer class="footer">
+        <img src="#" alt="logo pipa">
         <p>Portal de Informação Professor-Aluno</p>
-        <div>
+        <div class="contact">
             <h3>Fale conosco</h3>
             <p>Email: saapifes@gmail.com
             <p>Telefone: (27) 99999-9999</p>
         </div>
-        <div class="redes_sociais">
+        <div class="social-media">
             <p>Redes Sociais</p>
-            <img src="" alt="logo facebook">
-            <img src="" alt="logo instagram">
-            <img src="" alt="logo twitter">
+            <img src="#" alt="logo facebook">
+            <img src="#" alt="logo instagram">
+            <img src="#" alt="logo twitter">
         </div>
-        <div class="identi"> <!--Não sei o que colocar de class aqui-->
-            <p>Institutos federais parceiros</p>
-            <p>Método de trabalho</p>
-            <p>Mais funcionalidades</p>
-            <p>Nossa história</p>
-        </div>
-        <p>Endereço: Av. Fernando Ferrari, 514 - Goiabeiras, Vitória - ES, 29075-910</p> <!--Obviamente não é o endereço do nosso IFES, foi so o endereço sugerido pelo VScode-->
-        <p>2025 - PIPA</p>
-        <img src="" alt="logo zap">
     </footer>
 </body>
 </html>

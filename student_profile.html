@@ -1,99 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Aluno</title>
-    <link rel="stylesheet" href="styles/stylestudent.css">
+    <link rel="stylesheet" href="styles/style1.css">
+</head>
 
-  </head>
-  <body>
+<body>
 
-    <container>
+    <header class="barra_naveg">
 
-      <header class="barra_naveg">
+        <img src="assets/images/pipalogo.png" class="logo_pipa" alt="logo pipa">
+        <img src="assets/images/ifes_horizontal_cor.png" alt="logo ifes" class="logo_ifes">
+        <p class="menu">☰</p>
 
-        <img src="" alt="logo pipa" class="pipa"/>
-        <img src="" alt="logo ifes" class="ifes"/>
-        <p class="menu">menu hamburger</p>
+    </header>
 
-      </header>
+    <section class="banner"></section>
 
-      <div class="perfil_aluno">
+    <section class="perfil_aluno">
 
-        <img src="" alt="banner do aluno" class="banner"/>
-        
-        <div class="coisas">
+        <img src="assets/images/avatar_aluno.jpg" class="avatar" alt="Foto de perfil">
+        <h1 class="nome">Bem vindo, Gabriel!</h1>
+        <a href="index.html" class="sair">Sair</a>
 
-          <img src="" alt="foto do aluno" class="perfil"/>
-          <h1 class="nome_aluno">Bem vindo e Nome do Aluno</h1>
-          <p class="sair">sair</p>
+    </section>
 
+    <section class="seus_prof">
+
+        <h2>Seus Professores</h2>
+
+        <div class="professores">
+            <div class="pagina-prof">
+                <img src="one.jpg">
+                <div class="prof-info">
+                    <strong>Alessandro Bermudes Gomes</strong>
+                    <span>Disciplina: Biologia II</span>
+                </div>
+            </div>
+
+            <div class="pagina-prof">
+                <img src="bnh.jpg">
+                <div class="prof-info">
+                    <strong>Wagner Kirmse Caldas</strong>
+                    <span>Disciplina: Prog. III</span>
+                </div>
+            </div>
+
+            <div class="pagina-prof">
+                <img src="hxh.jpg">
+                <div class="prof-info">
+                    <strong>Amarildo Mendes Lemos</strong>
+                    <span>Disciplina: História II</span>
+                </div>
+            </div>
         </div>
 
-      </div>
+    </section>
 
-      <div class="professores">
-        <h1>Seus professores</h1>
-        <div class="professor1">
-          <img src="" alt="banner do professor" />
-          <img src="" alt="foto do professor" />
-          <p>Nome do Professor</p>
-          <p>Matéria</p>
-        </div>
-        <div class="professor2">
-          <img src="" alt="banner do professor" />
-          <img src="" alt="foto do professor" />
-          <p>Nome do Professor</p>
-          <p>Matéria</p>
-        </div>
-        <div class="professor3">
-          <img src="" alt="banner do professor" />
-          <img src="" alt="foto do professor" />
-          <p>Nome do Professor</p>
-          <p>Matéria</p>
-        </div>
-        <button>Seta para mais professores</button>
-      </div>
+    <section class="seu_calendario">
+        <h2>Seu Calendário</h2>
 
-      <div class="calendario">
-        <h1>Seu calendario</h1>
         <div class="calendario">
-          <!--Nao pensei num sistema bom para um calendario-->
-          <p>Calendario</p>
-        </div>
-      </div>
+            <div class="topo_calendario">
+                <span><-</span>
+                <strong>Março 2026</strong>
+                <span>-></span>
+            </div>
 
-      <footer>
-        <img src="" alt="logo pipa" />
-        <p>Portal de Informação Professor-Aluno</p>
-        <div>
-          <h3>Fale conosco</h3>
-          <p>Email: saapifes@gmail.com</p>
-          <p>Telefone: (27) 99999-9999</p>
+            <div class="semana">
+                <div>Dom</div>
+                <div>Seg</div>
+                <div>Ter</div>
+                <div>Qua</div>
+                <div>Qui</div>
+                <div>Sex</div>
+                <div>Sáb</div>
+            </div>
+
+            <div class="dias">
+                <div class="dia">1</div>
+                <div class="dia">2</div>
+                <div class="dia">3</div>
+                <div class="dia">4</div>
+                <div class="dia">5</div>
+                <div class="dia">6</div>
+                <div class="dia">7</div>
+
+                <div class="dia">8</div>
+                <div class="dia">9</div>
+                <div class="dia">10</div>
+                <div class="dia">11</div>
+                <div class="dia">12</div>
+                <div class="dia">13</div>
+                <div class="dia">14</div>
+
+                <div class="dia">15</div>
+                <div class="dia">16</div>
+                <div class="dia">17</div>
+                <div class="dia">18</div>
+                <div class="dia">19</div>
+                <div class="dia">20</div>
+                <div class="dia">21</div>
+
+                <div class="dia">22</div>
+                <div class="dia">23</div>
+                <div class="dia">24</div>
+                <div class="dia">25</div>
+                <div class="dia">26</div>
+                <div class="dia">27</div>
+                <div class="dia">28</div>
+
+                <div class="dia">29</div>
+                <div class="dia">30</div>
+                <div class="dia">31</div>
+            </div>
         </div>
-        <div class="redes_sociais">
-          <p>Redes Sociais</p>
-          <img src="" alt="logo facebook" />
-          <img src="" alt="logo instagram" />
-          <img src="" alt="logo twitter" />
-        </div>
-        <div class="identi">
-          <!--Não sei o que colocar de class aqui-->
-          <p>Institutos federais parceiros</p>
-          <p>Método de trabalho</p>
-          <p>Mais funcionalidades</p>
-          <p>Nossa história</p>
-        </div>
-        <p>
-          Endereço: Av. Fernando Ferrari, 514 - Goiabeiras, Vitória - ES,
-          29075-910
-        </p>
-        <!--Obviamente não é o endereço do nosso IFES, foi so o endereço sugerido pelo VScode-->
-        <p>2025 - PIPA</p>
-        <img src="" alt="logo zap" />
-      </footer>
-    </container>
-  </body>
+    </section>
+
+    <footer>
+        <!--Colar o footer que ja esta "feito"-->
+    </footer>
+
+</body>
+
 </html>
