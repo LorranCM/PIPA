@@ -1,8 +1,9 @@
 #navbar {
-    background-color: var(--white);
+    background-color:var(--white);
     color: var(--black);
-    padding-block: 2vh;
-
+    padding-block: 3vh;
+    position: absolute;
+    width: 100%;
 }
 
 #navbar ul{
@@ -10,7 +11,29 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    justify-content: space-around;
     place-items: center;
 
+}
+
+#navbar ul li{
+    font-weight: bold;
+    margin-inline: 2em;
+}
+
+#navbar ul li a{
+    text-decoration: none;
+    color: black;
+    font-size: 1.2em;
+}
+
+#navbar-PIPA-clickable img{
+    width: 2rem;
+}
+
+#navbar-PIPA-clickable {
+    font-size: 1.5em;
+}
+
+#navbar + * {
+    padding-top: 10vh;
 }
