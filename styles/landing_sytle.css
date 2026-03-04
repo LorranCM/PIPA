@@ -1,7 +1,6 @@
 @import url(/colors.css);
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
 
-
 body {
     background-color: var(--black);
     color: var(--white);
@@ -9,8 +8,38 @@ body {
     font-family: "Encode Sans";
 }
 
-#navbar{
-    background-color: var(--white);
-    color: var(--black);
-    padding-block: 2vh;
+body > *:not(:first-child) {
+    margin-inline: 5vw;
+}
+
+#navbar ul {
+    justify-content: flex-start;
+
+}
+
+#navbar ul li {
+    margin-inline: 3em;
+    font-weight: bold;
+}
+
+#navbar ul li a{
+    text-decoration: none;
+    color: black;
+}
+
+#navbar-PIPA-clickable img{
+    width: 2rem;
+}
+
+#navbar-PIPA-clickable {
+    font-size: 1.5em;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 5fr 3fr;
+}
+
+.hero figure {
+    background-color: blue;
 }

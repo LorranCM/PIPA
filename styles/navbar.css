@@ -1,4 +1,16 @@
-.navbar {
-    background-color: #FFFFFF;
-    display: inline;
+#navbar {
+    background-color: var(--white);
+    color: var(--black);
+    padding-block: 2vh;
+
+}
+
+#navbar ul{
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    justify-content: space-around;
+    place-items: center;
+
 }
