@@ -1,73 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informações do Aluno</title>
+    <link rel="stylesheet" href="styles/style_student_info.css">
 </head>
+
 <body>
 
-    <container>
+    <header class="barra_naveg">
 
-        <header class="">
-            <img src="" alt="logo pipa">
-            <img src="" alt="logo ifes">
-            <p>menu hamburger</p>
-        </header>
+        <img src="assets/images/pipalogo.png" class="logo_pipa" alt="logo pipa">
+        <img src="assets/images/ifes_horizontal_cor.png" alt="logo ifes" class="logo_ifes">
+        <p class="menu">☰</p>
 
-        <div class="perfil_aluno">
-            <img src="" alt="banner do aluno">
-            <img src="" alt="foto do aluno">
-            <img src="" alt="icone de edição">
-            <h1>Nome do Aluno</h1>
+    </header>
+
+    <section class="banner"></section>
+
+    <section class="perfil_aluno">
+
+        <img src="assets/images/avatar_aluno.jpg" class="avatar" alt="Foto de perfil">
+        <h1 class="nome">Bem vindo, Aluno!</h1>
+        <a href="index.html" class="sair">Sair</a>
+
+    </section>
+
+    <div class="pagina">
+        <div class="informacoes_aluno">
+            <h3>Informações do Aluno</h3>
+            <p>Nome:</p>
+            <textarea name="nome" id="nome" cols="30" rows="1" placeholder="Seu nome"></textarea>
+            <p>Email:</p>
+            <textarea name="email" id="email" cols="30" rows="1" placeholder="Seu email"></textarea>
+            <p>Mudar senha:</p>
+            <textarea name="senha" id="senha" cols="30" rows="1" placeholder="Sua senha"></textarea>
+            <p>Inserção:</p>
+            <textarea name="insercao" id="insercao" cols="8" rows="1" placeholder="Aluno"></textarea>
+            <!--Não vai ser textarea, só não sabia o que colocar no lugar de textarea-->
+            <p>Curso:</p>
+            <textarea name="curso" id="curso" cols="30" rows="1" placeholder="Seu curso"></textarea>
+            <p>Período:</p>
+            <textarea name="periodo" id="periodo" cols="8" rows="1" placeholder="Período"></textarea>
+            <button>Salvar</button>
         </div>
 
-        <div class="pagina">
-            <div class="informacoes_aluno">
-                <h3>Informações do Aluno</h3>
-                <p>Nome:</p>
-                <textarea name="nome" id="nome" cols="30" rows="1" placeholder="Seu nome"></textarea>
-                <p>Email:</p>
-                <textarea name="email" id="email" cols="30" rows="1" placeholder="Seu email"></textarea>
-                <p>Mudar senha:</p>
-                <textarea name="senha" id="senha" cols="30" rows="1" placeholder="Sua senha"></textarea>
-                <p>Inserção:</p>
-                <textarea name="insercao" id="insercao" cols="8" rows="1" placeholder="Aluno"></textarea> <!--Não vai ser textarea, só não sabia o que colocar no lugar de textarea-->
-                <p>Curso:</p>
-                <textarea name="curso" id="curso" cols="30" rows="1" placeholder="Seu curso"></textarea>
-                <p>Período:</p>
-                <textarea name="periodo" id="periodo" cols="8" rows="1" placeholder="Período"></textarea>
-                <button>Salvar</button>
+        <div class="professores">
+            <h1>Professores</h1>
+            <div class="professor1">
+                <img src="" alt="banner do professor">
+                <img src="" alt="foto do professor">
+                <p>Nome do Professor</p>
+                <p>Matéria</p>
             </div>
-
-            <div class="professores">
-                <h1>Professores</h1>
-                <div class="professor1">
-                    <img src="" alt="banner do professor">
-                    <img src="" alt="foto do professor">
-                    <p>Nome do Professor</p>
-                    <p>Matéria</p>
-                </div>
-                <div class="professor2">
-                    <img src="" alt="banner do professor">
-                    <img src="" alt="foto do professor">
-                    <p>Nome do Professor</p>
-                    <p>Matéria</p>
-                </div>
-                <div class="professor3">
-                    <img src="" alt="banner do professor">
-                    <img src="" alt="foto do professor">
-                    <p>Nome do Professor</p>
-                    <p>Matéria</p>
-                </div>
+            <div class="professor2">
+                <img src="" alt="banner do professor">
+                <img src="" alt="foto do professor">
+                <p>Nome do Professor</p>
+                <p>Matéria</p>
+            </div>
+            <div class="professor3">
+                <img src="" alt="banner do professor">
+                <img src="" alt="foto do professor">
+                <p>Nome do Professor</p>
+                <p>Matéria</p>
             </div>
         </div>
+    </div>
 
-        <footer>
-            <!--Colocar o footer que sera feito-->
-        </footer>
+    <footer class="footer">
+        <img src="#" alt="logo pipa">
+        <p>Portal de Informação Professor-Aluno</p>
+        <div class="contact">
+            <h3>Fale conosco</h3>
+            <p>Email: saapifes@gmail.com
+            <p>Telefone: (27) 99999-9999</p>
+        </div>
+        <div class="social-media">
+            <p>Redes Sociais</p>
+            <img src="#" alt="logo facebook">
+            <img src="#" alt="logo instagram">
+            <img src="#" alt="logo twitter">
+        </div>
+    </footer>
 
-    </container>
-    
 </body>
+
 </html>

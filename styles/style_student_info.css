@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: rgb(255, 255, 255);
+}
+
+.barra_naveg {
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+}
+
+.logo_pipa {
+    margin-right: 80%;
+    margin-left: 2%;
+    height: 50px;
+    width: auto;
+}
+
+.logo_ifes {
+    height: 70px;
+    width: auto;
+}
+
+.menu {
+    font-size: 22px;
+    cursor: pointer;
+    margin-right: 2%;
+}
+
+.banner {
+    height: 120px;
+    background: linear-gradient(90deg, #60c3b1, #5aaea3);
+}
+
+.perfil_aluno {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 50px;
+    background: #ffffff;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.nome {
+    font-size: 28px;
+}
+
+.sair {
+    margin-left: 75%;
+    color: red;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+
+
+
+.footer {
+    background-color: #2D322F;
+    padding: 2em;
+    margin-top: 10em;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    gap: 3em;
+    align-items: flex-start;
+}
+
+.contact {
+    flex: 1;
+}
+
+.social-media {
+    flex: 1;
+}

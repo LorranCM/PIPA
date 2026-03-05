@@ -225,15 +225,11 @@ body {
 }
 
 .card{
-        background: #dcdcdc;
-        padding: 10px;
-        border-radius: 4px;
-        width: 200px;
-        display: flex;
-        gap: 20px;
-        justify-content: center;
+  background: #dcdcdc;
+  padding: 10px;
+  border-radius: 4px;
+  width: 200px;
 }
-
 
 .card h3{
   text-align: center;
@@ -254,3 +250,4 @@ body {
   gap: 8px;
   border-radius: 3px;
 }
+

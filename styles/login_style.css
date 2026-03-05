@@ -11,7 +11,7 @@
     display: flex;
     gap: 3em;
     align-items: flex-start;
-}
+} 
 
 .contact {
     flex: 1;
@@ -47,7 +47,7 @@ body {
 .form-login {
     background-color: #FAFAFA;
     padding: 4em 2em 60px;
-    margin-top: 40px;
+    margin-top: 8rem;
     border-radius: 20px;
     align-items: center;
     box-shadow: 2px 2px 8px #272727;
