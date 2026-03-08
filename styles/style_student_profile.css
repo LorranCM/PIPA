@@ -18,7 +18,7 @@ body {
 }
 
 .logo_pipa {
-    margin-right: 80%;
+    margin-right: 70%;
     margin-left: 2%;
     height: 50px;
     width: auto;
@@ -32,7 +32,7 @@ body {
 .menu {
     font-size: 22px;
     cursor: pointer;
-    margin-right: 2%;
+    margin-right: 6%;
 }
 
 .banner {

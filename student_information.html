@@ -23,52 +23,82 @@
     <section class="perfil_aluno">
 
         <img src="assets/images/avatar_aluno.jpg" class="avatar" alt="Foto de perfil">
-        <h1 class="nome">Bem vindo, Aluno!</h1>
-        <a href="index.html" class="sair">Sair</a>
+        <img src="assets/images/editar_perfil.png" alt="editar_perfil" class="editar_perfil">
+        <h1 class="nome">Nome aluno!</h1>
 
     </section>
 
-    <div class="pagina">
-        <div class="informacoes_aluno">
-            <h3>Informações do Aluno</h3>
-            <p>Nome:</p>
-            <textarea name="nome" id="nome" cols="30" rows="1" placeholder="Seu nome"></textarea>
-            <p>Email:</p>
-            <textarea name="email" id="email" cols="30" rows="1" placeholder="Seu email"></textarea>
-            <p>Mudar senha:</p>
-            <textarea name="senha" id="senha" cols="30" rows="1" placeholder="Sua senha"></textarea>
-            <p>Inserção:</p>
-            <textarea name="insercao" id="insercao" cols="8" rows="1" placeholder="Aluno"></textarea>
-            <!--Não vai ser textarea, só não sabia o que colocar no lugar de textarea-->
-            <p>Curso:</p>
-            <textarea name="curso" id="curso" cols="30" rows="1" placeholder="Seu curso"></textarea>
-            <p>Período:</p>
-            <textarea name="periodo" id="periodo" cols="8" rows="1" placeholder="Período"></textarea>
-            <button>Salvar</button>
+    <section class="container">
+
+        <div class="card detalhes">
+
+            <h2>Detalhes de Usuário</h2>
+
+            <label>Nome:</label>
+            <input type="text" value="" placeholder="Nome do aluno">
+
+            <label>Email:</label>
+            <input type="email" value="" placeholder="E-mail do aluno">
+
+            <label>Inscrição:</label>
+            <input type="text" value="" placeholder="Aluno" disabled>
+
+            <label>Curso:</label>
+            <input type="text" value="" placeholder="Curso do aluno" disabled>
+
+            <label>Período:</label>
+            <input type="text" value="" placeholder="Período do aluno" disabled>
+
+            <button class="botao">Salvar</button>
+
         </div>
 
-        <div class="professores">
-            <h1>Professores</h1>
-            <div class="professor1">
-                <img src="" alt="banner do professor">
-                <img src="" alt="foto do professor">
-                <p>Nome do Professor</p>
-                <p>Matéria</p>
+        <div class="card professores">
+
+            <h2>Professores</h2>
+
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
+                </div>
             </div>
-            <div class="professor2">
-                <img src="" alt="banner do professor">
-                <img src="" alt="foto do professor">
-                <p>Nome do Professor</p>
-                <p>Matéria</p>
+
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
+                </div>
             </div>
-            <div class="professor3">
-                <img src="" alt="banner do professor">
-                <img src="" alt="foto do professor">
-                <p>Nome do Professor</p>
-                <p>Matéria</p>
+
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
+                </div>
+            </div>
+
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
+                </div>
+            </div>
+
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
+                </div>
             </div>
         </div>
-    </div>
+
+    </section>
 
     <footer class="footer">
         <img src="#" alt="logo pipa">
