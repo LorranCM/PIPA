@@ -23,11 +23,7 @@ body {
 
 .hero > :nth-child(2n-1){
   justify-self: end;
-  padding-right: 5vw;
-}
-
-.hero > :nth-child(2n){
-  padding-left: 3vw;
+  padding-right: 8%;
 }
 
 header {
@@ -48,8 +44,8 @@ header > * {
 }
 
 #header-description {
-    font-size: 1.2em;
-    width: 60%;
+    font-size: 1.5em;
+    width: 70%;
     color: var(--off-white);
 }
 
@@ -105,6 +101,10 @@ header > * {
     transform: translateY(5vh);
     display: inline;
     justify-self: center;
+}
+
+#hero-figure1 {
+    margin-left: 10%;
 }
 
 #hero-figure1::after{

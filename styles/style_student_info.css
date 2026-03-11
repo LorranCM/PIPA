@@ -17,11 +17,17 @@ body {
     align-items: center;
 }
 
-.logo_pipa {
+.pipa {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-inline: 2em;
     margin-right: 70%;
-    margin-left: 2%;
-    height: 50px;
-    width: auto;
+}
+
+.logo_pipa {
+    width: 2rem;
 }
 
 .logo_ifes {

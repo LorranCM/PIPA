@@ -1,0 +1,24 @@
+footer {
+    display: grid;
+    grid-template-columns: 5fr 2fr;
+    background-color: #2D322F;
+}
+
+footer figure { 
+    display: flex;
+    justify-content: top;
+}
+
+footer svg {
+    width: 5vw;
+    height: auto;
+}
+
+footer h2{
+    display: inline;
+    font-weight: 400;
+}
+
+footer h2 strong {
+    font-weight: bold;
+}

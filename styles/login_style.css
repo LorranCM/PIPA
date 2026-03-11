@@ -61,18 +61,19 @@ body {
 }
 
 .button-login {
-    background-color: #2E8E5A;
-    border-radius: 2em;
-    height: 6em;
-    max-width: 80em;
-    width: 20em;
-    align-self: center;
-    border-style: none;
-    font-size: large;
-    font-weight:800;
-    color: #FAFAFA;
-    transition: all 0.4s;
-    margin:auto;      
+    background-color: #00000000;
+    border: 2px solid #2E8E5A;
+    text-decoration: none;
+    border-radius: 12px;
+    margin-block: 1em;
+    padding: 1em 1.2em;
+    font-weight: bold;
+    font-size: 1em;
+    color: #2E8E5A;
+    display: inline-block;
+    position: relative;
+    transition: all 0.3s;
+    width: 10em;    
 }
 
 .button-login:hover {
@@ -80,6 +81,7 @@ body {
     transform: scale(1.1);
     transition: all 0.4s;
     cursor: pointer;
+    color: white;
 }
 
 .container-login {

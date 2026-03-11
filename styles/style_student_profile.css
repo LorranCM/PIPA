@@ -9,32 +9,6 @@ body {
     background: rgb(255, 255, 255);
 }
 
-.barra_naveg {
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    align-items: center;
-}
-
-.logo_pipa {
-    margin-right: 70%;
-    margin-left: 2%;
-    height: 50px;
-    width: auto;
-}
-
-.logo_ifes {
-    height: 70px;
-    width: auto;
-}
-
-.menu {
-    font-size: 22px;
-    cursor: pointer;
-    margin-right: 6%;
-}
-
 .banner {
     height: 120px;
     background: linear-gradient(90deg, #60c3b1, #5aaea3);
