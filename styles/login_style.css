@@ -1,4 +1,4 @@
-@import url(/colors.css);
+@import url("../colors.css");
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
 
 .contact {
@@ -7,6 +7,17 @@
 
 .social-media {
     flex: 1;
+}
+
+.error-box {
+    background-color: #ffcccc;
+    color: #cc0000;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 0.9em;
+    border: 1px solid #cc0000;
 }
 
 body {

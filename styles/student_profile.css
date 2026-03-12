@@ -2,14 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     font-family: "Encode Sans";
 }
 
 body {
     background: rgb(255, 255, 255);
+    margin: 0;
 }
 
 .banner {
@@ -53,6 +51,13 @@ body {
 .seus_prof h2 {
     text-align: center;
     margin-bottom: 25px;
+}
+
+.seus_prof a {
+    display: block;
+    margin-top: 15px;
+    color: #000000;
+    text-decoration: none;
 }
 
 .professores {

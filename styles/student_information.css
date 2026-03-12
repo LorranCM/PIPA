@@ -1,23 +1,14 @@
+
 @import url(/colors.css);
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     font-family: "Encode Sans";
 }
 
 body {
     background: rgb(255, 255, 255);
-}
-
-.barra_naveg {
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    align-items: center;
+    margin: 0;
 }
 
 .pipa {
@@ -95,6 +86,7 @@ body {
 
 .detalhes{
     width:350px;
+    height: 450px;
 }
 
 .detalhes h2{
