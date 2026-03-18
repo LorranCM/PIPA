@@ -31,6 +31,9 @@ body {
 
 .nome {
     font-size: 28px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .sair {
@@ -104,7 +107,8 @@ body {
     background: #ffffff;
 }
 
-.semana, .dias {
+.semana,
+.dias {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
@@ -200,36 +204,35 @@ body {
     flex: 1;
 }
 
-.docs2{
-  display: flex;
-  gap: 20px;
-  padding: 20px;
+.docs2 {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
 }
 
-.card{
-  background: #dcdcdc;
-  padding: 10px;
-  border-radius: 4px;
-  width: 200px;
+.card {
+    background: #dcdcdc;
+    padding: 10px;
+    border-radius: 4px;
+    width: 200px;
 }
 
-.card h3{
-  text-align: center;
-  margin-bottom: 10px;
+.card h3 {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
-.card ul{
-  list-style: none;
-  padding: 0;
+.card ul {
+    list-style: none;
+    padding: 0;
 }
 
-.card li{
-  background: #eee;
-  margin: 6px 0;
-  padding: 6px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 3px;
+.card li {
+    background: #eee;
+    margin: 6px 0;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 3px;
 }
-

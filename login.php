@@ -15,7 +15,7 @@
         if (isset($users[$matricula]) && $users[$matricula]['password'] === $password) {
             $_SESSION['loggedin'] = true;
             $_SESSION['matricula'] = $matricula;
-            header("Location: student_profile.html");
+            header("Location: student_profile.php");
             exit;
         } else {
             $error_message = "Matrícula ou senha incorretos.";
