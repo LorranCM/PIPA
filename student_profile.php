@@ -1,7 +1,7 @@
 ﻿<?php
     session_start();
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-        header("Location: login.html");
+        header("Location: login.php");
         exit;
     }
     $matricula = $_SESSION['matricula'];
@@ -51,7 +51,7 @@
 
         <h2>Seus Professores</h2>
 
-        <a href="./teacher_profile.html">
+        <a href="./teacher_profile.php">
             <div class="professores">
                 <div class="pagina-prof">
                     <img src="assets/images/one.jpg">
