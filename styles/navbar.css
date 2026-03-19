@@ -13,6 +13,7 @@
     margin: 0;
     padding: 0;
     place-items: center;
+    justify-content: space-between;
 }
 
 #navbar ul li{
@@ -33,4 +34,36 @@
 
 #navbar-PIPA-clickable {
     font-size: 1.5em;
+}
+
+#navbar-3-bars {
+    cursor: pointer;
+}
+
+.popup-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.popup-menu ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.popup-menu li {
+    padding: 10px;
+}
+
+.popup-menu a {
+    text-decoration: none;
+    color: black;
 }

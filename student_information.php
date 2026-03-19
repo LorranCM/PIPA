@@ -1,4 +1,4 @@
-﻿<?php
+<?php
     session_start();
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("Location: login.php");
@@ -7,16 +7,19 @@
     $matricula = $_SESSION['matricula'];
     $users = json_decode(file_get_contents('users.json'), true) ?? [];
     $student_name = $users[$matricula]['name'] ?? 'Aluno';
+    $student_email = $users[$matricula]['email'] ??'';
+    $student_matricula = $users[$matricula]['matricula'] ??'';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Aluno</title>
-    <link rel="stylesheet" href="styles/student_profile.css">
+    <title>Informações do Aluno</title>
     <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="styles/student_information.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
     <title>PIPA</title>
@@ -49,126 +52,81 @@
     <section class="perfil_aluno">
 
         <img src="assets/images/avatar_aluno.jpg" class="avatar" alt="Foto de perfil">
-        <h1 class="nome">Bem vindo, <?php echo htmlspecialchars($student_name); ?>!</h1>
-        <a href="login.php" class="sair">Sair</a>
+        <img src="assets/icons/edit-profile-svgrepo-com.svg" alt="editar_perfil" class="editar_perfil">
+        <h1 class="nome"><?php echo htmlspecialchars($student_name); ?>!</h1>
 
     </section>
 
-    <section class="seus_prof">
+    <section class="container">
 
-        <h2>Seus Professores</h2>
+        <div class="card detalhes">
 
-        <a href="./teacher_profile.php">
-            <div class="professores">
-                <div class="pagina-prof">
-                    <img src="assets/images/one.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/bnh.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/hxh.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/one.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/bnh.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/hxh.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
+            <h2>Detalhes de Usuário</h2>
+
+            <label>Nome:</label>
+            <input type="text" value="<?php echo htmlspecialchars($student_name); ?>" placeholder="Nome do aluno">
+
+            <label>Email:</label>
+            <input type="email" value="<?php echo htmlspecialchars($student_email); ?>" placeholder="E-mail do aluno">
+
+            <label>Matrícula:</label>
+            <input type="text" value="<?php echo htmlspecialchars($student_matricula); ?>" placeholder="Matrícula do aluno" disabled>
+
+            <label>Curso:</label>
+            <input type="text" value="" placeholder="Curso do aluno" disabled>
+
+            <label>Período:</label>
+            <input type="text" value="" placeholder="Período do aluno" disabled>
+
+            <button class="botao">Salvar</button>
+
+        </div>
+
+        <div class="card professores">
+
+            <h2>Professores</h2>
+
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
                 </div>
             </div>
-        </a>
 
-    </section>
-
-    <section class="seu_calendario">
-        <h2>Seu Calendário</h2>
-
-        <div class="calendario">
-            <div class="topo_calendario">
-                <span><-</span>
-                <strong>Março 2026</strong>
-                <span>-></span>
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
+                </div>
             </div>
 
-            <div class="semana">
-                <div>Dom</div>
-                <div>Seg</div>
-                <div>Ter</div>
-                <div>Qua</div>
-                <div>Qui</div>
-                <div>Sex</div>
-                <div>Sáb</div>
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
+                </div>
             </div>
 
-            <div class="dias">
-                <div class="dia">1</div>
-                <div class="dia">2</div>
-                <div class="dia">3</div>
-                <div class="dia">4</div>
-                <div class="dia">5</div>
-                <div class="dia">6</div>
-                <div class="dia">7</div>
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
+                </div>
+            </div>
 
-                <div class="dia">8</div>
-                <div class="dia">9</div>
-                <div class="dia">10</div>
-                <div class="dia">11</div>
-                <div class="dia">12</div>
-                <div class="dia">13</div>
-                <div class="dia">14</div>
-
-                <div class="dia">15</div>
-                <div class="dia">16</div>
-                <div class="dia">17</div>
-                <div class="dia">18</div>
-                <div class="dia">19</div>
-                <div class="dia">20</div>
-                <div class="dia">21</div>
-
-                <div class="dia">22</div>
-                <div class="dia">23</div>
-                <div class="dia">24</div>
-                <div class="dia">25</div>
-                <div class="dia">26</div>
-                <div class="dia">27</div>
-                <div class="dia">28</div>
-
-                <div class="dia">29</div>
-                <div class="dia">30</div>
-                <div class="dia">31</div>
-                <div class="dia-m">01</div>
-                <div class="dia-m">02</div>
-                <div class="dia-m">03</div>
-                <div class="dia-m">04</div>
+            <div class="professor">
+                <img src="assets/images/avatar_aluno.jpg">
+                <div>
+                    <p>Nome do professor</p>
+                    <span>Disciplina: xxxx</span>
+                </div>
             </div>
         </div>
+
     </section>
 
     <footer>
