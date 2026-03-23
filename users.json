@@ -2,12 +2,17 @@
     "20232tiimi0209": {
         "name": "Alvaro Dalmaso Tosta",
         "email": "alvarodalmaso07@gmail.com",
-        "password": "alvaro1234"
+        "password": "alvaro1234",
+        "matricula": "20232tiimi0209",
+        "curso": "Informatica para Internet",
+        "periodo": "6 periodo"
     },
     "20232tiimi0195": {
-        "name": "Gabriel Lopes Santana",
-        "email": "lopesifes123@gmail.com",
+        "name": "Gabriel Lopes Poderoso Demais",
+        "email": "abacaxi@gmail.com",
         "password": "Lopes123!",
-        "matricula": "20232tiimi0195"
+        "matricula": "20232tiimi0195",
+        "curso": "Informatica para Internet",
+        "periodo": "6 peridodo"
     }
 }
