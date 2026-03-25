@@ -172,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <svg fill="#FFFFFF" width="800px" height="800px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                     <path d="M33.66,4.6c-.96-.8-2.36-.8-3.32,0L9.86,21.63c-.96,.8-1.19,2.2-.54,3.27L30.45,59.14c.25,.41,.66,.7,1.13,.81,.14,.03,.28,.05,.42,.05,.33,0,.66-.09,.95-.27,.24-.15,.45-.35,.59-.59L54.68,24.9c.66-1.06,.43-2.47-.53-3.27L33.66,4.6Zm-.66,2.05l18.76,15.59h-18.76V6.65Zm-2,0v15.59H12.24L31,6.65Zm-.79,17.59l-9.47,15.34-9.47-15.34H30.21Zm-8.29,17.25l9.09-14.72v29.44l-9.09-14.72Zm11.09,14.76V24.25h19.73l-19.73,32.01Z" />
                 </svg>
-                <h2><strong>PIPA</strong><br>Portal de Informação para alunos</h2>
+                <h2><strong>PIPA</strong><br>Portal de Informação Professor-Aluno</h2>
             </figure>
             <div id="contacts-info">
                 <div>
