@@ -184,7 +184,7 @@ body {
     background: #e9e9e9;
 }
 
-.footer {
+.footer, #footer {
     background-color: #2D322F;
     padding: 2em;
     margin-top: 10em;

@@ -14,5 +14,10 @@
         "matricula": "20232tiimi0195",
         "curso": "Informatica para Internet",
         "periodo": "6 peridodo"
+    },
+    "20232tiimi0304": {
+        "name": "Nome Teste da Silva",
+        "email": "nomedasilva@gmail.com",
+        "password": "senha123"
     }
 }
