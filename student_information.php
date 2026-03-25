@@ -48,8 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informações do Aluno</title>
-    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles/student_information.css">
+    <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
     <title>PIPA</title>

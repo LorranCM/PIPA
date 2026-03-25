@@ -44,8 +44,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="<?= $base ?>/">
     <title>PIPA - Cadastro</title>
-    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles/login_style.css">
+    <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
 

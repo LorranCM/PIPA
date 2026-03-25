@@ -16,8 +16,13 @@
         "periodo": "6 peridodo"
     },
     "20232tiimi0304": {
-        "name": "Nome Teste da Silva",
+        "name": "123abc",
         "email": "nomedasilva@gmail.com",
         "password": "senha123"
+    },
+    "teste": {
+        "name": "Teste",
+        "email": "teste@gmail.com",
+        "password": "teste"
     }
 }

@@ -12,8 +12,8 @@
     <base href="<?= $base ?>/">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
     <link rel="stylesheet" href="colors.css">
-    <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/landing_style.css">
+    <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/footer.css">
     <title>PIPA</title>
 

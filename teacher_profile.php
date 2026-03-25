@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página do professor</title>
+    <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles/teacher_profile.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/navbar.css">

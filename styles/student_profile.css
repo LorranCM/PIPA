@@ -1,4 +1,3 @@
-@import url(/colors.css);
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
 
 * {
@@ -235,4 +234,24 @@ body {
     align-items: center;
     gap: 8px;
     border-radius: 3px;
+}
+
+.footer {
+    background-color: #2D322F;
+    padding: 2em;
+    margin-top: 10em;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    gap: 3em;
+    align-items: flex-start;
+}
+
+.contact {
+    flex: 1;
+}
+
+.social-media {
+    flex: 1;
 }
