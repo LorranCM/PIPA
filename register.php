@@ -1,41 +1,57 @@
 <?php
-    session_start();
-    // compute base URL for assets (strip trailing slash)
-    $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
+session_start();
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 
-    $error_message = "";
-    $success_message = "";
+$error_message = "";
+$success_message = "";
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $matricula = $_POST['matricula'] ?? '';
-        $name = $_POST['name'] ?? '';
-        $email = $_POST['email'] ?? '';
-        $email_confirmation = $_POST['email_confirmation'] ?? '';
-        $password = $_POST['password'] ?? '';
-        $password_confirmation = $_POST['password_confirmation'] ?? '';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $matricula = $_POST['matricula'] ?? '';
+    $name = $_POST['name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $email_confirmation = $_POST['email_confirmation'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $password_confirmation = $_POST['password_confirmation'] ?? '';
 
-        if ($email !== $email_confirmation) {
-            $error_message = "Os e-mails não coincidem.";
-        } elseif ($password !== $password_confirmation) {
-            $error_message = "As senhas não coincidem.";
-        } elseif (empty($matricula) || empty($name) || empty($email) || empty($password)) {
-            $error_message = "Todos os campos são obrigatórios.";
+    if ($email !== $email_confirmation) {
+        $error_message = "Os e-mails não coincidem.";
+    } elseif ($password !== $password_confirmation) {
+        $error_message = "As senhas não coincidem.";
+    } elseif (empty($matricula) || empty($name) || empty($email) || empty($password)) {
+        $error_message = "Todos os campos são obrigatórios.";
+    } else {
+        $usersFile = __DIR__ . '/users.json'; // caminho absoluto
+
+        // Carrega usuários existentes
+        if (file_exists($usersFile)) {
+            $json = file_get_contents($usersFile);
+            $users = json_decode($json, true);
+            if (!is_array($users)) {
+                $users = [];
+            }
         } else {
-            $users = json_decode(file_get_contents('users.json'), true) ?? [];
-            if (isset($users[$matricula])) {
-                $error_message = "Matrícula já cadastrada.";
+            $users = [];
+        }
+
+        if (isset($users[$matricula])) {
+            $error_message = "Matrícula já cadastrada.";
+        } else {
+            $users[$matricula] = [
+                'name' => $name,
+                'email' => $email,
+                'password' => $password // ⚠️ ATENÇÃO: senha em texto puro – recomendo usar password_hash()
+            ];
+
+            $jsonData = json_encode($users, JSON_PRETTY_PRINT);
+            if (file_put_contents($usersFile, $jsonData) === false) {
+                $error_message = "Erro ao salvar os dados. Verifique as permissões da pasta.";
             } else {
-                $users[$matricula] = [
-                    'name' => $name,
-                    'email' => $email,
-                    'password' => $password
-                ];
-                file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT));
                 header("Location: login.php");
                 exit;
             }
         }
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

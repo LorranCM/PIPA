@@ -15,14 +15,14 @@
         "curso": "Informatica para Internet",
         "periodo": "6 peridodo"
     },
-    "20232tiimi0304": {
-        "name": "123abc",
-        "email": "nomedasilva@gmail.com",
-        "password": "senha123"
+    "matricula123": {
+        "name": "Aluno Sobrenome",
+        "email": "email@gmail.com",
+        "password": "senha"
     },
-    "teste": {
-        "name": "Teste",
-        "email": "teste@gmail.com",
-        "password": "teste"
+    "novamatricula": {
+        "name": "Alterado Nome",
+        "email": "alterado123@gmail.com",
+        "password": "SENHAFORTE"
     }
 }

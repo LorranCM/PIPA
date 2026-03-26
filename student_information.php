@@ -6,34 +6,31 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 $matricula = $_SESSION['matricula'];
 $users = json_decode(file_get_contents('users.json'), true) ?? [];
-$student_name = $users[$matricula]['name'] ?? 'Aluno';
-$student_email = $users[$matricula]['email'] ?? '';
-$student_matricula = $users[$matricula]['matricula'] ?? '';
-$student_curso = $users[$matricula]['curso'] ?? '';
-$student_período = $users[$matricula]['periodo'] ?? '';
+$student_name    = $users[$matricula]['name'] ?? 'Aluno';
+$student_email   = $users[$matricula]['email'] ?? '';
+$student_matricula = $matricula;                       // ✅ a chave do JSON é a própria matrícula
+$student_curso   = $users[$matricula]['curso'] ?? 'Curso Indefinido';
+$student_período = $users[$matricula]['periodo'] ?? 'Período Indefinido';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $novo_nome = $_POST['name'] ?? '';
+    $novo_nome  = $_POST['name'] ?? '';
     $novo_email = $_POST['email'] ?? '';
     $nova_senha = $_POST['password'] ?? '';
 
     $users = json_decode(file_get_contents('users.json'), true) ?? [];
 
     if (isset($users[$matricula])) {
-
-        $users[$matricula]['name'] = $novo_nome;
+        $users[$matricula]['name']  = $novo_nome;
         $users[$matricula]['email'] = $novo_email;
 
-        // Atualiza senha só se foi preenchida
+        // Atualiza senha só se foi preenchida, armazenando em texto puro
         if (!empty($nova_senha)) {
-            $users[$matricula]['password'] = password_hash($nova_senha, PASSWORD_DEFAULT);
+            $users[$matricula]['password'] = $nova_senha;   // ✅ sem hash
         }
 
-        // Salva de volta no JSON
         file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT));
 
-        // Atualiza variáveis exibidas
-        $student_name = $novo_nome;
+        $student_name  = $novo_nome;
         $student_email = $novo_email;
 
         echo "<script>alert('Dados atualizados com sucesso!');</script>";
