@@ -1,13 +1,17 @@
 ﻿<?php
-    session_start();
-    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-        header("Location: login.php");
-        exit;
-    }
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: login.php");
+    exit;
+}
+
+// Recupera os dados do professor logado
+$matricula = $_SESSION['matricula'];
+$users = json_decode(file_get_contents('users.json'), true) ?? [];
+$teacher_name = $users[$matricula]['name'] ?? 'Professor';
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,10 +21,7 @@
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
-    <title>PIPA</title>
-
 </head>
-
 <body>
 
     <nav id="navbar">
@@ -39,12 +40,10 @@
     <section class="banner"></section>
 
     <section class="perfil_professor">
-
         <img src="assets/images/avatar_aluno.jpg" class="avatar" alt="Foto de perfil">
-        <h1 class="nome">Alessandro Bermudes</h1>
-        
+        <!-- Nome dinâmico do professor -->
+        <h1 class="nome"><?php echo htmlspecialchars($teacher_name); ?></h1>
     </section>
-
 
     <section class="calendario_do_professor">
         <h2>Calendário</h2>
@@ -105,3 +104,7 @@
             </div>
         </div>
     </section>
+
+    <?php include 'footer.php'; ?>
+</body>
+</html>

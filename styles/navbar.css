@@ -1,24 +1,33 @@
+/* navbar.css */
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
 
+/* Reset de conflito para garantir distância 0 */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 #navbar {
-    background-color:var(--white);
-    color: var(--black);
+    background-color: var(--white);
+    color: red;
     padding-block: 3vh;
     position: relative;
     width: 100%;
+    display: block;
+    margin: 0; /* Garante que não haja margem externa */
+    top: 0;
 }
 
-#navbar ul{
+#navbar ul {
+    margin: 0; /* Remove margens padrão de listas que causam gaps */
+    padding: 0;
     display: flex;
     list-style-type: none;
-    width: 100%;
-    margin: 0;
-    padding: 0;
     place-items: center;
     justify-content: space-between;
 }
 
-#navbar ul li{
+#navbar ul li {
     font-weight: bold;
     margin-inline: 2em;
 }
@@ -28,7 +37,7 @@
     height: auto;
 }
 
-#navbar ul li a{
+#navbar ul li a {
     text-decoration: none;
     color: black;
     font-size: 1.2em;
@@ -49,7 +58,7 @@
     right: 0;
     background-color: white;
     border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 1000;
 }
 

@@ -3,26 +3,30 @@
         "name": "Alvaro Dalmaso Tosta",
         "email": "alvarodalmaso07@gmail.com",
         "password": "alvaro1234",
-        "matricula": "20232tiimi0209",
-        "curso": "Informatica para Internet",
-        "periodo": "6 periodo"
+        "role": "student"
     },
     "20232tiimi0195": {
         "name": "Gabriel Lopes Poderoso Demais",
         "email": "abacaxi@gmail.com",
         "password": "Lopes123!",
-        "matricula": "20232tiimi0195",
-        "curso": "Informatica para Internet",
-        "periodo": "6 peridodo"
+        "role": "student"
     },
     "matricula123": {
         "name": "Aluno Sobrenome",
         "email": "email@gmail.com",
-        "password": "senha"
+        "password": "senha",
+        "role": "student"
     },
     "novamatricula": {
         "name": "Alterado Nome",
         "email": "alterado123@gmail.com",
-        "password": "SENHAFORTE"
+        "password": "SENHAFORTE",
+        "role": "student"
+    },
+    "professor123": {
+        "name": "Professor Sobrenome",
+        "email": "professor123@gmail.com",
+        "password": "prof123",
+        "role": "teacher"
     }
 }

@@ -1,52 +1,48 @@
 <?php
-    // start session
-    session_start();
+session_start();
 
-    // Variável para mensagem de erro
-    $error_message = "";
+$error_message = "";
 
-    // Processamento do Login
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $matricula = $_POST['matricula'] ?? '';
-        $password = $_POST['password'] ?? '';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $matricula = $_POST['matricula'] ?? '';
+    $password = $_POST['password'] ?? '';
 
-        $users = json_decode(file_get_contents('users.json'), true) ?? [];
-        // Validação das credenciais
-        if (isset($users[$matricula]) && $users[$matricula]['password'] === $password) {
-            $_SESSION['loggedin'] = true;
-            $_SESSION['matricula'] = $matricula;
-            header("Location: student_profile.php");
-            exit;
+    $users = json_decode(file_get_contents('users.json'), true) ?? [];
+
+    if (isset($users[$matricula]) && $users[$matricula]['password'] === $password) {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['matricula'] = $matricula;
+        
+        // NOVO: Define o tipo de usuário na sessão (padrão 'student' se não existir)
+        $role = $users[$matricula]['role'] ?? 'student';
+        $_SESSION['role'] = $role;
+
+        // Redireciona conforme o tipo
+        if ($role === 'teacher') {
+            header("Location: teacher_profile.php");
         } else {
-            $error_message = "Matrícula ou senha incorretos.";
+            header("Location: student_profile.php");
         }
+        exit;
+    } else {
+        $error_message = "Matrícula ou senha incorretos.";
     }
-
-    // compute base URL for assets (strip trailing slash)
-    $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
-?>
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="<?= $base ?>/">
     <title>PIPA</title>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles/login_style.css">
-    <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/footer.css">
-    <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
+    <link rel="stylesheet" href="styles/navbar.css">
 </head>
 
 <body>
-    <nav id="navbar">
-        <ul>
-            <li id="navbar-PIPA-clickable"><a href="index.php"><img src="assets/icons/kite-origami-paper-svgrepo-com.svg"
-                        alt="icone do pipa">PIPA</a></li>
-        </ul>
-    </nav>
+    <?php include 'navbar.php'; ?>
     <div class="page-content">
         <img src="assets/images/boy_holding_book.png" alt="menino segurando um livro" class="side-image">
 
