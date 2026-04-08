@@ -24,9 +24,17 @@
         "role": "student"
     },
     "professor123": {
-        "name": "Professor Sobrenome",
-        "email": "professor123@gmail.com",
+        "name": "Prof. Ricardo Oliveira",
+        "email": "ricardo@escola.com",
         "password": "prof123",
-        "role": "teacher"
+        "role": "teacher",
+        "materia": "Programação Web"
+    },
+    "professor456": {
+        "name": "Profa. Maria Souza",
+        "email": "maria@escola.com",
+        "password": "prof123",
+        "role": "teacher",
+        "materia": "Banco de Dados"
     }
 }

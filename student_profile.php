@@ -4,9 +4,24 @@
         header("Location: login.php");
         exit;
     }
-    $matricula = $_SESSION['matricula'];
+
     $users = json_decode(file_get_contents('users.json'), true) ?? [];
-    $student_name = $users[$matricula]['name'] ?? 'Aluno';
+    
+    // Pega a matrícula de quem está LOGADO (para a navbar/saudação)
+    $matricula_logada = $_SESSION['matricula'];
+    $nome_logado = $users[$matricula_logada]['name'] ?? 'Usuário';
+
+    // Pega a matrícula do DONO da página (via URL ?id=...)
+    // Se não houver 'id' na URL, assume que o aluno está vendo o próprio perfil
+    $matricula_perfil = $_GET['id'] ?? $matricula_logada;
+    $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
+
+    $matricula_logada = $_SESSION['matricula'];
+    $matricula_perfil = $_GET['id'] ?? $matricula_logada;
+
+    // Verifica se o usuário logado é o dono da página
+    $is_own_profile = ($matricula_logada === $matricula_perfil);
+    $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,65 +62,27 @@
 
     <section class="banner"></section>
 
-    <section class="perfil_aluno">
-
-        <img src="assets/images/avatar_aluno.jpg" class="avatar" alt="Foto de perfil">
-        <h1 class="nome">Bem vindo, <?php echo htmlspecialchars($student_name); ?>!</h1>
-        <a href="login.php" class="sair">Sair</a>
-
+    <section id="apresentacao">
+        <div id="texto-apresentacao">
+            <?php if ($is_own_profile): ?>
+                <h1>Olá, <?php echo $student_name; ?></h1>
+            <?php else: ?>
+                <h1>Perfil de <?php echo $student_name; ?></h1>
+            <?php endif; ?>
+        </div>
     </section>
 
     <section class="seus_prof">
 
         <h2>Seus Professores</h2>
-
-        <a href="./teacher_profile.php">
-            <div class="professores">
-                <div class="pagina-prof">
-                    <img src="assets/images/one.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/bnh.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/hxh.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/one.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/bnh.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/hxh.jpg">
-                    <div class="prof-info">
-                        <strong>Nome do professor</strong>
-                        <span>Disciplina: xxxx II</span>
-                    </div>
+        <a href="teacher_profile.php?id=professor123">
+            <div class="pagina-prof">
+                <img src="assets/images/one.jpg">
+                <div class="prof-info">
+                    <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
                 </div>
             </div>
         </a>
-
     </section>
 
     <section class="seu_calendario">

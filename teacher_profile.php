@@ -5,13 +5,28 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-// Recupera os dados do professor logado
-$matricula = $_SESSION['matricula'];
 $users = json_decode(file_get_contents('users.json'), true) ?? [];
-$teacher_name = $users[$matricula]['name'] ?? 'Professor';
+
+// Matrícula de quem está acessando
+$matricula_logada = $_SESSION['matricula'];
+
+// Matrícula do professor DONO da sala sendo visitada
+// Se não houver ID na URL, mostra o perfil do próprio professor logado
+$id_professor = $_GET['id'] ?? $matricula_logada;
+$teacher_name = $users[$id_professor]['name'] ?? 'Professor';
+
+$matricula_logada = $_SESSION['matricula'];
+$id_professor = $_GET['id'] ?? $matricula_logada;
+
+$is_own_profile = ($matricula_logada === $id_professor);
+$teacher_name = $users[$id_professor]['name'] ?? 'Professor';
+
+// Simulando a disciplina (você pode adicionar "materia" no users.json depois)
+$disciplina = $users[$id_professor]['materia'] ?? 'Desenvolvimento de Sistemas';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +37,7 @@ $teacher_name = $users[$matricula]['name'] ?? 'Professor';
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
 </head>
+
 <body>
 
     <nav id="navbar">
@@ -31,80 +47,60 @@ $teacher_name = $users[$matricula]['name'] ?? 'Professor';
                     <img src="assets/icons/kite-origami-paper-svgrepo-com.svg" alt="icone do pipa">PIPA
                 </a>
             </li>
-            <li id="navbar-3-bars">
+            <li id="navbar-3-bars" onclick="togglePopup()">
                 <img src="assets/icons/bars-svgrepo-com.svg" alt="3-bars">
             </li>
         </ul>
+        <div id="popup-menu" class="popup-menu">
+            <ul>
+                <li><a href="teacher_profile.php">Início</a></li>
+                <li><a href="teacher_information.php">Suas configurações</a></li>
+                <li><a href="login.php">Sair</a></li>
+            </ul>
+        </div>
     </nav>
 
-    <section class="banner"></section>
+    <section id="banner" class="banner">
+    </section>
 
-    <section class="perfil_professor">
+    <section class="perfil_aluno">
+
         <img src="assets/images/avatar_aluno.jpg" class="avatar" alt="Foto de perfil">
-        <!-- Nome dinâmico do professor -->
-        <h1 class="nome"><?php echo htmlspecialchars($teacher_name); ?></h1>
+            <?php if ($is_own_profile): ?>
+        <h1>Olá, <?php echo $teacher_name; ?></h1>
+        <?php else: ?>
+        <h1><?php echo $disciplina . " - " . $teacher_name; ?></h1>
+        <?php endif; ?>
+        <a href="login.php" class="sair">Sair</a>
+
     </section>
 
-    <section class="calendario_do_professor">
-        <h2>Calendário</h2>
+    <section class="seus_prof">
 
-        <div class="calendario">
-            <div class="topo_calendario">
-                <span>-</span>
-                <strong>Março 2026</strong>
-                <span>-></span>
+        <h2>Suas Turmas</h2>
+
+        <a href="student_profile.php?id=20232tiimi0209">
+            <div class="pagina-prof">
+                <img src="assets/images/one.jpg">
+                <div class="prof-info">
+                    <strong>Álvaro Dalmaso</strong> <span>Módulo: xxx</span>
+                </div>
             </div>
+        </a>
 
-            <div class="semana">
-                <div>Dom</div>
-                <div>Seg</div>
-                <div>Ter</div>
-                <div>Qua</div>
-                <div>Qui</div>
-                <div>Sex</div>
-                <div>Sáb</div>
-            </div>
-
-            <div class="dias">
-                <div class="dia">1</div>
-                <div class="dia">2</div>
-                <div class="dia">3</div>
-                <div class="dia">4</div>
-                <div class="dia">5</div>
-                <div class="dia">6</div>
-                <div class="dia">7</div>
-
-                <div class="dia">8</div>
-                <div class="dia">9</div>
-                <div class="dia">10</div>
-                <div class="dia">11</div>
-                <div class="dia">12</div>
-                <div class="dia">13</div>
-                <div class="dia">14</div>
-
-                <div class="dia">15</div>
-                <div class="dia">16</div>
-                <div class="dia">17</div>
-                <div class="dia">18</div>
-                <div class="dia">19</div>
-                <div class="dia">20</div>
-                <div class="dia">21</div>
-
-                <div class="dia">22</div>
-                <div class="dia">23</div>
-                <div class="dia">24</div>
-                <div class="dia">25</div>
-                <div class="dia">26</div>
-                <div class="dia">27</div>
-                <div class="dia">28</div>
-
-                <div class="dia">29</div>
-                <div class="dia">30</div>
-                <div class="dia">31</div>
-            </div>
-        </div>
     </section>
 
+    
+
+    
+<!-- OI LOPES SOU EU ALVARO VOU MEXER NUMAS COISAS LÁ NO SECTION DE CIMA -->
+    <script>
+        function togglePopup() {
+            var popup = document.getElementById('popup-menu');
+            popup.style.display = popup.style.display === 'grid' ? 'none' : 'grid';
+        }
+    </script>
     <?php include 'footer.php'; ?>
 </body>
+
 </html>
