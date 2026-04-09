@@ -6,9 +6,9 @@
         "role": "student"
     },
     "20232tiimi0195": {
-        "name": "Gabriel Lopes Poderoso Demais",
-        "email": "abacaxi@gmail.com",
-        "password": "Lopes123!",
+        "name": "lopes",
+        "email": "polonieuteamo@gmail.com",
+        "password": "oitatu",
         "role": "student"
     },
     "matricula123": {
@@ -28,7 +28,9 @@
         "email": "professor123@gmail.com",
         "password": "prof123",
         "role": "teacher",
-        "materia": "Programação Web I"
+        "materia": "Programação Web I",
+        "sala_fisica": "Laboratório 208 - Bloco 2",
+        "horario": "Segundas e Quartas, 11:00 - 12:40"
     },
     "professor456": {
         "name": "Profa. Ana Costa",
