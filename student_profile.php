@@ -75,8 +75,33 @@ $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
     <section class="seus_prof">
 
         <h2>Seus Professores</h2>
+
         <a href="classroom.php?id=professor123">
-            <div class="profe">
+            <div class="professores">
+                <div class="pagina-prof">
+                    <img src="assets/images/one.jpg">
+                    <div class="prof-info">
+                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
+                    </div>
+                </div>
+                <div class="pagina-prof">
+                    <img src="assets/images/one.jpg">
+                    <div class="prof-info">
+                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
+                    </div>
+                </div>
+                <div class="pagina-prof">
+                    <img src="assets/images/one.jpg">
+                    <div class="prof-info">
+                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
+                    </div>
+                </div>
+                <div class="pagina-prof">
+                    <img src="assets/images/one.jpg">
+                    <div class="prof-info">
+                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
+                    </div>
+                </div>
                 <div class="pagina-prof">
                     <img src="assets/images/one.jpg">
                     <div class="prof-info">
@@ -93,7 +118,7 @@ $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
 
         <div class="calendario">
             <div class="topo_calendario">
-                <span><-< /span>
+                <span><-</span>
                         <strong>Março 2026</strong>
                         <span>-></span>
             </div>
