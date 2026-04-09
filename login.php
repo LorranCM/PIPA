@@ -42,7 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <?php include 'navbar.php'; ?>
+    <nav id="navbar">
+    <ul>
+        <li id="navbar-PIPA-clickable">
+            <a href="index.php">
+                <img src="assets/icons/kite-origami-paper-svgrepo-com.svg" alt="icone do pipa">PIPA
+            </a>
+        </li>
+    </ul>
+    </nav>
     <div class="page-content">
         <img src="assets/images/boy_holding_book.png" alt="menino segurando um livro" class="side-image">
 

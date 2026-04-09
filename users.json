@@ -24,17 +24,17 @@
         "role": "student"
     },
     "professor123": {
-        "name": "Prof. Ricardo Oliveira",
-        "email": "ricardo@escola.com",
+        "name": "Professor Rodrigo Silva",
+        "email": "professor123@gmail.com",
         "password": "prof123",
         "role": "teacher",
-        "materia": "Programação Web"
+        "materia": "Programação Web I"
     },
     "professor456": {
-        "name": "Profa. Maria Souza",
-        "email": "maria@escola.com",
+        "name": "Profa. Ana Costa",
+        "email": "ana@gmail.com",
         "password": "prof123",
         "role": "teacher",
-        "materia": "Banco de Dados"
+        "materia": "Redes de Computadores"
     }
 }

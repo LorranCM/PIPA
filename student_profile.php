@@ -75,14 +75,15 @@
     <section class="seus_prof">
 
         <h2>Seus Professores</h2>
-        <a href="teacher_profile.php?id=professor123">
-            <div class="pagina-prof">
+        <a href="classroom.php?id=professor123"> 
+        <div class="pagina-prof">
                 <img src="assets/images/one.jpg">
                 <div class="prof-info">
                     <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
                 </div>
             </div>
         </a>
+        
     </section>
 
     <section class="seu_calendario">

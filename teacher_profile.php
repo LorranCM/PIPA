@@ -74,16 +74,15 @@ $disciplina = $users[$id_professor]['materia'] ?? 'Desenvolvimento de Sistemas';
         <a href="login.php" class="sair">Sair</a>
 
     </section>
-
+            
     <section class="seus_prof">
-
         <h2>Suas Turmas</h2>
 
-        <a href="student_profile.php?id=20232tiimi0209">
+        <a href="classroom.php?id=<?php echo $matricula_logada; ?>">
             <div class="pagina-prof">
                 <img src="assets/images/one.jpg">
                 <div class="prof-info">
-                    <strong>Álvaro Dalmaso</strong> <span>Módulo: xxx</span>
+                    <strong>Programação Web I</strong> <span>Módulo: xxx</span>
                 </div>
             </div>
         </a>
@@ -91,9 +90,6 @@ $disciplina = $users[$id_professor]['materia'] ?? 'Desenvolvimento de Sistemas';
     </section>
 
     
-
-    
-<!-- OI LOPES SOU EU ALVARO VOU MEXER NUMAS COISAS LÁ NO SECTION DE CIMA -->
     <script>
         function togglePopup() {
             var popup = document.getElementById('popup-menu');

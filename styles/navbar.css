@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
 
 /* Reset de conflito para garantir distância 0 */
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     margin: 0 !important;
     padding: 0 !important;
@@ -9,21 +13,22 @@ html, body {
 
 #navbar {
     background-color: var(--white);
-    color: red;
     padding-block: 3vh;
     position: relative;
     width: 100%;
     display: block;
-    margin: 0; /* Garante que não haja margem externa */
+    margin: 0; 
     top: 0;
+    vertical-align: top;
+    float: left; /* Ajuda a ocupar o espaço do topo sem gaps de linha */
 }
 
 #navbar ul {
-    margin: 0; /* Remove margens padrão de listas que causam gaps */
+    margin: 0;
     padding: 0;
     display: flex;
     list-style-type: none;
-    place-items: center;
+    align-items: center; /* Corrigido de place-items para melhor suporte */
     justify-content: space-between;
 }
 

@@ -11,7 +11,17 @@
     <link rel="stylesheet" href="styles/landing_style.css">
     <link rel="stylesheet" href="styles/navbar.css"> <title>PIPA</title>
 </head>
-<body><?php include 'navbar.php'; ?><section class="hero">
+<body>
+    <nav id="navbar">
+    <ul>
+        <li id="navbar-PIPA-clickable">
+            <a href="index.php">
+                <img src="assets/icons/kite-origami-paper-svgrepo-com.svg" alt="icone do pipa">PIPA
+            </a>
+        </li>
+    </ul>
+    </nav>
+    <section class="hero">
         <header>
             <h1 id="header-title">A organização pessoal do estudante do <strong>Instituto Federal</strong> nunca foi tão
                 fácil</h1>
