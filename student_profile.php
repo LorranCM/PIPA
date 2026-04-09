@@ -1,27 +1,27 @@
 ﻿<?php
-    session_start();
-    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-        header("Location: login.php");
-        exit;
-    }
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: login.php");
+    exit;
+}
 
-    $users = json_decode(file_get_contents('users.json'), true) ?? [];
-    
-    // Pega a matrícula de quem está LOGADO (para a navbar/saudação)
-    $matricula_logada = $_SESSION['matricula'];
-    $nome_logado = $users[$matricula_logada]['name'] ?? 'Usuário';
+$users = json_decode(file_get_contents('users.json'), true) ?? [];
 
-    // Pega a matrícula do DONO da página (via URL ?id=...)
-    // Se não houver 'id' na URL, assume que o aluno está vendo o próprio perfil
-    $matricula_perfil = $_GET['id'] ?? $matricula_logada;
-    $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
+// Pega a matrícula de quem está LOGADO (para a navbar/saudação)
+$matricula_logada = $_SESSION['matricula'];
+$nome_logado = $users[$matricula_logada]['name'] ?? 'Usuário';
 
-    $matricula_logada = $_SESSION['matricula'];
-    $matricula_perfil = $_GET['id'] ?? $matricula_logada;
+// Pega a matrícula do DONO da página (via URL ?id=...)
+// Se não houver 'id' na URL, assume que o aluno está vendo o próprio perfil
+$matricula_perfil = $_GET['id'] ?? $matricula_logada;
+$student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
 
-    // Verifica se o usuário logado é o dono da página
-    $is_own_profile = ($matricula_logada === $matricula_perfil);
-    $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
+$matricula_logada = $_SESSION['matricula'];
+$matricula_perfil = $_GET['id'] ?? $matricula_logada;
+
+// Verifica se o usuário logado é o dono da página
+$is_own_profile = ($matricula_logada === $matricula_perfil);
+$student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,17 +75,17 @@
     <section class="seus_prof">
 
         <h2>Seus Professores</h2>
-        <a href="classroom.php?id=professor123"> 
-            <div class="pagina-prof">
-                <img src="assets/images/one.jpg">
-                <div class="prof-info">
-                    <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
+        <a href="classroom.php?id=professor123">
+            <div class="profe">
+                <div class="pagina-prof">
+                    <img src="assets/images/one.jpg">
+                    <div class="prof-info">
+                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
+                    </div>
                 </div>
             </div>
-            
-            
         </a>
-        
+
     </section>
 
     <section class="seu_calendario">
@@ -93,9 +93,9 @@
 
         <div class="calendario">
             <div class="topo_calendario">
-                <span><-</span>
-                <strong>Março 2026</strong>
-                <span>-></span>
+                <span><-< /span>
+                        <strong>Março 2026</strong>
+                        <span>-></span>
             </div>
 
             <div class="semana">
