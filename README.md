@@ -1,5 +1,5 @@
-<h1>PIPA<br>
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)</h1>
+# PIPA  
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
 <h1>Description</h1>
 This integrative project aims to apply the knowledge acquired throughout the technical 
