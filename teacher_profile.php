@@ -96,7 +96,7 @@ $disciplina = $users[$id_professor]['materia'] ?? 'Desenvolvimento de Sistemas';
             popup.style.display = popup.style.display === 'grid' ? 'none' : 'grid';
         }
     </script>
-    <?php include 'footer.php'; ?>
+    <?php include 'components/footer.php'; ?>
 </body>
 
 </html>

@@ -9,17 +9,10 @@ body {
     margin: 0;
 }
 
-.banner {
-    height: 120px;
+.banner1 {
+    
+    height: 220px;
     background: linear-gradient(90deg, #60c3b1, #5aaea3);
-}
-
-.perfil_aluno {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 30px 50px;
-    background: #ffffff;
 }
 
 .avatar {
@@ -28,15 +21,15 @@ body {
     border-radius: 50%;
 }
 
-.nome {
-    font-size: 28px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+#apresentacao {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    margin: -40px 50px 30px 50px;
 }
 
 .sair {
-    margin-left: 75%;
     color: red;
     text-decoration: none;
     font-size: 14px;
@@ -83,55 +76,37 @@ body {
     object-fit: cover;
 }
 
-.seu_calendario {
-    background: white;
-    margin: 30px 50px;
-    padding: 30px;
+/* Container do Calendário com as margens de 50px e visual compacto */
+#calendar {
+    background-color: white;
+    margin: 30px 50px; 
+    padding: 20px;
     border: 1px solid #ccc;
     border-radius: 6px;
+    font-size: 0.85em; /* Fonte reduzida para ser mais compacto */
 }
 
-.seu_calendario h2 {
-    text-align: center;
-    margin-bottom: 25px;
+/* Ajustes de espaçamento interno do FullCalendar */
+.fc .fc-toolbar-title {
+    font-size: 1.1em !important;
 }
 
-.calendario {
-    border: 1px solid #ccc;
+.fc .fc-button {
+    padding: 0.3em 0.5em !important;
+    font-size: 0.85em !important;
 }
 
-.topo_calendario {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background: #ffffff;
+.fc .fc-daygrid-day-frame {
+    min-height: 70px !important; /* Altura das células reduzida */
 }
 
-.semana,
-.dias {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
+/* Feedback visual: muda o cursor para 'mãozinha' nos dias clicáveis */
+.fc .fc-daygrid-day {
+    cursor: pointer;
 }
 
-.semana div {
-    padding: 10px;
-    background: #ffffff;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid #ccc;
-}
-
-.dia {
-    height: 80px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    font-size: 14px;
-}
-
-.dia-m {
-    color: #ccc;
-    height: 80px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    font-size: 14px;
+/* Opcional: Adiciona um leve realce ao passar o mouse para reforçar o clique */
+.fc .fc-daygrid-day:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.2s ease;
 }
