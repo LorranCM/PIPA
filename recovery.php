@@ -49,9 +49,8 @@
 
         <form action="" method="POST" class="form-login">
             <div class="container-login">
-                <h1>Portal de Informação Professor-Aluno</h1>
+                <h1>Recuperação de Senha</h1>
                 <div class="container-inputs">
-                    <h3>Recuperação de Senha</h3>
                     <?php if ($error_message): ?>
                         <p style="color: red;"><?php echo $error_message; ?></p>
                     <?php endif; ?>

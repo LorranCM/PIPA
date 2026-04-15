@@ -1,128 +1,169 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@100;400;900&display=swap');
 
-.contact {
-    flex: 1;
-}
-
-.social-media {
-    flex: 1;
-}
-
-.error-box {
-    background-color: #ffcccc;
-    color: #cc0000;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    text-align: center;
-    font-size: 0.9em;
-    border: 1px solid #cc0000;
-}
-
+/* 1. Configurações Globais e Fundo */
 body {
-    font-family: "Encode Sans";
-    background-color: #2E8E5A;
+    font-family: "Encode Sans", sans-serif;
+    /* Degradê radial do fundo conforme o objetivo */
+    background: linear-gradient(
+    180deg, 
+    rgba(25, 56, 36, 1) 0%, 
+    rgb(38, 84, 54) 10%,   /* Mantém escuro até 20% */
+    rgba(64, 141, 92, 1) 50%,  /* Centro claro */
+    rgb(38, 84, 54) 80%,   /* Volta a ser escuro em 80% */
+    rgba(25, 56, 36, 1) 100%
+    ); 
     margin: 0;
+    min-height: 100vh;
+    display: block; /* Garante que a navbar fique no topo e footer embaixo */
 }
 
-.side-image {
-    max-width: 30%;
-    height: auto;
-    object-fit: cover;
-    margin-right: 2rem;
-}
-
+/* 2. Área Central (Imagem + Formulário) */
 .page-content {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* image left, form right */
-    width: 100%;
-    gap: 2rem;
-    padding: 2rem;
+    justify-content: center;
+    gap: 5rem; /* Espaço entre o rapaz da foto e o card de login */
+    padding: 4rem 2rem;
     box-sizing: border-box;
+    min-height: calc(100vh - 160px); /* Ajuste para não colidir com header/footer */
 }
 
+.side-image {
+    max-width: 650px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 3. O Card de Login */
 .form-login {
     background-color: #FAFAFA;
-    padding: 4em 2em 60px;
-    margin-top: 8rem;
-    border-radius: 20px;
-    align-items: center;
-    box-shadow: 2px 2px 8px #272727;
+    padding: 3.5em;
+    border-radius: 25px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.4);
     color: black;
-    /* wider form and center horizontally */
-    max-width: 700px;
-    width: 50%;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 580px; /* Largura ideal para legibilidade */
     box-sizing: border-box;
-    /* removed fixed right margin */
-}
-
-.button-login {
-    background-color: #00000000;
-    border: 2px solid #2E8E5A;
-    text-decoration: none;
-    border-radius: 12px;
-    margin-block: 1em;
-    padding: 1em 1.2em;
-    font-weight: bold;
-    font-size: 1em;
-    color: #2E8E5A;
-    display: inline-block;
-    position: relative;
-    transition: all 0.3s;
-    width: 10em;    
-}
-
-.button-login:hover {
-    background-color: #2d8053;
-    transform: scale(1.1);
-    transition: all 0.4s;
-    cursor: pointer;
-    color: white;
 }
 
 .container-login {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0;
 }
 
+/* Título "Login" com fonte bem grossa */
+.container-login h1 {
+    font-family: "Encode Sans Expanded", sans-serif;
+    font-size: 3.2em;
+    font-weight: 450; 
+    margin: 0 0 0.6em 0;
+    color: #000;
+    letter-spacing: -1px;
+}
+
+/* 4. Inputs e Legibilidade */
 .container-inputs {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;   /* left-align input elements */
-    width: 100%;              /* span full form width */
-}
-
-.container-inputs input {
-    width: 100%;              /* inputs fill the container */
-    box-sizing: border-box;
-}
-
-.container-inputs > div:has(input[type="checkbox"]) {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    width: auto;              /* only as wide as needed */
-}
-
-.container-inputs > div:has(input[type="checkbox"]) label {
-    white-space: nowrap;      /* prevent label from wrapping */
+    align-items: flex-start;
 }
 
 .input-text {
-    margin-bottom: 0.5em;
-    width: 20em;
+    width: 100%;
+    margin-bottom: 1.5em;
+}
+
+.input-text label {
+    color: #777;
+    font-size: 1em;
+    font-weight: 500;
+    margin-bottom: 0.4em;
+    display: block;
 }
 
 .input-text input {
-    border-radius: 5px;
-    height: 2.2em;
-    border-width: 1px;
+    width: 100%;
+    height: 48px; /* Altura maior para melhor legibilidade */
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    padding: 0 15px;
+    font-size: 1.1em;
+    font-family: "Encode Sans", sans-serif;
+    box-sizing: border-box;
+    outline-color: #2E8E5A;
+}
+
+/* Checkbox "Lembre de mim" */
+.container-inputs div:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin-bottom: 1.5em;
+}
+
+.container-inputs label[for="remember"] {
+    font-size: 0.95em;
+    color: #555;
+    cursor: pointer;
+}
+
+/* 5. Botão "Entrar" */
+.button-login {
+    background-color: transparent;
+    border: 2.5px solid #2E8E5A;
+    border-radius: 15px;
+    color: #2E8E5A;
+    font-size: 1.4em;
+    font-weight: 800; /* Fonte grossa no botão */
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    padding: 0.7em 0;
+    margin-top: 1em;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: block; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button-login:hover {
+    background-color: #2E8E5A;
+    color: white;
+    font-size: 1.45em;
+}
+
+/* 6. Links de Rodapé do Card */
+.container-inputs p {
+    font-size: 0.9em;
+    color: #888;
+    margin: 0.5em 0;
+    width: 100%;
 }
 
 .container-inputs a {
-    align-self: center;
+    color: #3498db;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.container-inputs a:hover {
+    text-decoration: underline;
+}
+
+/* Ajustes para o Erro */
+.error-box {
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #f87171;
+    box-sizing: border-box;
 }
