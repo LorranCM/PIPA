@@ -38,97 +38,53 @@ $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
     <title>PIPA</title>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'pt-br',
 
-    document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'pt-br',
-        
-        // Mantém o calendário compacto (sem espaços vazios)
-        height: 'auto', 
-        
-        // Função que detecta o clique no dia
-        dateClick: function(info) {
-            // Pop-up simples com a data e botão de OK (padrão do navegador)
-            alert('Data selecionada: ' + info.dateStr);
-        },
+                // Mantém o calendário compacto (sem espaços vazios)
+                height: 'auto',
 
-        // Personalização opcional dos botões do topo
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth'
-        }
-    });
-    calendar.render();
-    });
+                // Função que detecta o clique no dia
+                dateClick: function(info) {
+                    // Pop-up simples com a data e botão de OK (padrão do navegador)
+                    alert('Data selecionada: ' + info.dateStr);
+                },
 
+                // Personalização opcional dos botões do topo
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth'
+                }
+            });
+            calendar.render();
+        });
     </script>
 </head>
 
 <body>
     <?php include 'components/navbar.php'; ?>
 
-    <section class="banner">
-        <section class="banner1"></section>
-
-        <img src="assets/images/avatar_aluno.jpg" alt="" class="avatar">
-    </section>
-
-    <section id="apresentacao">
-
-        <div id="texto-apresentacao">
-            <?php if ($is_own_profile): ?>
-                <h1><?php echo $student_name; ?></h1>
-            <?php else: ?>
-                <h1>Perfil de <?php echo $student_name; ?></h1>
-            <?php endif; ?>
-
-            <p class="sair">sair</p>
-            
+    <section class="topo">
+        <div class="perfil">
+            <img src="assets/images/avatar_aluno.jpg" alt="perfil">
         </div>
-        
     </section>
 
-    <section class="seus_prof">
+    <section class="container">
+        <h1>Bem vindo, AlunoX! <span class="logout"><a href="login.php">Sair</a></span></h1>
 
-        <h2>Seus Professores</h2>
-
-        <a href="classroom.php?id=professor123">
-            <div class="professores">
-                <div class="pagina-prof">
-                    <img src="assets/images/one.jpg">
-                    <div class="prof-info">
-                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/one.jpg">
-                    <div class="prof-info">
-                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/one.jpg">
-                    <div class="prof-info">
-                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/one.jpg">
-                    <div class="prof-info">
-                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
-                <div class="pagina-prof">
-                    <img src="assets/images/one.jpg">
-                    <div class="prof-info">
-                        <strong>Professor Sobrenome</strong> <span>Disciplina: xxxx II</span>
-                    </div>
-                </div>
+        <div class="salas">
+            <h2>Suas salas</h2>
+            <div class="cards">
+                <div class="card">PIPA ID<br><small>Nome Professor</small></div>
+                <div class="card">PIPA ID<br><small>Nome Professor</small></div>
+                <div class="card">PIPA ID<br><small>Nome Professor</small></div>
             </div>
-        </a>
+        </div>
 
     </section>
 
@@ -197,7 +153,23 @@ $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
         </div>
     </section> -->
 
-    <?php include 'components/footer.php'; ?>
+    <section class="footer">
+        <div class="box">
+            <strong>Carteirinha PIPA</strong>
+            <br><br>
+            Aluno<br>
+            Semestre<br>
+            Curso
+        </div>
+
+        <div class="contato">
+            <strong>Contato institucional</strong><br><br>
+            Email
+            <input type="text" placeholder="xxxx@xxx.com">
+            Telefone
+            <input type="text" placeholder="(27) 99999-9999">
+        </div>
+    </section>
 
     <script>
         function togglePopup() {
