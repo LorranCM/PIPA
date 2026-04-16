@@ -107,7 +107,7 @@ $horario = $teacher_data['horario'] ?? "Segundas e Quartas, 10:00 - 12:40";
                 <?php if ($is_owner): ?>
                     <button class="btn btn-edit" onclick="openModal()"> Alterar Horário da Aula</button>
                 <?php elseif ($user_role === 'student'): ?>
-                    <button class="btn btn-schedule" onclick="alert('Aula agendada com sucesso!')">Agendar Aula Particular</button>
+                    <button class="btn btn-schedule" onclick="alert('Aula agendada com sucesso!')">Agendar Atendimento</button>
                 <?php endif; ?>
             </div>
         </div>

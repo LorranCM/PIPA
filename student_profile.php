@@ -7,21 +7,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $users = json_decode(file_get_contents('users.json'), true) ?? [];
 
-// Pega a matrícula de quem está LOGADO (para a navbar/saudação)
+// Pega a matrícula de quem está LOGADO
 $matricula_logada = $_SESSION['matricula'];
-$nome_logado = $users[$matricula_logada]['name'] ?? 'Usuário';
 
-// Pega a matrícula do DONO da página (via URL ?id=...)
-// Se não houver 'id' na URL, assume que o aluno está vendo o próprio perfil
-$matricula_perfil = $_GET['id'] ?? $matricula_logada;
-$student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
-
-$matricula_logada = $_SESSION['matricula'];
+// Pega a matrícula do DONO da página (via URL) ou assume que é o próprio logado
 $matricula_perfil = $_GET['id'] ?? $matricula_logada;
 
 // Verifica se o usuário logado é o dono da página
 $is_own_profile = ($matricula_logada === $matricula_perfil);
 $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
+
+// --- NOVA LÓGICA: FILTRAR PROFESSORES PARA AS SALAS ---
+$teachers = array_filter($users, function ($user) {
+    return isset($user['role']) && $user['role'] === 'teacher';
+});
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +34,7 @@ $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>PIPA</title>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
     <script>
@@ -74,102 +74,59 @@ $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
         </div>
     </section>
 
-    <section class="container">
-        <h1>Bem vindo, AlunoX! <span class="logout"><a href="login.php">Sair</a></span></h1>
-
-        <div class="salas">
-            <h2>Suas salas</h2>
-            <div class="cards">
-                <div class="card">PIPA ID<br><small>Nome Professor</small></div>
-                <div class="card">PIPA ID<br><small>Nome Professor</small></div>
-                <div class="card">PIPA ID<br><small>Nome Professor</small></div>
+    
+    <section class="content">
+        <h1>
+            <?php if ($is_own_profile): ?>
+                Olá, <?php echo $student_name; ?>
+            <?php else: ?>
+                <?php echo ($disciplina ?? "Perfil") . " - " . $student_name; ?>
+            <?php endif; ?>
+            <span class="logout">
+                <a href="login.php">Sair</a>
+            </span>
+        </h1>
+        <div class="container">
+            <div class="salas">
+                <h2>Suas salas</h2>
+                <div class="cards">
+                    <?php foreach ($teachers as $id_professor => $dados_professor): ?>
+                        <a href="classroom.php?id=<?php echo $id_professor; ?>" class="sala-link">
+                            <div class="card">
+                                <?php echo $dados_professor['materia'] ?? 'Disciplina'; ?><br>
+                                <small><?php echo $dados_professor['name']; ?></small>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                    <?php if (empty($teachers)): ?>
+                        <p>Nenhuma sala disponível no momento.</p>
+                    <?php endif; ?>
+                </div>
             </div>
+        </section>
+        <div class="container">
+            <div id='calendar'></div>
         </div>
-
-    </section>
-
-    <div id='calendar'></div>
-    <!-- <section class="seu_calendario">
-        <h2>Seu Calendário</h2>
-
-        <div class="calendario">
-            <div class="topo_calendario">
-                <span><-</span>
-                        <strong>Março 2026</strong>
-                        <span>-></span>
+        <section class="carteirinha">
+            <div class="card-wrapper">
+                <strong>Carteirinha PIPA</strong>
+                <div class="box">
+                    Aluno<br>
+                    Semestre<br>
+                    Curso
+                </div>
             </div>
-
-            <div class="semana">
-                <div>Dom</div>
-                <div>Seg</div>
-                <div>Ter</div>
-                <div>Qua</div>
-                <div>Qui</div>
-                <div>Sex</div>
-                <div>Sáb</div>
+            <div class="contato">
+                <strong>Contato institucional</strong><br><br>
+                Email
+                <div class="box1">
+                    <input type="text" placeholder="xxxx@xxx.com" disabled>
+                    Telefone
+                    <input type="text" placeholder="(27) 99999-9999">
+                </div>
             </div>
-
-            <div class="dias">
-                <div class="dia">1</div>
-                <div class="dia">2</div>
-                <div class="dia">3</div>
-                <div class="dia">4</div>
-                <div class="dia">5</div>
-                <div class="dia">6</div>
-                <div class="dia">7</div>
-
-                <div class="dia">8</div>
-                <div class="dia">9</div>
-                <div class="dia">10</div>
-                <div class="dia">11</div>
-                <div class="dia">12</div>
-                <div class="dia">13</div>
-                <div class="dia">14</div>
-
-                <div class="dia">15</div>
-                <div class="dia">16</div>
-                <div class="dia">17</div>
-                <div class="dia">18</div>
-                <div class="dia">19</div>
-                <div class="dia">20</div>
-                <div class="dia">21</div>
-
-                <div class="dia">22</div>
-                <div class="dia">23</div>
-                <div class="dia">24</div>
-                <div class="dia">25</div>
-                <div class="dia">26</div>
-                <div class="dia">27</div>
-                <div class="dia">28</div>
-
-                <div class="dia">29</div>
-                <div class="dia">30</div>
-                <div class="dia">31</div>
-                <div class="dia-m">01</div>
-                <div class="dia-m">02</div>
-                <div class="dia-m">03</div>
-                <div class="dia-m">04</div>
-            </div>
-        </div>
-    </section> -->
-
-    <section class="footer">
-        <div class="box">
-            <strong>Carteirinha PIPA</strong>
-            <br><br>
-            Aluno<br>
-            Semestre<br>
-            Curso
-        </div>
-
-        <div class="contato">
-            <strong>Contato institucional</strong><br><br>
-            Email
-            <input type="text" placeholder="xxxx@xxx.com">
-            Telefone
-            <input type="text" placeholder="(27) 99999-9999">
-        </div>
-    </section>
+        </section>
+    </div>
 
     <script>
         function togglePopup() {

@@ -36,67 +36,120 @@ $disciplina = $users[$id_professor]['materia'] ?? 'Desenvolvimento de Sistemas';
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'pt-br',
+
+                // Mantém o calendário compacto (sem espaços vazios)
+                height: 'auto',
+
+                // Função que detecta o clique no dia
+                dateClick: function(info) {
+                    // Pop-up simples com a data e botão de OK (padrão do navegador)
+                    alert('Data selecionada: ' + info.dateStr);
+                },
+
+                // Personalização opcional dos botões do topo
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth'
+                }
+            });
+            calendar.render();
+        });
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 
 <body>
 
-    <nav id="navbar">
-        <ul>
-            <li id="navbar-PIPA-clickable">
-                <a href="">
-                    <img src="assets/icons/kite-origami-paper-svgrepo-com.svg" alt="icone do pipa">PIPA
-                </a>
-            </li>
-            <li id="navbar-3-bars" onclick="togglePopup()">
-                <img src="assets/icons/bars-svgrepo-com.svg" alt="3-bars">
-            </li>
-        </ul>
-        <div id="popup-menu" class="popup-menu">
-            <ul>
-                <li><a href="teacher_profile.php">Início</a></li>
-                <li><a href="teacher_information.php">Suas configurações</a></li>
-                <li><a href="login.php">Sair</a></li>
-            </ul>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <?php include 'components/navbar.php'; ?>
+
+    <section class="topo">
+        <div class="perfil">
+            <img src="assets/images/avatar_aluno.jpg" alt="perfil">
         </div>
-    </nav>
-
-    <section id="banner" class="banner">
     </section>
 
-    <section class="perfil_aluno">
+    <div class="container my-5">
+        <section class="teacher">
+            <h2>Página do Professor</h2>
+        </section>
 
-        <img src="assets/images/avatar_aluno.jpg" class="avatar" alt="Foto de perfil">
-            <?php if ($is_own_profile): ?>
-        <h1>Olá, <?php echo $teacher_name; ?></h1>
-        <?php else: ?>
-        <h1><?php echo $disciplina . " - " . $teacher_name; ?></h1>
-        <?php endif; ?>
-        <a href="login.php" class="sair">Sair</a>
+        <section class="container">
 
-    </section>
-            
-    <section class="seus_prof">
-        <h2>Suas Turmas</h2>
+            <div class="icons">
+                <div id="btn-grid"><img src="assets/icons/list-paper-school-svgrepo-com.svg" alt=""></div>
+                <div id="btn-doc"><img src="assets/icons/list-paper-school-svgrepo-com.svg" alt=""></div>
+            </div>
 
-        <a href="classroom.php?id=<?php echo $matricula_logada; ?>">
-            <div class="pagina-prof">
-                <img src="assets/images/one.jpg">
-                <div class="prof-info">
-                    <strong>Programação Web I</strong> <span>Módulo: xxx</span>
+            <div id="area-documentos" class="area">
+                <div class="grid">
+                    <div class="box add" id="btn-add">+</div>
                 </div>
             </div>
-        </a>
 
-    </section>
+            <div id="area-add" class="area">
+                <h3>Adicionar documento</h3>
+                <input type="file">
+            </div>
 
-    
+            <div id="area-calendar" class="area">
+                <div id='calendar'></div>
+                <div class="card-wrapper">
+                    <strong>Carteirinha PIPA</strong>
+                    <div class="box">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+
     <script>
+        const areaDocs = document.getElementById("area-documentos");
+        const areaAdd = document.getElementById("area-add");
+        const areaCalendar = document.getElementById("area-calendar");
+
+        function esconderTudo() {
+            areaDocs.classList.remove("ativa");
+            areaAdd.classList.remove("ativa");
+            areaCalendar.classList.remove("ativa");
+        }
+
+        // função toggle das áreas
+        function toggleArea(area) {
+            const jaAtiva = area.classList.contains("ativa");
+
+            esconderTudo();
+
+            if (!jaAtiva) {
+                area.classList.add("ativa");
+            }
+        }
+
+        // eventos
+        document.getElementById("btn-doc").addEventListener("click", () => {
+            toggleArea(areaCalendar);
+        });
+
+        document.getElementById("btn-grid").addEventListener("click", () => {
+            toggleArea(areaDocs);
+        });
+
+        // popup
         function togglePopup() {
             var popup = document.getElementById('popup-menu');
             popup.style.display = popup.style.display === 'grid' ? 'none' : 'grid';
         }
     </script>
-    <?php include 'components/footer.php'; ?>
 </body>
 
 </html>

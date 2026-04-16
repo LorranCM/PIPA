@@ -106,6 +106,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="password_confirmation">Confirmar Senha</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirmar a senha">
                     </div>
+                    <div class="show-password-container">
+                        <input type="checkbox" id="show-all-passwords">
+                        <label for="show-all-passwords">Mostrar senhas</label>
+                    </div>
 
                     <!-- NOVO: Campo de seleção de tipo de usuário -->
                     <div class="input-text" style="margin-top: 10px;">
@@ -129,5 +133,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <link rel="stylesheet" href="styles/footer.css">
 <?php include 'components/footer.php'; ?>
+
+<script>
+    const checkbox = document.getElementById('show-all-passwords');
+    const passField = document.getElementById('password');
+    const confField = document.getElementById('password_confirmation');
+
+    checkbox.addEventListener('change', function() {
+        const type = this.checked ? 'text' : 'password';
+        passField.type = type;
+        confField.type = type;
+    });
+</script>
+
 </body>
 </html>

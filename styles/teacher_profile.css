@@ -9,196 +9,132 @@ body {
     margin: 0;
 }
 
-.banner {
+.topo {
+    background: linear-gradient(to right, #2f6f4f, #3c8a60);
+    height: 200px;
+    margin-top: 80px;
+}
+
+.perfil {
+    padding: 44px;
+    bottom: -50px;
+    left: 30px;
+}
+
+.perfil img {
+    width: 120px;
     height: 120px;
-    background: linear-gradient(90deg, #60c3b1, #5aaea3);
-}
-
-.perfil_aluno {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 30px 50px;
-    background: #ffffff;
-}
-
-.avatar {
-    width: 80px;
-    height: 80px;
     border-radius: 50%;
+    border: 4px solid white;
 }
 
-.nome {
-    font-size: 28px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.sair {
-    margin-left: 75%;
-    color: red;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.seus_prof {
-    background: white;
-    margin: 30px 50px;
-    padding: 30px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-.seus_prof h2 {
+.teacher h2 {
     text-align: center;
+    margin-top: 50px;
     margin-bottom: 25px;
 }
 
-.seus_prof a {
+.icons {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.icons img {
+    width: 100px;
+}
+
+.area {
+    display: none;
+}
+
+.area.ativa {
     display: block;
-    margin-top: 15px;
-    color: #000000;
-    text-decoration: none;
 }
 
-.professores {
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.box {
+    background: #6f9f89;
+    height: 100px;
+    color: white;
     display: flex;
-    gap: 20px;
     justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
-.pagina-prof {
-    background: #f8f8f8;
-    width: 260px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #ccc;
+.add {
+    font-size: 40px;
 }
 
-.pagina-prof img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-} 
-
-/*Div's teacher_profile */
-
-.boxdocs {
+.carteirinha {
     display: flex;
-    gap: 20px;
     justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
-.pdf {
-    background: #f8f8f8;
-    width: 260px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-}
-
-.prof-info {
+.box {
+    background: #6f9f89;
+    width: 400px;
+    height: 185px;
+    color: white;
     padding: 15px;
-    font-size: 14px;
-}
-
-.prof-info span {
-    display: block;
-    margin-top: 5px;
-    color: #666;
-}
-
-.calendario_do_professor {
-    background: white;
-    margin: 30px 50px;
-    padding: 30px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-.calendario_do_professor h2 {
-    text-align: center;
+    border-radius: 10px;
     margin-bottom: 25px;
 }
 
-.perfil_professor {
+.card-wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding: 30px 50px;
-    background: #e9e9e9;
 }
 
-.footer, #footer {
-    background-color: #2D322F;
-    padding: 2em;
-    margin-top: 10em;
-    color: white;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    gap: 3em;
-    align-items: flex-start;
-}
-
-.contact {
-    flex: 1;
-}
-
-.social-media {
-    flex: 1;
-}
-
-.docs2 {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-}
-
-.card {
-    background: #dcdcdc;
-    padding: 10px;
-    border-radius: 4px;
-    width: 200px;
-}
-
-.card h3 {
-    text-align: center;
+.card-wrapper strong {
     margin-bottom: 10px;
+    font-size: 18px;
 }
 
-.card ul {
-    list-style: none;
-    padding: 0;
+/* Container do Calendário com as margens de 50px e visual compacto */
+#calendar {
+    background-color: white;
+    margin: 30px 50px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.85em;
+    /* Fonte reduzida para ser mais compacto */
 }
 
-.card li {
-    background: #eee;
-    margin: 6px 0;
-    padding: 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-radius: 3px;
+/* Ajustes de espaçamento interno do FullCalendar */
+.fc .fc-toolbar-title {
+    font-size: 1.1em !important;
 }
 
-.footer {
-    background-color: #2D322F;
-    padding: 2em;
-    margin-top: 10em;
-    color: white;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    gap: 3em;
-    align-items: flex-start;
+.fc .fc-button {
+    padding: 0.3em 0.5em !important;
+    font-size: 0.85em !important;
 }
 
-.contact {
-    flex: 1;
+.fc .fc-daygrid-day-frame {
+    min-height: 70px !important;
+    /* Altura das células reduzida */
 }
 
-.social-media {
-    flex: 1;
+/* Feedback visual: muda o cursor para 'mãozinha' nos dias clicáveis */
+.fc .fc-daygrid-day {
+    cursor: pointer;
+}
+
+/* Opcional: Adiciona um leve realce ao passar o mouse para reforçar o clique */
+.fc .fc-daygrid-day:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.2s ease;
 }

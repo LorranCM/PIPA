@@ -33,9 +33,11 @@
                         <label for="password">Senha</label>
                         <input type="password" name="password" id="password" class="password" placeholder="Senha" required>
                     </div>
-                    <div>
-                        <input type="checkbox" name="remember" id="remember" class="remember">
-                        <label for="remember">Lembre de mim</label>
+                   
+
+                    <div class="show-password-container">
+                        <input type="checkbox" id="show-password">
+                        <label for="show-password">Mostrar senha</label>
                     </div>
                     <p><a href="recovery.php">Esqueci minha senha</a></p>
                     <p>Primeiro acesso? <a href="register.php">Registrar</a></p>
@@ -47,5 +49,16 @@
     </div>
 
     <?php include 'components/footer.php'; ?>
+    <script>
+    // Seleciona os elementos
+    const passwordField = document.getElementById('password');
+    const showPasswordCheckbox = document.getElementById('show-password');
+
+    // Escuta o evento de clique na checkbox
+    showPasswordCheckbox.addEventListener('change', function() {
+        // Se estiver marcado, muda para 'text', se não, volta para 'password'
+        passwordField.type = this.checked ? 'text' : 'password';
+    });
+</script>
 </body>
 </html>
