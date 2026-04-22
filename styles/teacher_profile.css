@@ -21,8 +21,17 @@ body {
     left: 30px;
 }
 
+
 .perfil img {
     width: 120px;
+}
+.menu {
+    font-size: 22px;
+    cursor: pointer;
+    margin-right: 2%;
+}
+
+.banner {
     height: 120px;
     border-radius: 50%;
     border: 4px solid white;

@@ -7,68 +7,34 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $users = json_decode(file_get_contents('users.json'), true) ?? [];
 
-// Matrícula de quem está acessando
-$matricula_logada = $_SESSION['matricula'];
-
-// Matrícula do professor DONO da sala sendo visitada
-// Se não houver ID na URL, mostra o perfil do próprio professor logado
-$id_professor = $_GET['id'] ?? $matricula_logada;
-$teacher_name = $users[$id_professor]['name'] ?? 'Professor';
-
+// Identificação do usuário e do perfil visitado
 $matricula_logada = $_SESSION['matricula'];
 $id_professor = $_GET['id'] ?? $matricula_logada;
 
 $is_own_profile = ($matricula_logada === $id_professor);
 $teacher_name = $users[$id_professor]['name'] ?? 'Professor';
-
-// Simulando a disciplina (você pode adicionar "materia" no users.json depois)
 $disciplina = $users[$id_professor]['materia'] ?? 'Desenvolvimento de Sistemas';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página do professor</title>
+    <title>Página do Professor - <?php echo $teacher_name; ?></title>
+    
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles/teacher_profile.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'pt-br',
-
-                // Mantém o calendário compacto (sem espaços vazios)
-                height: 'auto',
-
-                // Função que detecta o clique no dia
-                dateClick: function(info) {
-                    // Pop-up simples com a data e botão de OK (padrão do navegador)
-                    alert('Data selecionada: ' + info.dateStr);
-                },
-
-                // Personalização opcional dos botões do topo
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth'
-                }
-            });
-            calendar.render();
-        });
-    </script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 
 <body>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <?php include 'components/navbar.php'; ?>
 
     <section class="topo">
@@ -85,8 +51,12 @@ $disciplina = $users[$id_professor]['materia'] ?? 'Desenvolvimento de Sistemas';
         <section class="container">
 
             <div class="icons">
-                <div id="btn-grid"><img src="assets/icons/list-paper-school-svgrepo-com.svg" alt=""></div>
-                <div id="btn-doc"><img src="assets/icons/list-paper-school-svgrepo-com.svg" alt=""></div>
+                <div id="btn-grid">
+                    <img src="assets/icons/list-paper-school-svgrepo-com.svg" alt="Documentos">
+                </div>
+                <div id="btn-doc">
+                    <img src="assets/icons/calendar-days-svgrepo-com.svg" alt="Calendário">
+                </div>
             </div>
 
             <div id="area-documentos" class="area">
@@ -97,58 +67,91 @@ $disciplina = $users[$id_professor]['materia'] ?? 'Desenvolvimento de Sistemas';
 
             <div id="area-add" class="area">
                 <h3>Adicionar documento</h3>
-                <input type="file">
+                <input type="file" class="form-control">
             </div>
 
             <div id="area-calendar" class="area">
                 <div id='calendar'></div>
-                <div class="card-wrapper">
+                <div class="card-wrapper mt-4">
                     <strong>Carteirinha PIPA</strong>
-                    <div class="box">
-                    </div>
+                    <div class="box"></div>
                 </div>
             </div>
 
         </section>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        // 1. Seleção de elementos
         const areaDocs = document.getElementById("area-documentos");
         const areaAdd = document.getElementById("area-add");
         const areaCalendar = document.getElementById("area-calendar");
 
-        function esconderTudo() {
+        const btnGrid = document.getElementById("btn-grid");
+        const btnDoc = document.getElementById("btn-doc");
+        const btnAdd = document.getElementById("btn-add");
+
+        let calendar; // Variável global para controle do calendário
+
+        // 2. Inicialização do Calendário (Executa quando a página carrega)
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'pt-br',
+                height: 'auto',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth'
+                },
+                dateClick: function(info) {
+                    alert('Data selecionada: ' + info.dateStr);
+                }
+            });
+
+            calendar.render();
+        });
+
+        // 3. Função para resetar visibilidade e estilos
+        function resetEstado() {
             areaDocs.classList.remove("ativa");
             areaAdd.classList.remove("ativa");
             areaCalendar.classList.remove("ativa");
+            
+            btnGrid.classList.remove("selected");
+            btnDoc.classList.remove("selected");
         }
 
-        // função toggle das áreas
-        function toggleArea(area) {
+        // 4. Função principal de troca de visualização
+        function alternarVisualizacao(area, botao) {
             const jaAtiva = area.classList.contains("ativa");
 
-            esconderTudo();
+            resetEstado();
 
             if (!jaAtiva) {
                 area.classList.add("ativa");
+                if (botao) botao.classList.add("selected");
+                
+                // Correção específica para o FullCalendar "amassado"
+                if (area === areaCalendar) {
+                    setTimeout(() => {
+                        if (calendar) {
+                            calendar.render();      // Força o desenho
+                            calendar.updateSize();  // Ajusta o tamanho ao container visível
+                        }
+                    }, 100); 
+                }
             }
         }
 
-        // eventos
-        document.getElementById("btn-doc").addEventListener("click", () => {
-            toggleArea(areaCalendar);
-        });
-
-        document.getElementById("btn-grid").addEventListener("click", () => {
-            toggleArea(areaDocs);
-        });
-
-        // popup
-        function togglePopup() {
-            var popup = document.getElementById('popup-menu');
-            popup.style.display = popup.style.display === 'grid' ? 'none' : 'grid';
-        }
+        // 5. Configuração dos Cliques
+        btnDoc.addEventListener("click", () => alternarVisualizacao(areaCalendar, btnDoc));
+        btnGrid.addEventListener("click", () => alternarVisualizacao(areaDocs, btnGrid));
+        btnAdd.addEventListener("click", () => alternarVisualizacao(areaAdd, null));
     </script>
 </body>
 
