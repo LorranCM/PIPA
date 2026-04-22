@@ -22,8 +22,82 @@ body {
     width: auto;
 }
 
+<<<<<<< Updated upstream
 .menu {
     font-size: 22px;
+=======
+.perfil img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+}
+
+.teacher h2 {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 25px;
+}
+
+/* Container dos ícones - ALINHAMENTO LADO A LADO */
+.icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Espaço entre os ícones */
+    margin-bottom: 30px;
+}
+
+/* Feedback visual para os botões de ícone */
+.icons div {
+    padding: 15px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content; /* Garante que o fundo não ocupe a tela toda */
+}
+
+/* Efeito ao passar o mouse */
+.icons div:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Estado ativo (clicado) */
+.icons div.selected {
+    background-color: rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Ajuste na imagem */
+.icons img {
+    width: 60px; /* Ajuste o tamanho conforme preferir */
+    pointer-events: none;
+}
+
+.area {
+    display: none;
+}
+
+.area.ativa {
+    display: block;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.box {
+    background: #6f9f89;
+    height: 100px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+>>>>>>> Stashed changes
     cursor: pointer;
     margin-right: 2%;
 }
