@@ -1,8 +1,7 @@
-@import url(/colors.css);
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
 
 * {
-    font-family: "Encode Sans";
+    font-family: "Encode Sans", sans-serif;
 }
 
 body {
@@ -10,226 +9,174 @@ body {
     margin: 0;
 }
 
-.banner {
+/* --- CABEÇALHO / TOPO --- */
+.topo {
+    background: linear-gradient(to right, #2f6f4f, #3c8a60);
+    height: 200px;
+    margin-top: 80px;
+}
+
+.perfil {
+    padding: 44px;
+    bottom: -50px;
+    left: 30px;
+}
+
+.perfil img {
+    width: 120px;
     height: 120px;
-    background: linear-gradient(90deg, #60c3b1, #5aaea3);
-}
-
-.perfil_aluno {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 30px 50px;
-    background: #ffffff;
-}
-
-.avatar {
-    width: 80px;
-    height: 80px;
     border-radius: 50%;
+    border: 4px solid white;
 }
 
-.nome {
-    font-size: 28px;
-}
-
-.sair {
-    margin-left: 75%;
-    color: red;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.seus_prof {
+/* --- CONTEÚDO PRINCIPAL --- */
+.content {
     background: white;
-    margin: 30px 50px;
-    padding: 30px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    margin: 5px 20px 20px;
+    padding: 20px;
 }
 
-.seus_prof h2 {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.seus_prof a {
-    display: block;
-    margin-top: 15px;
-    color: #000000;
-    text-decoration: none;
-}
-
-.professores {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.pagina-prof {
-    background: #f8f8f8;
-    width: 260px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-}
-
-.pagina-prof img {
+h1 {
+    display: flex !important;
+    justify-content: space-between; /* Empurra os itens para as extremidades */
+    align-items: center;            /* Alinha verticalmente o texto e o link */
+    margin-bottom: 20px;
     width: 100%;
-    height: 120px;
-    object-fit: cover;
 }
 
-.seu_calendario {
-    background: white;
-    margin: 30px 50px;
-    padding: 30px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+.logout {
+    margin-right: 30px; /* Ajuste este valor para o "respiro" desejado */
 }
 
-.seu_calendario h2 {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.calendario {
-    border: 1px solid #ccc;
-}
-
-.topo_calendario {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background: #ffffff;
-}
-
-.semana, .dias {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-}
-
-.semana div {
-    padding: 10px;
-    background: #ffffff;
-    text-align: center;
+.logout a {
+    color: red !important;
+    font-size: 14px;
+    text-decoration: none;
     font-weight: bold;
-    border: 1px solid #ccc;
 }
 
-.dia {
-    height: 80px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    font-size: 14px;
+.salas h2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.dia-m {
-    color: #ccc;
-    height: 80px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    font-size: 14px;
+/* --- SISTEMA DE CARDS (SALAS) --- */
+.cards {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 25px !important; /* Respiro entre os cards */
+    margin-top: 10px;
+    width: 100%;
 }
 
-/*Div's teacher_profile */
-
-.boxdocs {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.pdf {
-    background: #f8f8f8;
-    width: 260px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-}
-
-.prof-info {
-    padding: 15px;
-    font-size: 14px;
-}
-
-.prof-info span {
+.sala-link {
+    text-decoration: none !important;
+    color: inherit !important;
+    transition: transform 0.2s;
     display: block;
-    margin-top: 5px;
-    color: #666;
 }
 
-.calendario_do_professor {
-    background: white;
+.sala-link:hover {
+    transform: translateY(-5px);
+}
+
+/* Seletor específico para vencer o .card do Bootstrap */
+.cards .card {
+    background-color: #6f9f89 !important;
+    width: 200px !important;
+    min-width: 200px;
+    height: 110px !important;
+    border-radius: 10px !important;
+    border: none !important;
+    color: white !important;
+    padding: 10px;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center;
+}
+
+/* --- CALENDÁRIO (RESET DE ESTILOS BOOTSTRAP) --- */
+#calendar {
+    background-color: white;
     margin: 30px 50px;
-    padding: 30px;
+    padding: 20px;
     border: 1px solid #ccc;
     border-radius: 6px;
+    font-size: 0.85em;
 }
 
-.calendario_do_professor h2 {
-    text-align: center;
-    margin-bottom: 25px;
+/* Remove o azul e o sublinhado que o Bootstrap coloca nos links do calendário */
+#calendar a {
+    text-decoration: none !important;
+    color: inherit !important;
 }
 
-.perfil_professor {
+.fc .fc-daygrid-day {
+    cursor: pointer;
+}
+
+.fc .fc-daygrid-day:hover {
+    background-color: #f0f0f0;
+}
+
+/* --- SEÇÃO CARTEIRINHA E CONTATO --- */
+.carteirinha {
     display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 20px;
-    padding: 30px 50px;
-    background: #e9e9e9;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
-.footer {
-    background-color: #2D322F;
-    padding: 2em;
-    margin-top: 10em;
+.box {
+    background: #6f9f89;
+    width: 400px;
+    max-width: 100%;
+    height: 185px;
     color: white;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.card-wrapper {
     display: flex;
-    gap: 3em;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
 }
 
-.contact {
-    flex: 1;
+.card-wrapper strong {
+    margin-bottom: 10px;
+    font-size: 18px;
 }
 
-.social-media {
-    flex: 1;
+.contato {
+    display: flex;
+    flex-direction: column;
 }
 
-.docs2{
-  display: flex;
-  gap: 20px;
-  padding: 20px;
+.contato strong {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
-.card{
-  background: #dcdcdc;
-  padding: 10px;
-  border-radius: 4px;
-  width: 200px;
+.box1 {
+    display: flex;
+    flex-direction: column;
 }
 
-.card h3{
-  text-align: center;
-  margin-bottom: 10px;
+.contato input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #c3c2c2;
 }
-
-.card ul{
-  list-style: none;
-  padding: 0;
-}
-
-.card li{
-  background: #eee;
-  margin: 6px 0;
-  padding: 6px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 3px;
-}
-

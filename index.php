@@ -1,30 +1,5 @@
 <?php
-    // start session and redirect if already logged in
     session_start();
-    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-        header("Location: student_profile.html");
-        exit;
-    }
-
-    // Variável para mensagem de erro
-    $error_message = "";
-
-    // Processamento do Login
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $matricula = $_POST['matricula'] ?? '';
-        $password = $_POST['password'] ?? '';
-
-        // Validação das credenciais solicitadas
-        if ($matricula === "abc123" && $password === "abc123") {
-            $_SESSION['loggedin'] = true;
-            $_SESSION['matricula'] = $matricula;
-            header("Location: student_profile.html");
-            exit;
-        } else {
-            $error_message = "Matrícula ou senha incorretos.";
-        }
-    }
-
     // compute base URL for assets (strip trailing slash)
     $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 ?>
@@ -32,98 +7,112 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="<?= $base ?>/">
-    <title>PIPA</title>
-    <link rel="stylesheet" href="styles/navbar.css">
-    <link rel="stylesheet" href="styles/login_style.css">
-    <link rel="stylesheet" href="styles/footer.css">
-    <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
+    <link rel="stylesheet" href="colors.css">
+    <link rel="stylesheet" href="styles/landing_style.css">
+    <link rel="stylesheet" href="styles/navbar.css"> <title>PIPA</title>
 </head>
-
 <body>
-    <nav id="navbar">
-        <ul>
-            <li id="navbar-PIPA-clickable"><a href="landing.html"><img src="assets/icons/kite-origami-paper-svgrepo-com.svg"
-                        alt="icone do pipa">PIPA</a></li>
+    <?php include 'components/navbar.php'; ?>
+    <section class="hero">
+        <header>
+            <h1 id="header-title">A organização pessoal do estudante do <strong>Instituto Federal</strong> nunca foi tão
+                fácil</h1>
+            <a href="./login.php" class="select-button">SELECIONAR IF</a>
+            <h3 id="header-description">
+                Uma plataforma didática que conecta professores e alunos, centralizando informações acadêmicas e
+                facilitando a organização do aluno.
+            </h3>
+        </header>
+
+        <figure id="hero-figure1">
+            <img src="assets/images/girl-holding-book.png" alt="figura1">
+            <canvas id="graphic-el-1"></canvas>
+            <canvas id="graphic-el-2"></canvas>
+        </figure>
+
+        <figure id="hero-figure2">
+            <img src="assets/images/five-students-group.png" alt="figura2">
+        </figure>
+
+        <article>
+            <h2 id="article-paragraph">Somos um grupo de 5 programadores, estudantes do <strong>Instituto
+                    Federal</strong> do Espírito Santo - Campus Serra. Atualmente
+                estamos cursando o sexto período de Informática para Internet.</h2>
+        </article>
+
+    </section>
+
+    <section class="section-more-about">
+        <h2>Nossos Objetivos</h2>
+
+        <ul id="objectives-description">
+            <li>
+                <svg width="800px" height="800px" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: none;
+                                stroke-miterlimit: 10;
+                                stroke-width: 1.91px;
+                            }
+                        </style>
+                    </defs>
+                    <line class="cls-1" x1="8.18" y1="22.5" x2="9.14" y2="17.73" />
+                    <line class="cls-1" x1="5.32" y1="22.5" x2="18.68" y2="22.5" />
+                    <rect class="cls-1" x="1.5" y="1.5" width="21" height="16.23" rx="1.91" />
+                    <line class="cls-1" x1="15.75" y1="22.5" x2="14.8" y2="17.73" />
+                    <line class="cls-1" x1="1.5" y1="13.91" x2="22.5" y2="13.91" />
+                </svg>
+                <h3>Organização<br>extra-sala</h3>
+            </li>
+            <li>
+                <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 8V12L14.5 14.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C twenty-one point five zero nine three four three eight two one two one point eight three five six five point eight zero six five five two one point nine four four nine eight"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <h3>Facilidade no Atendimento com Professor</h3>
+            </li>
+            <li>
+                <svg width="800px" height="800px" viewBox="0 0 8.4666669 8.4666669" id="svg8" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#"
+                    xmlns:dc="http://purl.org/dc/elements/1.1/"
+                    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                    xmlns:svg="http://www.w3.org/2000/svg">
+                    <defs id="defs2" />
+                    <g id="layer1" transform="translate(0,-288.53332)">
+                        <path
+                            d="M 5 1 A 1.0000999 1.0000999 0 0 0 4 2 L 4 30 A 1.0000999 1.0000999 0 0 0 5 31 L 27 31 A 1.0000999 1.0000999 0 0 0 28 30 L 28 9 A 1.0000999 1.0000999 0 0 0 27.707031 8.2929688 L 20.707031 1.2929688 A 1.0000999 1.0000999 0 0 0 20 1 L 5 1 z M 6 3 L 19.001953 3 L 19.001953 8.9980469 C 18.99982 9.5505004 19.445584 9.9999878 19.998047 10.001953 L 26 10.001953 L 26 29 L 6 29 L 6 3 z M 21.001953 4.4160156 L 24.587891 8.0019531 L 21.001953 8.0019531 L 21.001953 4.4160156 z "
+                            id="rect996"
+                            style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.99999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+                            transform="matrix(0.26458333,0,0,0.26458333,0,288.53332)" />
+                        <path
+                            d="m 2.8847656,291.70898 a 0.26495432,0.26495432 0 0 0 0.025391,0.5293 h 2.6464844 a 0.26465,0.26465 0 1 0 0,-0.5293 H 2.9101562 a 0.26460981,0.26460981 0 0 0 -0.025391,0 z"
+                            id="path1009"
+                            style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+                        <path
+                            d="m 2.9101562,293.29492 a 0.26465,0.26465 0 1 0 0,0.5293 h 2.6464844 a 0.26465,0.26465 0 1 0 0,-0.5293 z"
+                            id="path1011"
+                            style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+                        <path
+                            d="m 2.9101562,294.88281 a 0.26465,0.26465 0 1 0 0,0.5293 h 2.6464844 a 0.26465,0.26465 0 1 0 0,-0.5293 z"
+                            id="path1013"
+                            style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+                    </g>
+                </svg>
+                <h3>Informações Centralizadas</h3>
+            </li>
         </ul>
-    </nav>
-    <div class="page-content">
-        <img src="assets/images/boy_holding_book.png" alt="menino segurando um livro" class="side-image">
 
-        <form action="" method="POST" class="form-login" id="form-login">
-            <div class="container-login">
-                <h1>Portal de Informação Para Alunos</h1>
-                <div class="container-inputs">
-                    <h3>Login</h3>
+        <a href="./login.php" class="select-button">SELECIONAR IF</a>
 
-                    <?php if (!empty($error_message)): ?>
-                        <div class="error-box"><?= $error_message ?></div>
-                    <?php endif; ?>
+    </section>
 
-                    <div class="input-text">
-                        <label for="matricula">Matrícula</label>
-                        <input type="text" name="matricula" class="matricula" id="matricula" placeholder="Matrícula" required>
-                    </div>
-                    <div class="input-text">
-                        <label for="password">Senha</label>
-                        <input type="password" name="password" class="password" id="password" placeholder="Senha" required>
-                    </div>
-                    <div>
-                        <input type="checkbox" name="remember" class="remember" id="remember"><label for="remember">Lembre de mim</label>
-                    </div>
-                    <p>
-                        <a href="recovery.html">Esqueci minha senha</a>
-                    </p>
-                    <p>Primeiro acesso? <a href="register.html">Registrar</a></p>
-                    
-                    <button type="submit" class="button-login">Acessar</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <footer>
-        <section id="footer-section1">
-            <figure>
-                <svg fill="#FFFFFF" width="800px" height="800px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M33.66,4.6c-.96-.8-2.36-.8-3.32,0L9.86,21.63c-.96,.8-1.19,2.2-.54,3.27L30.45,59.14c.25,.41,.66,.7,1.13,.81,.14,.03,.28,.05,.42,.05,.33,0,.66-.09,.95-.27,.24-.15,.45-.35,.59-.59L54.68,24.9c.66-1.06,.43-2.47-.53-3.27L33.66,4.6Zm-.66,2.05l18.76,15.59h-18.76V6.65Zm-2,0v15.59H12.24L31,6.65Zm-.79,17.59l-9.47,15.34-9.47-15.34H30.21Zm-8.29,17.25l9.09-14.72v29.44l-9.09-14.72Zm11.09,14.76V24.25h19.73l-19.73,32.01Z"/></svg>
-                <h2><strong>PIPA</strong><br>Portal de Informação para alunos</h2>
-            </figure>
-            <div id="contacts-info">
-                <div>
-                    <h2>Fale conosco</h2>
-                    <p><strong>Email:</strong> pipaifes@gmail.com</p>
-                    <p><strong>Telefone:</strong> (11) 1234-5678</p>
-                </div>
-                <div>
-                    <h2>Nos acompanhe</h2>
-                    <ul id="social-media-icon-list">
-                        <li>
-                            <a href="https://www.facebook.com/pipaifes" target="_blank">
-                                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H15V13.9999H17.0762C17.5066 13.9999 17.8887 13.7245 18.0249 13.3161L18.4679 11.9871C18.6298 11.5014 18.2683 10.9999 17.7564 10.9999H15V8.99992C15 8.49992 15.5 7.99992 16 7.99992H18C18.5523 7.99992 19 7.5522 19 6.99992V6.31393C19 5.99091 18.7937 5.7013 18.4813 5.61887C17.1705 5.27295 16 5.27295 16 5.27295C13.5 5.27295 12 6.99992 12 8.49992V10.9999H10C9.44772 10.9999 9 11.4476 9 11.9999V12.9999C9 13.5522 9.44771 13.9999 10 13.9999H12V21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" fill="#FFFFFF"/>
-                                </svg>
-                            </a>
-                        </li>
-                        </ul>
-                </div>
-            </div>
-        </section>
-        <section id="footer-section2">
-            <ul>
-                <li><a href="">Institutos Federais parceiros</a></li>
-                <li><a href="">Método de trabalho</a></li>
-                <li><a href="">Mais funcionalidades</a></li>
-                <li><a href="">Nossa história</a></li>
-            </ul>
-            <div>
-                <p>Av. dos Sabiás, 330 - Morada de Laranjeiras, Serra - ES, 29166-630</p>
-                <p>&copy 2025 - PIPA</p>
-            </div>
-        </section>
-    </footer>
-
+    <?php include 'components/footer.php'; ?>
 </body>
 
 </html>

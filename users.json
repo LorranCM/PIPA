@@ -1,0 +1,42 @@
+{
+    "20232tiimi0209": {
+        "name": "Alvaro Dalmaso Tosta",
+        "email": "alvarodalmaso07@gmail.com",
+        "password": "alvaro1234",
+        "role": "student"
+    },
+    "20232tiimi0195": {
+        "name": "lopes",
+        "email": "polonieuteamo@gmail.com",
+        "password": "oitatu",
+        "role": "student"
+    },
+    "matricula123": {
+        "name": "Aluno Sobrenome",
+        "email": "email@gmail.com",
+        "password": "senha",
+        "role": "student"
+    },
+    "novamatricula": {
+        "name": "Alterado Nome",
+        "email": "alterado123@gmail.com",
+        "password": "SENHAFORTE",
+        "role": "student"
+    },
+    "professor123": {
+        "name": "Professor Rodrigo Silva",
+        "email": "professor123@gmail.com",
+        "password": "prof123",
+        "role": "teacher",
+        "materia": "Programação Web I",
+        "sala_fisica": "Laboratório 208 - Bloco 2",
+        "horario": "Segundas e Quartas, 11:00 - 12:40"
+    },
+    "professor456": {
+        "name": "Profa. Ana Costa",
+        "email": "ana@gmail.com",
+        "password": "prof123",
+        "role": "teacher",
+        "materia": "Redes de Computadores"
+    }
+}

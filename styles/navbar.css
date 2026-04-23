@@ -1,21 +1,38 @@
+/* navbar.css */
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
+
+/* Reset de conflito para garantir distância 0 */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 #navbar {
-    background-color:var(--white);
-    color: var(--black);
+    background-color: var(--white);
     padding-block: 3vh;
     position: relative;
     width: 100%;
+    display: block;
+    margin: 0; 
+    top: 0;
+    vertical-align: top;
+    float: left; /* Ajuda a ocupar o espaço do topo sem gaps de linha */
 }
 
-#navbar ul{
-    display: flex;
-    list-style-type: none;
-    width: 100%;
+#navbar ul {
     margin: 0;
     padding: 0;
-    place-items: center;
+    display: flex;
+    list-style-type: none;
+    align-items: center; /* Corrigido de place-items para melhor suporte */
+    justify-content: space-between;
 }
 
-#navbar ul li{
+#navbar ul li {
     font-weight: bold;
     margin-inline: 2em;
 }
@@ -25,7 +42,7 @@
     height: auto;
 }
 
-#navbar ul li a{
+#navbar ul li a {
     text-decoration: none;
     color: black;
     font-size: 1.2em;
@@ -33,4 +50,36 @@
 
 #navbar-PIPA-clickable {
     font-size: 1.5em;
+}
+
+#navbar-3-bars {
+    cursor: pointer;
+}
+
+.popup-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.popup-menu ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.popup-menu li {
+    padding: 10px;
+}
+
+.popup-menu a {
+    text-decoration: none;
+    color: black;
 }
