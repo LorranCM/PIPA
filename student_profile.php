@@ -74,21 +74,20 @@ $teachers = array_filter($users, function ($user) {
         </div>
     </section>
 
-    
-    <section class="content">
-        <h1>
-            <?php if ($is_own_profile): ?>
-                Olá, <?php echo $student_name; ?>
-            <?php else: ?>
-                <?php echo ($disciplina ?? "Perfil") . " - " . $student_name; ?>
-            <?php endif; ?>
-            <span class="logout">
-                <a href="login.php">Sair</a>
-            </span>
-        </h1>
-        <div class="container">
+    <div class="container">
+        <section class="content">
+            <h1>
+                <?php if ($is_own_profile): ?>
+                    Olá, <?php echo $student_name; ?>
+                <?php else: ?>
+                    <?php echo ($disciplina ?? "Perfil") . " - " . $student_name; ?>
+                <?php endif; ?>
+                <span class="logout">
+                    <a href="login.php">Sair</a>
+                </span>
+            </h1>
+            <h2 class="class">Suas salas</h2>
             <div class="salas">
-                <h2>Suas salas</h2>
                 <div class="cards">
                     <?php foreach ($teachers as $id_professor => $dados_professor): ?>
                         <a href="classroom.php?id=<?php echo $id_professor; ?>" class="sala-link">
@@ -104,9 +103,9 @@ $teachers = array_filter($users, function ($user) {
                 </div>
             </div>
         </section>
-        <div class="container">
+        <section>
             <div id='calendar'></div>
-        </div>
+        </section>
         <section class="carteirinha">
             <div class="card-wrapper">
                 <strong>Carteirinha PIPA</strong>
@@ -127,6 +126,7 @@ $teachers = array_filter($users, function ($user) {
             </div>
         </section>
     </div>
+
 
     <script>
         function togglePopup() {

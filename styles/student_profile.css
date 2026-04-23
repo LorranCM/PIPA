@@ -18,7 +18,6 @@ body {
 
 .perfil {
     padding: 44px;
-    bottom: -50px;
     left: 30px;
 }
 
@@ -44,10 +43,6 @@ h1 {
     width: 100%;
 }
 
-.logout {
-    margin-right: 30px; /* Ajuste este valor para o "respiro" desejado */
-}
-
 .logout a {
     color: red !important;
     font-size: 14px;
@@ -55,7 +50,13 @@ h1 {
     font-weight: bold;
 }
 
-.salas h2 {
+.salas {
+    background-color: #cccbcb;
+    height: 293px;
+    display: flex;
+}
+
+.class {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -63,14 +64,14 @@ h1 {
 
 /* --- SISTEMA DE CARDS (SALAS) --- */
 .cards {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 25px !important; /* Respiro entre os cards */
+    display: flex ;
+    flex-direction: row ;
+    flex-wrap: wrap ;
+    justify-content: center ;
+    align-items: center ;
+    gap: 25px ; /* Respiro entre os cards */
     margin-top: 10px;
     width: 100%;
-    
 }
 
 .sala-link {
@@ -86,18 +87,17 @@ h1 {
 
 /* Seletor específico para vencer o .card do Bootstrap */
 .cards .card {
-    background-color: #6f9f89 !important;
-    width: 200px !important;
-    min-width: 200px;
-    height: 110px !important;
-    border-radius: 10px !important;
-    border: none !important;
-    color: white !important;
+    background-color: #6f9f89 ;
+    width: 349px ;
+    height: 225px ;
+    border-radius: 10px ;
+    border: none ;
+    color: white ;
     padding: 10px;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
+    display: flex ;
+    flex-direction: column ;
+    justify-content: center ;
+    align-items: center ;
     text-align: center;
 }
 
@@ -165,12 +165,7 @@ h1 {
     display: flex;
     justify-content: center;
     font-size: 18px;
-    margin-bottom: 10px;
-}
 
-.box1 {
-    display: flex;
-    flex-direction: column;
 }
 
 .contato input {

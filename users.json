@@ -23,20 +23,31 @@
         "password": "SENHAFORTE",
         "role": "student"
     },
-    "professor123": {
-        "name": "Professor Rodrigo Silva",
-        "email": "professor123@gmail.com",
-        "password": "prof123",
-        "role": "teacher",
-        "materia": "Programação Web I",
-        "sala_fisica": "Laboratório 208 - Bloco 2",
-        "horario": "Segundas e Quartas, 11:00 - 12:40"
+"professor123": {
+    "name": "Professor Rodrigo Silva",
+    "email": "professor123@gmail.com",
+    "password": "prof123",
+    "role": "teacher",
+    "materia": "Programação Web I",
+    "sala_fisica": "Laboratório 208 - Bloco 2",
+    "horario": {
+        "dias": ["monday", "wednesday"],
+        "inicio": "11:00",
+        "fim": "12:40"
     },
-    "professor456": {
-        "name": "Profa. Ana Costa",
-        "email": "ana@gmail.com",
-        "password": "prof123",
-        "role": "teacher",
-        "materia": "Redes de Computadores"
-    }
+    "agendamentos": []
+},
+"professor456": {
+    "name": "Profa. Ana Costa",
+    "email": "ana@gmail.com",
+    "password": "prof123",
+    "role": "teacher",
+    "materia": "Redes de Computadores",
+    "horario": {
+        "dias": ["tuesday", "thursday"],
+        "inicio": "08:00",
+        "fim": "09:40"
+    },
+    "agendamentos": []
+}
 }
