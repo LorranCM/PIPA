@@ -90,7 +90,7 @@ $teachers = array_filter($users, function ($user) {
             <div class="salas">
                 <div class="cards">
                     <?php foreach ($teachers as $id_professor => $dados_professor): ?>
-                        <a href="classroom.php?id=<?php echo $id_professor; ?>" class="sala-link">
+                        <a href="teacher_profile.php?id=<?php echo $id_professor; ?>" class="sala-link">
                             <div class="card">
                                 <?php echo $dados_professor['materia'] ?? 'Disciplina'; ?><br>
                                 <small><?php echo $dados_professor['name']; ?></small>

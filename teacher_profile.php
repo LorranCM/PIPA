@@ -8,22 +8,145 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 $users = json_decode(file_get_contents('users.json'), true) ?? [];
 
 $matricula_logada = $_SESSION['matricula'];
-$id_professor     = $_GET['id'] ?? $matricula_logada;
-$is_own_profile   = ($matricula_logada === $id_professor);
+$user_role = $_SESSION['role'] ?? 'student';
 
-$teacher_name = $users[$id_professor]['name']   ?? 'Professor';
-$disciplina   = $users[$id_professor]['materia'] ?? 'Desenvolvimento de Sistemas';
-$horario      = $users[$id_professor]['horario'] ?? [];
-$agendamentos = $users[$id_professor]['agendamentos'] ?? [];
+// ID do professor da página (via GET). Se não fornecido e for teacher, assume o próprio logado
+$id_professor = $_GET['id'] ?? null;
+if (!$id_professor && $user_role === 'teacher') {
+    $id_professor = $matricula_logada;
+} elseif (!$id_professor) {
+    die("Professor não especificado.");
+}
 
-// Mapeia dias para número (FullCalendar daysOfWeek)
+$teacher_data = $users[$id_professor] ?? null;
+if (!$teacher_data || $teacher_data['role'] !== 'teacher') {
+    die("Professor não encontrado.");
+}
+
+$is_owner = ($user_role === 'teacher' && $matricula_logada === $id_professor);
+$teacher_name = $teacher_data['name'];
+$disciplina  = $teacher_data['materia'] ?? 'Disciplina';
+$sala_fisica = $teacher_data['sala_fisica'] ?? 'A definir';
+$horario     = $teacher_data['horario'] ?? [];
+$agendamentos_raw = $teacher_data['agendamentos'] ?? [];
+
+// Normaliza agendamentos
+$agendamentos = [];
+if (!empty($agendamentos_raw)) {
+    foreach ($agendamentos_raw as $item) {
+        if (is_array($item)) {
+            $agendamentos[] = $item;
+        } elseif (is_string($item)) {
+            $agendamentos[] = ['date' => $item, 'status' => 'pending', 'student' => 'desconhecido'];
+        }
+    }
+}
+
+// Flash messages
+$flash = $_SESSION['flash'] ?? null;
+unset($_SESSION['flash']);
+
+// POST: atualizar informações da sala (owner)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_room']) && $is_owner) {
+    $users[$id_professor]['sala_fisica'] = $_POST['sala_fisica'];
+    $users[$id_professor]['horario'] = [
+        'dias'   => $_POST['dias'] ?? [],
+        'inicio' => $_POST['inicio'],
+        'fim'    => $_POST['fim'],
+    ];
+    file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Informações da sala atualizadas.'];
+    header("Location: teacher_profile.php?id=" . $id_professor);
+    exit;
+}
+
+// POST: agendamento (student)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agendar_data']) && $user_role === 'student' && !$is_owner) {
+    $data_agendada = $_POST['agendar_data'];
+    $exists = false;
+    foreach ($agendamentos as $a) {
+        if ($a['date'] === $data_agendada) {
+            $exists = true;
+            break;
+        }
+    }
+    if (!$exists) {
+        $dias_semana = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+        $dia_da_semana_num = date('w', strtotime($data_agendada));
+        $dia_da_semana_nome = $dias_semana[$dia_da_semana_num];
+        $today = date('Y-m-d');
+        $max_date = date('Y-m-d', strtotime('+30 days'));
+        $valid_day = in_array($dia_da_semana_nome, $horario['dias'] ?? []);
+        $within_range = ($data_agendada >= $today && $data_agendada <= $max_date);
+        if ($valid_day && $within_range) {
+            $novo_agendamento = [
+                'date'    => $data_agendada,
+                'student' => $matricula_logada,
+                'status'  => 'pending'
+            ];
+            $users[$id_professor]['agendamentos'][] = $novo_agendamento;
+            file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Atendimento agendado para ' . date('d/m/Y', strtotime($data_agendada)) . '!'];
+        } else {
+            $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Data inválida ou fora do período permitido.'];
+        }
+    } else {
+        $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Já existe um agendamento nesta data.'];
+    }
+    header("Location: teacher_profile.php?id=" . $id_professor);
+    exit;
+}
+
+// POST: confirmar/cancelar (teacher owner)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $is_owner) {
+    $data_acao = $_POST['date'];
+    $action = $_POST['action'];
+    $msg = '';
+    foreach ($users[$id_professor]['agendamentos'] as $key => &$ag) {
+        if ($ag['date'] === $data_acao) {
+            if ($action === 'confirm') {
+                $ag['status'] = 'confirmed';
+                $msg = 'Agendamento confirmado.';
+            } elseif ($action === 'cancel') {
+                unset($users[$id_professor]['agendamentos'][$key]);
+                $users[$id_professor]['agendamentos'] = array_values($users[$id_professor]['agendamentos']);
+                $msg = 'Agendamento cancelado.';
+            }
+            break;
+        }
+    }
+    unset($ag);
+    file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    $_SESSION['flash'] = ['type' => 'success', 'msg' => $msg];
+    header("Location: teacher_profile.php?id=" . $id_professor);
+    exit;
+}
+
+// Monta texto legível do horário
+$dias_pt = [
+    'sunday' => 'Domingo', 'monday' => 'Segunda-feira', 'tuesday' => 'Terça-feira',
+    'wednesday' => 'Quarta-feira', 'thursday' => 'Quinta-feira', 'friday' => 'Sexta-feira', 'saturday' => 'Sábado'
+];
+$dias_legivel = '';
+if (!empty($horario['dias'])) {
+    $nomes = array_map(fn($d) => $dias_pt[$d] ?? $d, $horario['dias']);
+    $dias_legivel = implode(', ', $nomes);
+}
+$horario_legivel = $dias_legivel
+    ? "$dias_legivel — {$horario['inicio']} às {$horario['fim']}"
+    : 'Não definido';
+
+// Prepara eventos para FullCalendar
 $dow_map = [
     'sunday'=>0,'monday'=>1,'tuesday'=>2,
     'wednesday'=>3,'thursday'=>4,'friday'=>5,'saturday'=>6
 ];
 
-// Eventos recorrentes: dias disponíveis (verde)
+$today = date('Y-m-d');
+$end_date = date('Y-m-d', strtotime('+30 days'));
 $fc_events = [];
+
+// Dias disponíveis recorrentes (verdes), apenas no intervalo de hoje a hoje+30
 if (!empty($horario['dias'])) {
     foreach ($horario['dias'] as $dia) {
         $fc_events[] = [
@@ -32,19 +155,29 @@ if (!empty($horario['dias'])) {
             'startTime'  => $horario['inicio'],
             'endTime'    => $horario['fim'],
             'color'      => '#2E8E5A',
-            'startRecur' => date('Y-m-01'),
-            'endRecur'   => date('Y-m-d', strtotime('+6 months')),
+            'startRecur' => $today,
+            'endRecur'   => $end_date,
         ];
     }
 }
 
-// Eventos pontuais: agendamentos recebidos (amarelo)
-foreach ($agendamentos as $data) {
+// Agendamentos
+foreach ($agendamentos as $ag) {
+    $status = $ag['status'] ?? 'pending';
+    $student_mat = $ag['student'] ?? '';
+    $student_name = $users[$student_mat]['name'] ?? 'Aluno';
+    $title = ($status === 'confirmed') ? 'Confirmado' : 'Agendado (pendente)';
+    $color = ($status === 'confirmed') ? '#3498db' : '#f39c12';
     $fc_events[] = [
-        'title' => 'Agendado',
-        'start' => $data,
-        'color' => '#f39c12',
-        'allDay'=> true,
+        'title'   => $title . ' - ' . $student_name,
+        'start'   => $ag['date'],
+        'color'   => $color,
+        'allDay'  => true,
+        'extendedProps' => [
+            'status' => $status,
+            'student' => $student_name,
+            'date' => $ag['date']
+        ]
     ];
 }
 
@@ -54,19 +187,16 @@ $fc_events_json = json_encode($fc_events);
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página do Professor - <?php echo htmlspecialchars($teacher_name); ?></title>
-
+    <title><?php echo htmlspecialchars($teacher_name); ?> - Perfil</title>
     <link rel="stylesheet" href="colors.css">
+    <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/teacher_profile.css">
     <link rel="stylesheet" href="styles/footer.css">
-    <link rel="stylesheet" href="styles/navbar.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
 </head>
 <body>
-
     <?php include 'components/navbar.php'; ?>
 
     <section class="topo">
@@ -76,127 +206,297 @@ $fc_events_json = json_encode($fc_events);
     </section>
 
     <div class="container my-5">
-
-        <!-- Saudação -->
         <section class="teacher">
             <h2>Olá, <?php echo htmlspecialchars($teacher_name); ?>!</h2>
         </section>
 
-        <!-- Salas do professor -->
-        <section class="mb-4">
-            <h4 class="text-center mb-3">Suas salas</h4>
-            <div class="d-flex flex-wrap justify-content-center gap-3">
-                <?php foreach ($users as $id => $u):
-                    if (($u['role'] ?? '') !== 'teacher' || $id !== $id_professor) continue;
-                ?>
-                    <a href="classroom.php?id=<?php echo $id; ?>"
-                       style="text-decoration:none;">
-                        <div style="background:#6f9f89;color:white;padding:20px 30px;border-radius:10px;
-                                    min-width:220px;text-align:center;cursor:pointer;
-                                    transition:transform .2s;" 
-                             onmouseover="this.style.transform='translateY(-4px)'"
-                             onmouseout="this.style.transform='translateY(0)'">
-                            <strong><?php echo htmlspecialchars($u['materia'] ?? 'Disciplina'); ?></strong><br>
-                            <small><?php echo htmlspecialchars($u['sala_fisica'] ?? 'Local não definido'); ?></small>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
+        <!-- Ícones originais -->
+        <div class="icons">
+            <div id="btn-grid">
+                <img src="assets/icons/list-paper-school-svgrepo-com.svg" alt="Documentos">
             </div>
-        </section>
+            <div id="btn-doc">
+                <img src="assets/icons/calendar-days-svgrepo-com.svg" alt="Calendário">
+            </div>
+        </div>
 
-        <section class="container">
-            <div class="icons">
-                <div id="btn-grid">
-                    <img src="assets/icons/list-paper-school-svgrepo-com.svg" alt="Documentos">
+        <!-- Flash message -->
+        <?php if ($flash): ?>
+            <div class="flash-message <?php echo $flash['type'] === 'success' ? 'flash-success' : 'flash-error'; ?>">
+                <?php echo htmlspecialchars($flash['msg']); ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Área Documentos -->
+        <div id="area-documentos" class="area">
+            <div class="grid">
+                <div class="box add" id="btn-add">+</div>
+            </div>
+        </div>
+
+        <!-- Área Calendário (sala de aula integrada) -->
+        <div id="area-calendar" class="area">
+            <div class="room-card">
+                <div class="room-header">
+                    <h1><?php echo htmlspecialchars($disciplina); ?></h1>
+                    <p>Professor(a): <strong><?php echo htmlspecialchars($teacher_name); ?></strong></p>
                 </div>
-                <div id="btn-doc">
-                    <img src="assets/icons/calendar-days-svgrepo-com.svg" alt="Calendário">
+                <div class="info-group">
+                    <label>Localização:</label>
+                    <span><?php echo htmlspecialchars($sala_fisica); ?></span>
                 </div>
+                <div class="info-group">
+                    <label>Horário de Atendimento:</label>
+                    <span><?php echo htmlspecialchars($horario_legivel); ?></span>
+                </div>
+                <?php if ($user_role === 'student' && !$is_owner): ?>
+                    <p class="instrucao-agendamento">
+                        Clique em um dia <strong>disponível</strong> para agendar seu atendimento.
+                    </p>
+                <?php endif; ?>
+                <?php if ($is_owner): ?>
+                    <div class="action-area">
+                        <button class="btn btn-edit" onclick="openEditModal()">✏️ Alterar Horário</button>
+                    </div>
+                <?php endif; ?>
             </div>
 
-            <div id="area-documentos" class="area">
-                <div class="grid">
-                    <div class="box add" id="btn-add">+</div>
-                </div>
+            <div class="legenda">
+                <span><span class="cor-disponivel"></span>Disponível</span>
+                <span><span class="cor-pendente"></span>Agendado (pendente)</span>
+                <span><span class="cor-confirmado"></span>Confirmado</span>
             </div>
-
-            <div id="area-add" class="area">
-                <h3>Adicionar documento</h3>
-                <input type="file" class="form-control">
-            </div>
-
-            <div id="area-calendar" class="area">
-                <!-- Legenda -->
-                <div style="display:flex;gap:20px;justify-content:center;margin-bottom:12px;font-size:0.9em;">
-                    <span><span style="display:inline-block;width:14px;height:14px;background:#2E8E5A;border-radius:3px;vertical-align:middle;margin-right:5px;"></span>Disponível</span>
-                    <span><span style="display:inline-block;width:14px;height:14px;background:#f39c12;border-radius:3px;vertical-align:middle;margin-right:5px;"></span>Agendado</span>
-                </div>
-                <div id="calendar"></div>
-            </div>
-        </section>
+            <div id="calendar"></div>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const areaDocs     = document.getElementById("area-documentos");
-        const areaAdd      = document.getElementById("area-add");
-        const areaCalendar = document.getElementById("area-calendar");
-        const btnGrid      = document.getElementById("btn-grid");
-        const btnDoc       = document.getElementById("btn-doc");
-        const btnAdd       = document.getElementById("btn-add");
+    <!-- Modal de Edição da Sala (owner) -->
+    <?php if ($is_owner): ?>
+    <div id="modalEdit" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Editar Informações da Sala</h3>
+            <form method="POST">
+                <label for="sala_fisica">Nova Localização:</label>
+                <input type="text" name="sala_fisica" id="sala_fisica" value="<?php echo htmlspecialchars($sala_fisica); ?>" required>
 
-        let calendar;
+                <label>Dias de Atendimento:</label>
+                <div class="dias-check">
+                    <?php
+                    $dias_opcoes = [
+                        'monday'=>'Segunda','tuesday'=>'Terça','wednesday'=>'Quarta',
+                        'thursday'=>'Quinta','friday'=>'Sexta','saturday'=>'Sábado','sunday'=>'Domingo'
+                    ];
+                    $dias_selecionados = $horario['dias'] ?? [];
+                    foreach ($dias_opcoes as $val => $label):
+                        $checked = in_array($val, $dias_selecionados) ? 'checked' : '';
+                    ?>
+                        <label>
+                            <input type="checkbox" name="dias[]" value="<?php echo $val; ?>" <?php echo $checked; ?>>
+                            <?php echo $label; ?>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const calendarEl = document.getElementById('calendar');
-            const events = <?php echo $fc_events_json; ?>;
+                <div class="horario-row">
+                    <div>
+                        <label for="inicio">Início:</label>
+                        <input type="text" name="inicio" id="inicio" value="<?php echo htmlspecialchars($horario['inicio'] ?? ''); ?>" placeholder="08:00" required>
+                    </div>
+                    <div>
+                        <label for="fim">Fim:</label>
+                        <input type="text" name="fim" id="fim" value="<?php echo htmlspecialchars($horario['fim'] ?? ''); ?>" placeholder="09:40" required>
+                    </div>
+                </div>
 
-            calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'pt-br',
-                height: 'auto',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth'
-                },
-                events: events,
-                eventClick: function(info) {
-                    if (info.event.title === 'Agendado') {
-                        const data = new Date(info.event.startStr + 'T12:00:00')
-                            .toLocaleDateString('pt-BR');
-                        alert('Atendimento agendado para: ' + data);
-                    }
-                }
-            });
-            calendar.render();
-        });
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" onclick="closeEditModal()">Cancelar</button>
+                    <button type="submit" name="update_room" class="btn btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php endif; ?>
 
-        function resetEstado() {
-            areaDocs.classList.remove("ativa");
-            areaAdd.classList.remove("ativa");
-            areaCalendar.classList.remove("ativa");
-            btnGrid.classList.remove("selected");
-            btnDoc.classList.remove("selected");
-        }
+    <!-- Modal de Confirmação (teacher owner) -->
+    <?php if ($is_owner): ?>
+    <div id="modalConfirm" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modalConfirmTitle">Confirmar agendamento</h3>
+            <p id="modalConfirmText"></p>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeConfirmModal()">Fechar</button>
+                <button class="btn btn-yes" id="btnConfirmYes">Sim</button>
+                <button class="btn btn-no" id="btnConfirmNo">Não</button>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 
-        function alternarVisualizacao(area, botao) {
-            const jaAtiva = area.classList.contains("ativa");
-            resetEstado();
-            if (!jaAtiva) {
-                area.classList.add("ativa");
-                if (botao) botao.classList.add("selected");
-                if (area === areaCalendar) {
-                    setTimeout(() => {
-                        if (calendar) { calendar.render(); calendar.updateSize(); }
-                    }, 100);
-                }
+    <!-- Form oculto para agendamento (student) -->
+    <?php if ($user_role === 'student' && !$is_owner): ?>
+    <form id="form-agendar" method="POST" style="display:none;">
+        <input type="hidden" name="agendar_data" id="input-data-agendamento">
+    </form>
+    <?php endif; ?>
+
+    <!-- Form oculto para confirmar/cancelar (teacher) -->
+    <?php if ($is_owner): ?>
+    <form id="form-action" method="POST" style="display:none;">
+        <input type="hidden" name="date" id="input-date-action">
+        <input type="hidden" name="action" id="input-action-type">
+    </form>
+    <?php endif; ?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Alternância de abas (ícones)
+    const areaDocs     = document.getElementById("area-documentos");
+    const areaCalendar = document.getElementById("area-calendar");
+    const btnGrid      = document.getElementById("btn-grid");
+    const btnDoc       = document.getElementById("btn-doc");
+    const btnAdd       = document.getElementById("btn-add");
+
+    let calendar;
+
+    function resetEstado() {
+        areaDocs.classList.remove("ativa");
+        areaCalendar.classList.remove("ativa");
+        btnGrid.classList.remove("selected");
+        btnDoc.classList.remove("selected");
+    }
+
+    function alternarVisualizacao(area, botao) {
+        const jaAtiva = area.classList.contains("ativa");
+        resetEstado();
+        if (!jaAtiva) {
+            area.classList.add("ativa");
+            if (botao) botao.classList.add("selected");
+            if (area === areaCalendar) {
+                setTimeout(() => {
+                    if (calendar) { calendar.render(); calendar.updateSize(); }
+                }, 100);
             }
         }
+    }
 
-        btnDoc.addEventListener("click",  () => alternarVisualizacao(areaCalendar, btnDoc));
-        btnGrid.addEventListener("click", () => alternarVisualizacao(areaDocs, btnGrid));
-        btnAdd.addEventListener("click",  () => alternarVisualizacao(areaAdd, null));
-    </script>
+    btnDoc.addEventListener("click",  () => alternarVisualizacao(areaCalendar, btnDoc));
+    btnGrid.addEventListener("click", () => alternarVisualizacao(areaDocs, btnGrid));
+    if (btnAdd) {
+        btnAdd.addEventListener("click",  () => {
+            // lógica simples: abrir input de arquivo (pode ser expandido)
+            alert('Funcionalidade de upload em desenvolvimento.');
+        });
+    }
+
+    // Calendário
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar');
+        const events = <?php echo $fc_events_json; ?>;
+        const userRole = '<?php echo $user_role; ?>';
+        const isOwner = <?php echo $is_owner ? 'true' : 'false'; ?>;
+        const todayStr = '<?php echo $today; ?>';
+        const endStr = '<?php echo $end_date; ?>';
+
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'pt-br',
+            height: 'auto',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth'
+            },
+            events: events,
+            eventClick: function(info) {
+                if (isOwner) {
+                    const props = info.event.extendedProps;
+                    if (props && props.status) {
+                        if (props.status === 'pending') {
+                            openConfirmModal(props.date, props.student, info.event.title);
+                        } else if (props.status === 'confirmed') {
+                            alert('Este agendamento já está confirmado.');
+                        }
+                    }
+                }
+            },
+            dateClick: function(info) {
+                if (userRole === 'student' && !isOwner) {
+                    if (info.dateStr < todayStr) {
+                        alert('Não é possível agendar para datas passadas.');
+                        return;
+                    }
+                    if (info.dateStr > endStr) {
+                        alert('Agendamento apenas para os próximos 30 dias.');
+                        return;
+                    }
+                    const eventosDoDia = calendar.getEvents().filter(function(ev) {
+                        return ev.startStr.substring(0,10) === info.dateStr && ev.title.includes('Disponível');
+                    });
+                    const agendado = calendar.getEvents().filter(function(ev) {
+                        return ev.startStr.substring(0,10) === info.dateStr && (ev.title.includes('Agendado') || ev.title.includes('Confirmado'));
+                    });
+                    if (eventosDoDia.length === 0) {
+                        alert('Este dia não está disponível para agendamento.');
+                        return;
+                    }
+                    if (agendado.length > 0) {
+                        alert('Já existe um agendamento nesta data.');
+                        return;
+                    }
+                    const dataFormatada = new Date(info.dateStr + 'T12:00:00').toLocaleDateString('pt-BR');
+                    if (confirm('Agendar atendimento para ' + dataFormatada + '?')) {
+                        document.getElementById('input-data-agendamento').value = info.dateStr;
+                        document.getElementById('form-agendar').submit();
+                    }
+                }
+            }
+        });
+        calendar.render();
+        window.calendar = calendar;
+
+        // Exibe a aba de calendário por padrão
+        alternarVisualizacao(areaCalendar, btnDoc);
+    });
+
+    // Modal de edição
+    function openEditModal()  { document.getElementById('modalEdit').style.display = 'block'; }
+    function closeEditModal() { document.getElementById('modalEdit').style.display = 'none'; }
+
+    // Modal de confirmação
+    let currentConfirmDate = '';
+    function openConfirmModal(date, student, title) {
+        currentConfirmDate = date;
+        document.getElementById('modalConfirmTitle').innerText = 'Confirmar agendamento';
+        document.getElementById('modalConfirmText').innerText =
+            'Deseja confirmar ou cancelar o agendamento de ' + student +
+            ' no dia ' + new Date(date + 'T12:00:00').toLocaleDateString('pt-BR') + '?';
+        document.getElementById('modalConfirm').style.display = 'block';
+    }
+    function closeConfirmModal() {
+        document.getElementById('modalConfirm').style.display = 'none';
+        currentConfirmDate = '';
+    }
+    document.getElementById('btnConfirmYes')?.addEventListener('click', function() {
+        if (currentConfirmDate) {
+            document.getElementById('input-date-action').value = currentConfirmDate;
+            document.getElementById('input-action-type').value = 'confirm';
+            document.getElementById('form-action').submit();
+        }
+    });
+    document.getElementById('btnConfirmNo')?.addEventListener('click', function() {
+        if (currentConfirmDate) {
+            if (confirm('Tem certeza que deseja cancelar este agendamento?')) {
+                document.getElementById('input-date-action').value = currentConfirmDate;
+                document.getElementById('input-action-type').value = 'cancel';
+                document.getElementById('form-action').submit();
+            }
+        }
+    });
+
+    window.onclick = function(e) {
+        if (e.target === document.getElementById('modalEdit')) closeEditModal();
+        if (e.target === document.getElementById('modalConfirm')) closeConfirmModal();
+    }
+</script>
 </body>
 </html>

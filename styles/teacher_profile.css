@@ -133,37 +133,239 @@ body {
     font-size: 18px;
 }
 
-/* Container do Calendário com as margens de 50px e visual compacto */
+/* ===== NOVOS ESTILOS (SALA DE AULA / CALENDÁRIO / MODAIS) ===== */
+
+/* Flash messages */
+.flash-message {
+    margin: 20px 50px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+.flash-success {
+    background: #e8f5e9;
+    border-left: 4px solid #2E8E5A;
+    color: #1b5e20;
+}
+.flash-error {
+    background: #fdecea;
+    border-left: 4px solid #e74c3c;
+    color: #a71d2a;
+}
+
+/* Room card */
+.room-card {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin: 0 50px 30px;
+}
+.room-header {
+    border-bottom: 2px solid #2E8E5A;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+.room-header h1 {
+    margin: 0 0 5px;
+    font-size: 2em;
+    color: #1e3d2f;
+}
+.room-header p {
+    margin: 0;
+    font-size: 1.1em;
+    color: #444;
+}
+
+.info-group {
+    margin-bottom: 15px;
+}
+.info-group label {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 4px;
+}
+.info-group span {
+    font-size: 1.1em;
+    color: #222;
+}
+
+.instrucao-agendamento {
+    text-align: center;
+    color: #555;
+    margin-top: 15px;
+}
+
+.action-area {
+    margin-top: 20px;
+}
+
+/* Botões genéricos */
+.btn {
+    padding: 12px 25px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.95em;
+}
+.btn-edit {
+    background-color: #f39c12;
+    color: white;
+}
+.btn-edit:hover {
+    background-color: #e08e0b;
+}
+.btn-save {
+    background-color: #2E8E5A;
+    color: white;
+}
+.btn-save:hover {
+    background-color: #1e6a41;
+}
+.btn-cancel {
+    background: #ccc;
+    color: #333;
+}
+.btn-cancel:hover {
+    background: #b3b3b3;
+}
+.btn-yes {
+    background: #2E8E5A;
+    color: white;
+}
+.btn-no {
+    background: #e74c3c;
+    color: white;
+}
+.btn-yes:hover,
+.btn-no:hover {
+    opacity: 0.9;
+}
+
+/* Legenda do calendário */
+.legenda {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 0.9em;
+}
+.legenda span {
+    display: inline-flex;
+    align-items: center;
+}
+.legenda span span {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.cor-disponivel { background: #2E8E5A; }
+.cor-pendente   { background: #f39c12; }
+.cor-confirmado { background: #3498db; }
+
+/* Calendário */
 #calendar {
     background-color: white;
-    margin: 30px 50px;
+    margin: 0 50px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 0.85em;
 }
 
-/* Ajustes de espaçamento interno do FullCalendar */
+/* Ajustes FullCalendar */
 .fc .fc-toolbar-title {
     font-size: 1.1em !important;
 }
-
 .fc .fc-button {
     padding: 0.3em 0.5em !important;
     font-size: 0.85em !important;
 }
-
 .fc .fc-daygrid-day-frame {
     min-height: 70px !important;
 }
-
-/* Feedback visual: muda o cursor para 'mãozinha' nos dias clicáveis */
 .fc .fc-daygrid-day {
     cursor: pointer;
 }
-
-/* Opcional: Adiciona um leve realce ao passar o mouse para reforçar o clique */
 .fc .fc-daygrid-day:hover {
     background-color: #f0f0f0;
     transition: background-color 0.2s ease;
+}
+
+/* Modais */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background: white;
+    margin: 8% auto;
+    padding: 25px;
+    border-radius: 8px;
+    width: 450px;
+}
+.modal-content h3 {
+    margin-top: 0;
+    color: #333;
+}
+.modal-content label {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 4px;
+}
+.modal-content input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.dias-check {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 8px 0 16px;
+}
+.dias-check label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-weight: normal;
+}
+.horario-row {
+    display: flex;
+    gap: 10px;
+}
+.horario-row div {
+    flex: 1;
+}
+.horario-row label {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 4px;
+}
+.modal-footer {
+    text-align: right;
+    margin-top: 20px;
+}
+.modal-footer .btn {
+    margin-left: 8px;
 }
