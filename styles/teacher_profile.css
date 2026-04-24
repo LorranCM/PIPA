@@ -309,63 +309,73 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
 }
 .modal-content {
-    background: white;
-    margin: 8% auto;
+    background-color: #ffffff !important; /* 'white' com !important para vencer o Bootstrap */
+    border-radius: 12px;
+    width: 450px !important;             /* Força a largura correta */
+    max-width: 90%;
     padding: 25px;
-    border-radius: 8px;
-    width: 450px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: fadeIn 0.2s ease;
+    display: flex;                       /* Garante que o conteúdo interno se alinhe */
+    flex-direction: column;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+/* Botão fechar (X) */
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+}
+.modal-close:hover {
+    color: #333;
 }
 .modal-content h3 {
     margin-top: 0;
-    color: #333;
+    margin-bottom: 15px;
+    color: #2c3e2f;
+    padding-right: 20px;
 }
-.modal-content label {
-    font-weight: bold;
-    color: #555;
-    display: block;
-    margin-bottom: 4px;
-}
-.modal-content input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-.dias-check {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 8px 0 16px;
-}
-.dias-check label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    font-weight: normal;
-}
-.horario-row {
-    display: flex;
-    gap: 10px;
-}
-.horario-row div {
-    flex: 1;
-}
-.horario-row label {
-    font-weight: bold;
-    color: #555;
-    display: block;
-    margin-bottom: 4px;
+.modal-content p {
+    margin-bottom: 20px;
+    color: #444;
 }
 .modal-footer {
-    text-align: right;
-    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
 }
 .modal-footer .btn {
-    margin-left: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+.btn-yes {
+    background-color: #2E8E5A;
+    color: white;
+}
+.btn-yes:hover {
+    background-color: #1e6a41;
+}
+.btn-no {
+    background-color: #e74c3c;
+    color: white;
+}
+.btn-no:hover {
+    background-color: #c0392b;
 }

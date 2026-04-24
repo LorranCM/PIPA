@@ -28,19 +28,25 @@ $teacher_name = $teacher_data['name'];
 $disciplina  = $teacher_data['materia'] ?? 'Disciplina';
 $sala_fisica = $teacher_data['sala_fisica'] ?? 'A definir';
 $horario     = $teacher_data['horario'] ?? [];
-$agendamentos_raw = $teacher_data['agendamentos'] ?? [];
 
-// Normaliza agendamentos
+// ========== LIMPEZA AUTOMÁTICA DOS AGENDAMENTOS (remove objetos vazios) ==========
+$agendamentos_raw = $teacher_data['agendamentos'] ?? [];
 $agendamentos = [];
 if (!empty($agendamentos_raw)) {
     foreach ($agendamentos_raw as $item) {
-        if (is_array($item)) {
+        if (is_array($item) && isset($item['date']) && !empty($item['date'])) {
             $agendamentos[] = $item;
         } elseif (is_string($item)) {
             $agendamentos[] = ['date' => $item, 'status' => 'pending', 'student' => 'desconhecido'];
         }
     }
 }
+// Salva a limpeza no array principal, se necessário
+if (isset($users[$id_professor]['agendamentos']) && count($users[$id_professor]['agendamentos']) !== count($agendamentos)) {
+    $users[$id_professor]['agendamentos'] = $agendamentos;
+    file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+}
+// ========== FIM DA LIMPEZA ==========
 
 // Flash messages
 $flash = $_SESSION['flash'] ?? null;
@@ -60,17 +66,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_room']) && $is
     exit;
 }
 
-// POST: agendamento (student)
+// POST: agendamento (student) - CORRIGIDO COM VERIFICAÇÃO DE ESCRITA
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agendar_data']) && $user_role === 'student' && !$is_owner) {
     $data_agendada = $_POST['agendar_data'];
-    $exists = false;
-    foreach ($agendamentos as $a) {
-        if ($a['date'] === $data_agendada) {
-            $exists = true;
+    
+    // --- Garante que a array de agendamentos está limpa e é uma array ---
+    if (!isset($users[$id_professor]['agendamentos']) || !is_array($users[$id_professor]['agendamentos'])) {
+        $users[$id_professor]['agendamentos'] = [];
+    }
+    // Remove lixos (objetos sem 'date')
+    $users[$id_professor]['agendamentos'] = array_values(array_filter($users[$id_professor]['agendamentos'], function($item) {
+        return is_array($item) && isset($item['date']) && !empty($item['date']);
+    }));
+    
+    // Verifica duplicidade
+    $existe = false;
+    foreach ($users[$id_professor]['agendamentos'] as $ag) {
+        if ($ag['date'] === $data_agendada) {
+            $existe = true;
             break;
         }
     }
-    if (!$exists) {
+    
+    if (!$existe) {
         $dias_semana = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
         $dia_da_semana_num = date('w', strtotime($data_agendada));
         $dia_da_semana_nome = $dias_semana[$dia_da_semana_num];
@@ -78,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agendar_data']) && $u
         $max_date = date('Y-m-d', strtotime('+30 days'));
         $valid_day = in_array($dia_da_semana_nome, $horario['dias'] ?? []);
         $within_range = ($data_agendada >= $today && $data_agendada <= $max_date);
+        
         if ($valid_day && $within_range) {
             $novo_agendamento = [
                 'date'    => $data_agendada,
@@ -85,8 +104,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agendar_data']) && $u
                 'status'  => 'pending'
             ];
             $users[$id_professor]['agendamentos'][] = $novo_agendamento;
-            file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-            $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Atendimento agendado para ' . date('d/m/Y', strtotime($data_agendada)) . '!'];
+            
+            // Tenta escrever e verifica o retorno
+            $json_data = json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            if (file_put_contents('users.json', $json_data) === false) {
+                $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Erro ao salvar o agendamento. Verifique as permissões do arquivo users.json.'];
+            } else {
+                $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Atendimento agendado para ' . date('d/m/Y', strtotime($data_agendada)) . '!'];
+            }
         } else {
             $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Data inválida ou fora do período permitido.'];
         }
@@ -189,11 +214,11 @@ $fc_events_json = json_encode($fc_events);
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($teacher_name); ?> - Perfil</title>
     <link rel="stylesheet" href="colors.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/teacher_profile.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
 </head>
 <body>
@@ -321,12 +346,12 @@ $fc_events_json = json_encode($fc_events);
     <?php if ($is_owner): ?>
     <div id="modalConfirm" class="modal-overlay">
         <div class="modal-content">
+            <span class="modal-close" id="closeConfirmModalX">&times;</span>
             <h3 id="modalConfirmTitle">Confirmar agendamento</h3>
             <p id="modalConfirmText"></p>
             <div class="modal-footer">
-                <button class="btn btn-cancel" onclick="closeConfirmModal()">Fechar</button>
-                <button class="btn btn-yes" id="btnConfirmYes">Sim</button>
-                <button class="btn btn-no" id="btnConfirmNo">Não</button>
+                <button class="btn btn-yes" id="btnConfirmYes">✓ Confirmar</button>
+                <button class="btn btn-no" id="btnConfirmNo">✗ Cancelar</button>
             </div>
         </div>
     </div>
@@ -383,7 +408,6 @@ $fc_events_json = json_encode($fc_events);
     btnGrid.addEventListener("click", () => alternarVisualizacao(areaDocs, btnGrid));
     if (btnAdd) {
         btnAdd.addEventListener("click",  () => {
-            // lógica simples: abrir input de arquivo (pode ser expandido)
             alert('Funcionalidade de upload em desenvolvimento.');
         });
     }
@@ -458,11 +482,11 @@ $fc_events_json = json_encode($fc_events);
         alternarVisualizacao(areaCalendar, btnDoc);
     });
 
-    // Modal de edição
-    function openEditModal()  { document.getElementById('modalEdit').style.display = 'block'; }
+    // Modal de edição - CORRIGIDO: display flex para centralizar
+    function openEditModal()  { document.getElementById('modalEdit').style.display = 'flex'; }
     function closeEditModal() { document.getElementById('modalEdit').style.display = 'none'; }
 
-    // Modal de confirmação
+    // Modal de confirmação - CORRIGIDO: display flex
     let currentConfirmDate = '';
     function openConfirmModal(date, student, title) {
         currentConfirmDate = date;
@@ -470,12 +494,18 @@ $fc_events_json = json_encode($fc_events);
         document.getElementById('modalConfirmText').innerText =
             'Deseja confirmar ou cancelar o agendamento de ' + student +
             ' no dia ' + new Date(date + 'T12:00:00').toLocaleDateString('pt-BR') + '?';
-        document.getElementById('modalConfirm').style.display = 'block';
+        document.getElementById('modalConfirm').style.display = 'flex';
     }
     function closeConfirmModal() {
         document.getElementById('modalConfirm').style.display = 'none';
         currentConfirmDate = '';
     }
+
+    // Fechar modal ao clicar no X
+    document.getElementById('closeConfirmModalX')?.addEventListener('click', function() {
+        closeConfirmModal();
+    });
+
     document.getElementById('btnConfirmYes')?.addEventListener('click', function() {
         if (currentConfirmDate) {
             document.getElementById('input-date-action').value = currentConfirmDate;
@@ -483,6 +513,7 @@ $fc_events_json = json_encode($fc_events);
             document.getElementById('form-action').submit();
         }
     });
+
     document.getElementById('btnConfirmNo')?.addEventListener('click', function() {
         if (currentConfirmDate) {
             if (confirm('Tem certeza que deseja cancelar este agendamento?')) {
