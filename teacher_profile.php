@@ -122,6 +122,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agendar_data']) && $u
     exit;
 }
 
+// POST: cancelar pelo aluno
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_data']) && $user_role === 'student') {
+    $data_cancelar = $_POST['cancelar_data'];
+
+    foreach ($users[$id_professor]['agendamentos'] as $key => $ag) {
+        if (
+            $ag['date'] === $data_cancelar &&
+            $ag['student'] === $matricula_logada &&
+            $ag['status'] === 'confirmed'
+        ) {
+            unset($users[$id_professor]['agendamentos'][$key]);
+            $users[$id_professor]['agendamentos'] = array_values($users[$id_professor]['agendamentos']);
+
+            file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+            $_SESSION['flash'] = [
+                'type' => 'success',
+                'msg' => 'Agendamento cancelado com sucesso.'
+            ];
+            break;
+        }
+    }
+
+    header("Location: teacher_profile.php?id=" . $id_professor);
+    exit;
+}
+
 // POST: confirmar/cancelar (teacher owner)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $is_owner) {
     $data_acao = $_POST['date'];
@@ -210,6 +237,7 @@ $fc_events_json = json_encode($fc_events);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($teacher_name); ?> - Perfil</title>
@@ -221,6 +249,7 @@ $fc_events_json = json_encode($fc_events);
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
 </head>
+
 <body>
     <?php include 'components/navbar.php'; ?>
 
@@ -247,9 +276,9 @@ $fc_events_json = json_encode($fc_events);
 
         <!-- Flash message -->
         <?php if ($flash): ?>
-            <div class="flash-message <?php echo $flash['type'] === 'success' ? 'flash-success' : 'flash-error'; ?>">
-                <?php echo htmlspecialchars($flash['msg']); ?>
-            </div>
+        <div class="flash-message <?php echo $flash['type'] === 'success' ? 'flash-success' : 'flash-error'; ?>">
+            <?php echo htmlspecialchars($flash['msg']); ?>
+        </div>
         <?php endif; ?>
 
         <!-- Área Documentos -->
@@ -275,14 +304,14 @@ $fc_events_json = json_encode($fc_events);
                     <span><?php echo htmlspecialchars($horario_legivel); ?></span>
                 </div>
                 <?php if ($user_role === 'student' && !$is_owner): ?>
-                    <p class="instrucao-agendamento">
-                        Clique em um dia <strong>disponível</strong> para agendar seu atendimento.
-                    </p>
+                <p class="instrucao-agendamento">
+                    Clique em um dia <strong>disponível</strong> para agendar seu atendimento.
+                </p>
                 <?php endif; ?>
                 <?php if ($is_owner): ?>
-                    <div class="action-area">
-                        <button class="btn btn-edit" onclick="openEditModal()">✏️ Alterar Horário</button>
-                    </div>
+                <div class="action-area">
+                    <button class="btn btn-edit" onclick="openEditModal()">✏️ Alterar Horário</button>
+                </div>
                 <?php endif; ?>
             </div>
 
@@ -302,7 +331,8 @@ $fc_events_json = json_encode($fc_events);
             <h3>Editar Informações da Sala</h3>
             <form method="POST">
                 <label for="sala_fisica">Nova Localização:</label>
-                <input type="text" name="sala_fisica" id="sala_fisica" value="<?php echo htmlspecialchars($sala_fisica); ?>" required>
+                <input type="text" name="sala_fisica" id="sala_fisica"
+                    value="<?php echo htmlspecialchars($sala_fisica); ?>" required>
 
                 <label>Dias de Atendimento:</label>
                 <div class="dias-check">
@@ -315,21 +345,24 @@ $fc_events_json = json_encode($fc_events);
                     foreach ($dias_opcoes as $val => $label):
                         $checked = in_array($val, $dias_selecionados) ? 'checked' : '';
                     ?>
-                        <label>
-                            <input type="checkbox" name="dias[]" value="<?php echo $val; ?>" <?php echo $checked; ?>>
-                            <?php echo $label; ?>
-                        </label>
+                    <label>
+                        <input type="checkbox" name="dias[]" value="<?php echo $val; ?>" <?php echo $checked; ?>>
+                        <?php echo $label; ?>
+                    </label>
                     <?php endforeach; ?>
                 </div>
 
                 <div class="horario-row">
                     <div>
                         <label for="inicio">Início:</label>
-                        <input type="text" name="inicio" id="inicio" value="<?php echo htmlspecialchars($horario['inicio'] ?? ''); ?>" placeholder="08:00" required>
+                        <input type="text" name="inicio" id="inicio"
+                            value="<?php echo htmlspecialchars($horario['inicio'] ?? ''); ?>" placeholder="08:00"
+                            required>
                     </div>
                     <div>
                         <label for="fim">Fim:</label>
-                        <input type="text" name="fim" id="fim" value="<?php echo htmlspecialchars($horario['fim'] ?? ''); ?>" placeholder="09:40" required>
+                        <input type="text" name="fim" id="fim"
+                            value="<?php echo htmlspecialchars($horario['fim'] ?? ''); ?>" placeholder="09:40" required>
                     </div>
                 </div>
 
@@ -364,6 +397,12 @@ $fc_events_json = json_encode($fc_events);
     </form>
     <?php endif; ?>
 
+    <?php if ($user_role === 'student'): ?>
+    <form id="form-cancelar" method="POST" style="display:none;">
+        <input type="hidden" name="cancelar_data" id="input-cancelar-data">
+    </form>
+    <?php endif; ?>
+
     <!-- Form oculto para confirmar/cancelar (teacher) -->
     <?php if ($is_owner): ?>
     <form id="form-action" method="POST" style="display:none;">
@@ -372,14 +411,14 @@ $fc_events_json = json_encode($fc_events);
     </form>
     <?php endif; ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
     // Alternância de abas (ícones)
-    const areaDocs     = document.getElementById("area-documentos");
+    const areaDocs = document.getElementById("area-documentos");
     const areaCalendar = document.getElementById("area-calendar");
-    const btnGrid      = document.getElementById("btn-grid");
-    const btnDoc       = document.getElementById("btn-doc");
-    const btnAdd       = document.getElementById("btn-add");
+    const btnGrid = document.getElementById("btn-grid");
+    const btnDoc = document.getElementById("btn-doc");
+    const btnAdd = document.getElementById("btn-add");
 
     let calendar;
 
@@ -398,22 +437,25 @@ $fc_events_json = json_encode($fc_events);
             if (botao) botao.classList.add("selected");
             if (area === areaCalendar) {
                 setTimeout(() => {
-                    if (calendar) { calendar.render(); calendar.updateSize(); }
+                    if (calendar) {
+                        calendar.render();
+                        calendar.updateSize();
+                    }
                 }, 100);
             }
         }
     }
 
-    btnDoc.addEventListener("click",  () => alternarVisualizacao(areaCalendar, btnDoc));
+    btnDoc.addEventListener("click", () => alternarVisualizacao(areaCalendar, btnDoc));
     btnGrid.addEventListener("click", () => alternarVisualizacao(areaDocs, btnGrid));
     if (btnAdd) {
-        btnAdd.addEventListener("click",  () => {
+        btnAdd.addEventListener("click", () => {
             alert('Funcionalidade de upload em desenvolvimento.');
         });
     }
 
     // Calendário
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');
         const events = <?php echo $fc_events_json; ?>;
         const userRole = '<?php echo $user_role; ?>';
@@ -432,14 +474,29 @@ $fc_events_json = json_encode($fc_events);
             },
             events: events,
             eventClick: function(info) {
+                const props = info.event.extendedProps;
+
+                // PROFESSOR (mantém igual)
                 if (isOwner) {
-                    const props = info.event.extendedProps;
-                    if (props && props.status) {
-                        if (props.status === 'pending') {
-                            openConfirmModal(props.date, props.student, info.event.title);
-                        } else if (props.status === 'confirmed') {
-                            alert('Este agendamento já está confirmado.');
+                    if (props.status === 'pending') {
+                        openConfirmModal(props.date, props.student, info.event.title);
+                    }
+                    return;
+                }
+
+                // ALUNO
+                if (userRole === 'student') {
+                    if (props.status === 'confirmed') {
+                        const dataFormatada = new Date(props.date + 'T12:00:00').toLocaleDateString(
+                            'pt-BR');
+
+                        if (confirm('Deseja cancelar o atendimento do dia ' + dataFormatada +
+                                '?')) {
+                            document.getElementById('input-cancelar-data').value = props.date;
+                            document.getElementById('form-cancelar').submit();
                         }
+                    } else {
+                        alert('Aguardando confirmação do professor.');
                     }
                 }
             },
@@ -454,10 +511,12 @@ $fc_events_json = json_encode($fc_events);
                         return;
                     }
                     const eventosDoDia = calendar.getEvents().filter(function(ev) {
-                        return ev.startStr.substring(0,10) === info.dateStr && ev.title.includes('Disponível');
+                        return ev.startStr.substring(0, 10) === info.dateStr && ev.title
+                            .includes('Disponível');
                     });
                     const agendado = calendar.getEvents().filter(function(ev) {
-                        return ev.startStr.substring(0,10) === info.dateStr && (ev.title.includes('Agendado') || ev.title.includes('Confirmado'));
+                        return ev.startStr.substring(0, 10) === info.dateStr && (ev.title
+                            .includes('Agendado') || ev.title.includes('Confirmado'));
                     });
                     if (eventosDoDia.length === 0) {
                         alert('Este dia não está disponível para agendamento.');
@@ -467,7 +526,8 @@ $fc_events_json = json_encode($fc_events);
                         alert('Já existe um agendamento nesta data.');
                         return;
                     }
-                    const dataFormatada = new Date(info.dateStr + 'T12:00:00').toLocaleDateString('pt-BR');
+                    const dataFormatada = new Date(info.dateStr + 'T12:00:00').toLocaleDateString(
+                        'pt-BR');
                     if (confirm('Agendar atendimento para ' + dataFormatada + '?')) {
                         document.getElementById('input-data-agendamento').value = info.dateStr;
                         document.getElementById('form-agendar').submit();
@@ -483,11 +543,17 @@ $fc_events_json = json_encode($fc_events);
     });
 
     // Modal de edição - CORRIGIDO: display flex para centralizar
-    function openEditModal()  { document.getElementById('modalEdit').style.display = 'flex'; }
-    function closeEditModal() { document.getElementById('modalEdit').style.display = 'none'; }
+    function openEditModal() {
+        document.getElementById('modalEdit').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+        document.getElementById('modalEdit').style.display = 'none';
+    }
 
     // Modal de confirmação - CORRIGIDO: display flex
     let currentConfirmDate = '';
+
     function openConfirmModal(date, student, title) {
         currentConfirmDate = date;
         document.getElementById('modalConfirmTitle').innerText = 'Confirmar agendamento';
@@ -496,6 +562,7 @@ $fc_events_json = json_encode($fc_events);
             ' no dia ' + new Date(date + 'T12:00:00').toLocaleDateString('pt-BR') + '?';
         document.getElementById('modalConfirm').style.display = 'flex';
     }
+
     function closeConfirmModal() {
         document.getElementById('modalConfirm').style.display = 'none';
         currentConfirmDate = '';
@@ -528,6 +595,7 @@ $fc_events_json = json_encode($fc_events);
         if (e.target === document.getElementById('modalEdit')) closeEditModal();
         if (e.target === document.getElementById('modalConfirm')) closeConfirmModal();
     }
-</script>
+    </script>
 </body>
+
 </html>
