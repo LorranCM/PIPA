@@ -18,7 +18,7 @@
             $error_message = "Matrícula ou e-mail não encontrados.";
         }
     }
-?>
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 

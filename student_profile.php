@@ -1,12 +1,15 @@
 ﻿<?php
 session_start();
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
     exit;
 }
 
 $users = json_decode(file_get_contents('users.json'), true) ?? [];
-
 // Pega a matrícula de quem está LOGADO
 $matricula_logada = $_SESSION['matricula'];
 
@@ -101,7 +104,10 @@ $meus_agendamentos_json = json_encode($meus_agendamentos);
 </head>
 
 <body>
-    <?php include 'components/navbar.php'; ?>
+    <?php 
+        include 'components/navbar.php'; 
+        modular_nav();
+    ?>
 
     <section class="topo">
         <div class="perfil">
@@ -118,7 +124,7 @@ $meus_agendamentos_json = json_encode($meus_agendamentos);
                 <?php echo ($disciplina ?? "Perfil") . " - " . $student_name; ?>
                 <?php endif; ?>
                 <span class="logout">
-                    <a href="login.php">Sair</a>
+                    <a href="logout.php">Sair</a>
                 </span>
             </h1>
             <h2 class="class">Suas salas</h2>

@@ -1,11 +1,6 @@
 <?php
     session_start();
-    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-        $role = $_SESSION['role'] ?? 'student';
-        $redirect = ($role === 'teacher') ? 'teacher_profile.php' : 'student_profile.php';
-        header("Location: " . $redirect);
-        exit;
-    }
+    $base_url = "../;
 ?>
 
 <!DOCTYPE html>
@@ -14,18 +9,24 @@
 <head>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles/landing_style.css">
-    <link rel="stylesheet" href="styles/navbar.css"> <title>PIPA</title>
+    <link rel="stylesheet" href="styles/navbar.css"> 
+    <title>PIPA</title>
+    <base href="../">
 </head>
 <body>
-    <?php 
-        include 'components/navbar.php'; 
-        modular_nav()
-    ?>
+
+    <script>
+        document.body.innerHTML += "<p>Base atual: " + document.baseURI + "</p>";
+    </script>
+    <?php include 'components/navbar.php'; ?>
+
+    <!-- <?php include 'components/navbar.php'; ?>
+
     <section class="hero">
         <header>
             <h1 id="header-title">A organização pessoal do estudante do <strong>Instituto Federal</strong> nunca foi tão
                 fácil</h1>
-            <a href="./login.php" class="select-button">SELECIONAR IF</a>
+            <a href="login.php" class="select-button">SELECIONAR IF</a>
             <h3 id="header-description">
                 Uma plataforma didática que conecta professores e alunos, centralizando informações acadêmicas e
                 facilitando a organização do aluno.
@@ -116,11 +117,11 @@
             </li>
         </ul>
 
-        <a href="./login.php" class="select-button">SELECIONAR IF</a>
+        <a href="login.php" class="select-button">SELECIONAR IF</a>
 
     </section>
 
-    <?php include 'components/footer.php'; ?>
+    <?php include 'components/footer.php'; ?> -->
 </body>
 
 </html>

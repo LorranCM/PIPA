@@ -30,46 +30,13 @@
         "role": "teacher",
         "materia": "Programação Web I",
         "sala_fisica": "Laboratório 208 - Bloco 2",
-        "horario": {
-            "dias": [
-                "monday",
-                "wednesday"
-            ],
-            "inicio": "11:00",
-            "fim": "12:40"
-        },
-        "agendamentos": [
-            {
-                "date": "2026-05-06",
-                "student": "20232tiimi0209",
-                "status": "confirmed"
-            },
-            {
-                "date": "2026-05-04",
-                "student": "20232tiimi0209",
-                "status": "pending"
-            },
-            {
-                "date": "2026-04-29",
-                "student": "20232tiimi0195",
-                "status": "confirmed"
-            }
-        ]
+        "horario": "Segundas e Quartas, 11:00 - 12:40"
     },
     "professor456": {
         "name": "Profa. Ana Costa",
         "email": "ana@gmail.com",
         "password": "prof123",
         "role": "teacher",
-        "materia": "Redes de Computadores",
-        "horario": {
-            "dias": [
-                "tuesday",
-                "thursday"
-            ],
-            "inicio": "08:00",
-            "fim": "09:40"
-        },
-        "agendamentos": []
+        "materia": "Redes de Computadores"
     }
 }

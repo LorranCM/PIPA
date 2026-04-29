@@ -1,67 +1,9 @@
-<?php
-session_start();
-
-$error_message = "";
-$success_message = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $matricula = $_POST['matricula'] ?? '';
-    $name = $_POST['name'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $email_confirmation = $_POST['email_confirmation'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $password_confirmation = $_POST['password_confirmation'] ?? '';
-    $role = $_POST['role'] ?? 'student'; // <-- NOVO: tipo de usuário (padrão aluno)
-
-    if ($email !== $email_confirmation) {
-        $error_message = "Os e-mails não coincidem.";
-    } elseif ($password !== $password_confirmation) {
-        $error_message = "As senhas não coincidem.";
-    } elseif (empty($matricula) || empty($name) || empty($email) || empty($password)) {
-        $error_message = "Todos os campos são obrigatórios.";
-    } elseif (!in_array($role, ['student', 'teacher'])) { // <-- NOVO: validação do tipo
-        $error_message = "Tipo de usuário inválido.";
-    } else {
-        $usersFile = __DIR__ . '/users.json';
-
-        if (file_exists($usersFile)) {
-            $json = file_get_contents($usersFile);
-            $users = json_decode($json, true);
-            if (!is_array($users)) {
-                $users = [];
-            }
-        } else {
-            $users = [];
-        }
-
-        if (isset($users[$matricula])) {
-            $error_message = "Matrícula já cadastrada.";
-        } else {
-            $users[$matricula] = [
-                'name' => $name,
-                'email' => $email,
-                'password' => $password,
-                'role' => $role,
-            ];
-
-            $jsonData = json_encode($users, JSON_PRETTY_PRINT);
-            if (file_put_contents($usersFile, $jsonData) === false) {
-                $error_message = "Erro ao salvar os dados. Verifique as permissões da pasta.";
-            } else {
-                header("Location: login.php");
-                exit;
-            }
-        }
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIPA - Cadastro</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PIPA - Cadastro</title>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles/login_style.css">
     <link rel="stylesheet" href="styles/navbar.css">
@@ -74,20 +16,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="page-content">
         <img src="assets/images/boy_holding_book.png" alt="menino segurando um livro" class="side-image">
 
-        <form action="" method="POST" class="form-login">
+        <form action="" method="POST" class="form-login" id="form-login">
             <div class="container-login">
                 <h1>Cadastro</h1>
                 <div class="container-inputs">
-                    <?php if ($error_message): ?>
-                        <p style="color: red;"><?php echo $error_message; ?></p>
-                    <?php endif; ?>
                     <div class="input-text">
                         <label for="matricula">Matrícula</label>
-                        <input type="text" name="matricula" id="matricula" placeholder="Matrícula">
+                        <input type="text" name="matricula" id="registration" placeholder="Matrícula">
                     </div>
                     <div class="input-text">
-                        <label for="name">Nome Completo</label>
-                        <input type="text" name="name" id="name" placeholder="Nome Completo">
+                        <label for="name">Nome</label>
+                        <input type="text" name="name" id="name" placeholder="Nome">
+                    </div>
+                    <div class="input-text">
+                        <label for="lastname">Sobrenome</label>
+                        <input type="text" name="lastname" id="lastname" placeholder="Sobrenome">
                     </div>
                     <div class="input-text">
                         <label for="email">E-mail</label>
@@ -110,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="show-all-passwords">Mostrar senhas</label>
                     </div>
 
-                    <!-- NOVO: Campo de seleção de tipo de usuário -->
                     <div class="input-text" style="margin-top: 10px;">
                         <label>Tipo de usuário:</label>
                         <div style="display: flex; gap: 15px; margin-top: 5px;">
@@ -130,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 
-<link rel="stylesheet" href="styles/footer.css">
 <?php include 'components/footer.php'; ?>
 
 <script>
@@ -144,6 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         confField.type = type;
     });
 </script>
+
+<script src="auth/scripts/register.js" type="module"></script>
 
 </body>
 </html>

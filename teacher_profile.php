@@ -1,5 +1,9 @@
 ﻿<?php
 session_start();
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
     exit;
@@ -130,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelar_data']) && $
         if (
             $ag['date'] === $data_cancelar &&
             $ag['student'] === $matricula_logada &&
-            $ag['status'] === 'confirmed'
+            in_array($ag['status'], ['confirmed', 'pending'])
         ) {
             unset($users[$id_professor]['agendamentos'][$key]);
             $users[$id_professor]['agendamentos'] = array_values($users[$id_professor]['agendamentos']);
@@ -251,17 +255,29 @@ $fc_events_json = json_encode($fc_events);
 </head>
 
 <body>
-    <?php include 'components/navbar.php'; ?>
+    <?php 
+        include 'components/navbar.php'; 
+        modular_nav("teacher_profile.php");
+    ?>
 
     <section class="topo">
         <div class="perfil">
             <img src="assets/images/avatar_aluno.jpg" alt="perfil">
         </div>
     </section>
+    <span class="logout">
+        <a href="logout.php">Sair</a>
+    </span>
 
     <div class="container my-5">
         <section class="teacher">
-            <h2>Olá, <?php echo htmlspecialchars($teacher_name); ?>!</h2>
+            <h2>
+                <?php if ($is_owner): ?>
+                Olá, <?php echo $teacher_name; ?>!
+                <?php else: ?>
+                <?php echo $teacher_name; ?>
+                <?php endif; ?>
+            </h2>
         </section>
 
         <!-- Ícones originais -->
@@ -284,7 +300,10 @@ $fc_events_json = json_encode($fc_events);
         <!-- Área Documentos -->
         <div id="area-documentos" class="area">
             <div class="grid">
-                <div class="box add" id="btn-add">+</div>
+                <?php if ($is_owner): ?>
+                <div class="box add">+</div>
+                <?php else: ?>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -486,7 +505,7 @@ $fc_events_json = json_encode($fc_events);
 
                 // ALUNO
                 if (userRole === 'student') {
-                    if (props.status === 'confirmed') {
+                    if (props.status === 'confirmed' || props.status === 'pending') {
                         const dataFormatada = new Date(props.date + 'T12:00:00').toLocaleDateString(
                             'pt-BR');
 

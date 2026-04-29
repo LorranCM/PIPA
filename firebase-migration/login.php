@@ -1,34 +1,20 @@
-<?php
-session_start();
-
-// Se já estiver logado, manda direto pro perfil correspondente
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    $role = $_SESSION['role'] ?? 'student';
-    $redirect = ($role === 'teacher') ? 'teacher_profile.php' : 'student_profile.php';
-    header("Location: " . $redirect);
-    exit;
-}
-
-include 'login_controller.php';
-?>
-
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIPA - Login</title>
-    <link rel="stylesheet" href="colors.css">
-    <link rel="stylesheet" href="styles/login_style.css">
-    <link rel="stylesheet" href="styles/footer.css">
-    <link rel="stylesheet" href="styles/navbar.css">
-    <base href="./">
-</head>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PIPA - Login</title>
+        <link rel="stylesheet" href="colors.css">
+        <link rel="stylesheet" href="styles/login_style.css">
+        <link rel="stylesheet" href="styles/footer.css">
+        <link rel="stylesheet" href="styles/navbar.css">
+        <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
+    </head>
 <body>
-    <?php 
-        include 'components/navbar.php'; 
-        modular_nav();
-    ?>
+
+    <?php include 'components/navbar.php'; ?>
 
     <div class="page-content">
         <img src="assets/images/boy_holding_book.png" alt="menino segurando um livro" class="side-image">
@@ -36,15 +22,12 @@ include 'login_controller.php';
         <form action="" method="POST" class="form-login" id="form-login">
             <div class="container-login">
                 <h1>Login</h1>
-                <div class="container-inputs">
 
-                    <?php if (!empty($error_message)): ?>
-                        <div class="error-box"><?= $error_message ?></div>
-                    <?php endif; ?>
+                <div class="container-inputs">
 
                     <div class="input-text">
                         <label for="matricula">Matrícula</label>
-                        <input type="text" name="matricula" id="matricula" class="matricula" placeholder="Matrícula" required>
+                        <input type="text" name="matricula" id="registration" class="matricula" placeholder="Matrícula" required>
                     </div>
                     <div class="input-text">
                         <label for="password">Senha</label>
@@ -66,6 +49,7 @@ include 'login_controller.php';
     </div>
 
     <?php include 'components/footer.php'; ?>
+
     <script>
     // Seleciona os elementos
     const passwordField = document.getElementById('password');
@@ -76,6 +60,9 @@ include 'login_controller.php';
         // Se estiver marcado, muda para 'text', se não, volta para 'password'
         passwordField.type = this.checked ? 'text' : 'password';
     });
-</script>
+    </script>
+
+    <script src="auth/scripts/login.js" type="module"></script>
+    
 </body>
 </html>
