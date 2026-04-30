@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Se já estiver logado, manda direto pro perfil correspondente
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $role = $_SESSION['role'] ?? 'student';
     $redirect = ($role === 'teacher') ? 'teacher_profile.php' : 'student_profile.php';

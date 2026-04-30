@@ -1,0 +1,224 @@
+/* =============================================
+   ESTILOS UNIFICADOS PARA MODAIS
+   ============================================= */
+
+/* Overlay do modal (fundo escuro) */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background-color: #ffffff !important;
+    border-radius: 12px;
+    width: 450px !important;
+    max-width: 90%;
+    padding: 25px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Animação de entrada */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Botão de fechar (X) */
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+    z-index: 1;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+/* Título do modal */
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #2c3e2f;
+    padding-right: 30px;
+    font-size: 1.3em;
+}
+
+/* Texto do modal */
+.modal-content p {
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Rodapé do modal com botões */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Botões do modal */
+.modal-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.modal-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Variações de botões */
+.btn-primary {
+    background-color: #2E8E5A;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1e6a41;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.btn-warning {
+    background-color: #f39c12;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #e08e0b;
+}
+
+.btn-info {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #2980b9;
+}
+
+/* =============================================
+   ESTILOS ESPECÍFICOS DO MODAL DE EDIÇÃO
+   ============================================= */
+#modalEdit .dias-check {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+#modalEdit .dias-check label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+#modalEdit .horario-row {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+#modalEdit .horario-row > div {
+    flex: 1;
+}
+
+#modalEdit .horario-row input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+#modalEdit label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+}
+
+#modalEdit input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* =============================================
+   RESPONSIVIDADE DOS MODAIS
+   ============================================= */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95% !important;
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .modal-footer {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .modal-btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    #modalEdit .horario-row {
+        flex-direction: column;
+    }
+}

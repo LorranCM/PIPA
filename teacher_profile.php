@@ -1,5 +1,6 @@
 ﻿<?php
 session_start();
+
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
@@ -251,13 +252,14 @@ $fc_events_json = json_encode($fc_events);
     <link rel="stylesheet" href="styles/teacher_profile.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
 </head>
 
 <body>
     <?php 
         include 'components/navbar.php'; 
-        modular_nav("teacher_profile.php");
+        modular_nav();
     ?>
 
     <section class="topo">
@@ -265,47 +267,47 @@ $fc_events_json = json_encode($fc_events);
             <img src="assets/images/avatar_aluno.jpg" alt="perfil">
         </div>
     </section>
-    <span class="logout">
-        <a href="logout.php">Sair</a>
-    </span>
-
-    <div class="container my-5">
-        <section class="teacher">
-            <h2>
-                <?php if ($is_owner): ?>
-                Olá, <?php echo $teacher_name; ?>!
-                <?php else: ?>
-                <?php echo $teacher_name; ?>
-                <?php endif; ?>
-            </h2>
-        </section>
-
-        <!-- Ícones originais -->
-        <div class="icons">
-            <div id="btn-grid">
-                <img src="assets/icons/list-paper-school-svgrepo-com.svg" alt="Documentos">
-            </div>
-            <div id="btn-doc">
-                <img src="assets/icons/calendar-days-svgrepo-com.svg" alt="Calendário">
-            </div>
-        </div>
-
-        <!-- Flash message -->
-        <?php if ($flash): ?>
-        <div class="flash-message <?php echo $flash['type'] === 'success' ? 'flash-success' : 'flash-error'; ?>">
-            <?php echo htmlspecialchars($flash['msg']); ?>
-        </div>
+    <div class="container">
+        <?php if ($is_owner): ?>
+            <span class="logout">
+                <a href="logout.php">Sair <i class="fa-solid fa-right-from-bracket"></i></a>
+            </span>
         <?php endif; ?>
-
-        <!-- Área Documentos -->
-        <div id="area-documentos" class="area">
-            <div class="grid">
-                <?php if ($is_owner): ?>
-                <div class="box add">+</div>
-                <?php else: ?>
-                <?php endif; ?>
+        <div class="container my-5">
+            <section class="teacher">
+                <h2>
+                    <?php if ($is_owner): ?>
+                    Olá, <?php echo $teacher_name; ?>!
+                    <?php else: ?>
+                    <?php echo $teacher_name; ?>
+                    <?php endif; ?>
+                </h2>
+            </section>
+            <!-- Ícones originais -->
+            <div class="icons">
+                <div id="btn-grid">
+                    <img src="assets/icons/list-paper-school-svgrepo-com.svg" alt="Documentos">
+                </div>
+                <div id="btn-doc">
+                    <img src="assets/icons/calendar-days-svgrepo-com.svg" alt="Calendário">
+                </div>
             </div>
-        </div>
+            <!-- Flash message -->
+            <?php if ($flash): ?>
+            <div class="flash-message <?php echo $flash['type'] === 'success' ? 'flash-success' : 'flash-error'; ?>">
+                <?php echo htmlspecialchars($flash['msg']); ?>
+            </div>
+            <?php endif; ?>
+            <!-- Área Documentos -->
+            <div id="area-documentos" class="area">
+                <div class="grid">
+                    <?php if ($is_owner): ?>
+                    <div class="box add">+</div>
+                    <?php else: ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+    </div>
 
         <!-- Área Calendário (sala de aula integrada) -->
         <div id="area-calendar" class="area">
@@ -432,189 +434,317 @@ $fc_events_json = json_encode($fc_events);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    // Alternância de abas (ícones)
-    const areaDocs = document.getElementById("area-documentos");
-    const areaCalendar = document.getElementById("area-calendar");
-    const btnGrid = document.getElementById("btn-grid");
-    const btnDoc = document.getElementById("btn-doc");
-    const btnAdd = document.getElementById("btn-add");
+// Alternância de abas (ícones)
+const areaDocs = document.getElementById("area-documentos");
+const areaCalendar = document.getElementById("area-calendar");
+const btnGrid = document.getElementById("btn-grid");
+const btnDoc = document.getElementById("btn-doc");
+const btnAdd = document.getElementById("btn-add");
 
-    let calendar;
+let calendar;
 
-    function resetEstado() {
-        areaDocs.classList.remove("ativa");
-        areaCalendar.classList.remove("ativa");
-        btnGrid.classList.remove("selected");
-        btnDoc.classList.remove("selected");
-    }
+function resetEstado() {
+    areaDocs.classList.remove("ativa");
+    areaCalendar.classList.remove("ativa");
+    btnGrid.classList.remove("selected");
+    btnDoc.classList.remove("selected");
+}
 
-    function alternarVisualizacao(area, botao) {
-        const jaAtiva = area.classList.contains("ativa");
-        resetEstado();
-        if (!jaAtiva) {
-            area.classList.add("ativa");
-            if (botao) botao.classList.add("selected");
-            if (area === areaCalendar) {
-                setTimeout(() => {
-                    if (calendar) {
-                        calendar.render();
-                        calendar.updateSize();
-                    }
-                }, 100);
-            }
+function alternarVisualizacao(area, botao) {
+    const jaAtiva = area.classList.contains("ativa");
+    resetEstado();
+    if (!jaAtiva) {
+        area.classList.add("ativa");
+        if (botao) botao.classList.add("selected");
+        if (area === areaCalendar) {
+            setTimeout(() => {
+                if (calendar) {
+                    calendar.render();
+                    calendar.updateSize();
+                }
+            }, 100);
         }
     }
+}
 
-    btnDoc.addEventListener("click", () => alternarVisualizacao(areaCalendar, btnDoc));
-    btnGrid.addEventListener("click", () => alternarVisualizacao(areaDocs, btnGrid));
-    if (btnAdd) {
-        btnAdd.addEventListener("click", () => {
-            alert('Funcionalidade de upload em desenvolvimento.');
-        });
-    }
+btnDoc.addEventListener("click", () => alternarVisualizacao(areaCalendar, btnDoc));
+btnGrid.addEventListener("click", () => alternarVisualizacao(areaDocs, btnGrid));
+if (btnAdd) {
+    btnAdd.addEventListener("click", () => {
+        alert('Funcionalidade de upload em desenvolvimento.');
+    });
+}
 
-    // Calendário
-    document.addEventListener('DOMContentLoaded', function() {
-        const calendarEl = document.getElementById('calendar');
-        const events = <?php echo $fc_events_json; ?>;
-        const userRole = '<?php echo $user_role; ?>';
-        const isOwner = <?php echo $is_owner ? 'true' : 'false'; ?>;
-        const todayStr = '<?php echo $today; ?>';
-        const endStr = '<?php echo $end_date; ?>';
+// Calendário
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const events = <?php echo $fc_events_json; ?>;
+    const userRole = '<?php echo $user_role; ?>';
+    const isOwner = <?php echo $is_owner ? 'true' : 'false'; ?>;
+    const todayStr = '<?php echo $today; ?>';
+    const endStr = '<?php echo $end_date; ?>';
 
-        calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'pt-br',
-            height: 'auto',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth'
-            },
-            events: events,
-            eventClick: function(info) {
-                const props = info.event.extendedProps;
-
-                // PROFESSOR (mantém igual)
-                if (isOwner) {
+    calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'pt-br',
+        height: 'auto',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth'
+        },
+        events: events,
+        // Remove o eventClick para evitar conflitos com dateClick
+        // eventClick: function(info) { ... },  // REMOVIDO
+        
+        dateClick: function(info) {
+            const dateStr = info.dateStr;
+            
+            // Busca todos os eventos desta data
+            const eventosDoDia = calendar.getEvents().filter(function(ev) {
+                return ev.startStr.substring(0, 10) === dateStr;
+            });
+            
+            // Filtra eventos específicos
+            const disponiveis = eventosDoDia.filter(ev => ev.title.includes('Disponível'));
+            const agendados = eventosDoDia.filter(ev => 
+                ev.title.includes('Agendado') || ev.title.includes('Confirmado')
+            );
+            
+            // LÓGICA PARA PROFESSOR (owner)
+            if (isOwner) {
+                if (agendados.length > 0) {
+                    const ag = agendados[0];
+                    const props = ag.extendedProps;
+                    
                     if (props.status === 'pending') {
-                        openConfirmModal(props.date, props.student, info.event.title);
+                        // Usa modal personalizado em vez de confirm()
+                        openConfirmModal(props.date, props.student, ag.title);
+                    } else if (props.status === 'confirmed') {
+                        showCustomModal(
+                            'Agendamento Confirmado',
+                            'Este agendamento já está confirmado para ' + props.student + 
+                            ' no dia ' + formatDate(props.date) + '.',
+                            [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                        );
                     }
-                    return;
+                } else {
+                    // Nenhum agendamento nesta data
+                    showCustomModal(
+                        'Nada nesta data',
+                        'Não há agendamentos para o dia ' + formatDate(dateStr) + '.',
+                        [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                    );
                 }
-
-                // ALUNO
-                if (userRole === 'student') {
-                    if (props.status === 'confirmed' || props.status === 'pending') {
-                        const dataFormatada = new Date(props.date + 'T12:00:00').toLocaleDateString(
-                            'pt-BR');
-
-                        if (confirm('Deseja cancelar o atendimento do dia ' + dataFormatada +
-                                '?')) {
-                            document.getElementById('input-cancelar-data').value = props.date;
-                            document.getElementById('form-cancelar').submit();
-                        }
-                    } else {
-                        alert('Aguardando confirmação do professor.');
-                    }
-                }
-            },
-            dateClick: function(info) {
-                if (userRole === 'student' && !isOwner) {
-                    if (info.dateStr < todayStr) {
-                        alert('Não é possível agendar para datas passadas.');
-                        return;
-                    }
-                    if (info.dateStr > endStr) {
-                        alert('Agendamento apenas para os próximos 30 dias.');
-                        return;
-                    }
-                    const eventosDoDia = calendar.getEvents().filter(function(ev) {
-                        return ev.startStr.substring(0, 10) === info.dateStr && ev.title
-                            .includes('Disponível');
-                    });
-                    const agendado = calendar.getEvents().filter(function(ev) {
-                        return ev.startStr.substring(0, 10) === info.dateStr && (ev.title
-                            .includes('Agendado') || ev.title.includes('Confirmado'));
-                    });
-                    if (eventosDoDia.length === 0) {
-                        alert('Este dia não está disponível para agendamento.');
-                        return;
-                    }
-                    if (agendado.length > 0) {
-                        alert('Já existe um agendamento nesta data.');
-                        return;
-                    }
-                    const dataFormatada = new Date(info.dateStr + 'T12:00:00').toLocaleDateString(
-                        'pt-BR');
-                    if (confirm('Agendar atendimento para ' + dataFormatada + '?')) {
-                        document.getElementById('input-data-agendamento').value = info.dateStr;
-                        document.getElementById('form-agendar').submit();
-                    }
-                }
+                return;
             }
-        });
-        calendar.render();
-        window.calendar = calendar;
-
-        // Exibe a aba de calendário por padrão
-        alternarVisualizacao(areaCalendar, btnDoc);
-    });
-
-    // Modal de edição - CORRIGIDO: display flex para centralizar
-    function openEditModal() {
-        document.getElementById('modalEdit').style.display = 'flex';
-    }
-
-    function closeEditModal() {
-        document.getElementById('modalEdit').style.display = 'none';
-    }
-
-    // Modal de confirmação - CORRIGIDO: display flex
-    let currentConfirmDate = '';
-
-    function openConfirmModal(date, student, title) {
-        currentConfirmDate = date;
-        document.getElementById('modalConfirmTitle').innerText = 'Confirmar agendamento';
-        document.getElementById('modalConfirmText').innerText =
-            'Deseja confirmar ou cancelar o agendamento de ' + student +
-            ' no dia ' + new Date(date + 'T12:00:00').toLocaleDateString('pt-BR') + '?';
-        document.getElementById('modalConfirm').style.display = 'flex';
-    }
-
-    function closeConfirmModal() {
-        document.getElementById('modalConfirm').style.display = 'none';
-        currentConfirmDate = '';
-    }
-
-    // Fechar modal ao clicar no X
-    document.getElementById('closeConfirmModalX')?.addEventListener('click', function() {
-        closeConfirmModal();
-    });
-
-    document.getElementById('btnConfirmYes')?.addEventListener('click', function() {
-        if (currentConfirmDate) {
-            document.getElementById('input-date-action').value = currentConfirmDate;
-            document.getElementById('input-action-type').value = 'confirm';
-            document.getElementById('form-action').submit();
-        }
-    });
-
-    document.getElementById('btnConfirmNo')?.addEventListener('click', function() {
-        if (currentConfirmDate) {
-            if (confirm('Tem certeza que deseja cancelar este agendamento?')) {
-                document.getElementById('input-date-action').value = currentConfirmDate;
-                document.getElementById('input-action-type').value = 'cancel';
-                document.getElementById('form-action').submit();
+            
+            // LÓGICA PARA ALUNO (student)
+            if (userRole === 'student' && !isOwner) {
+                if (agendados.length > 0) {
+                    const ag = agendados[0];
+                    const props = ag.extendedProps;
+                    const dataFormatada = formatDate(props.date);
+                    
+                    // Modal personalizado para cancelar
+                    showCustomModal(
+                        'Agendamento Encontrado',
+                        'Você tem um agendamento ' + 
+                        (props.status === 'confirmed' ? 'confirmado' : 'pendente') + 
+                        ' para o dia ' + dataFormatada + '. Deseja cancelar?',
+                        [
+                            { 
+                                text: 'Cancelar Agendamento', 
+                                class: 'btn-no', 
+                                onClick: function() {
+                                    document.getElementById('input-cancelar-data').value = props.date;
+                                    document.getElementById('form-cancelar').submit();
+                                }
+                            },
+                            { 
+                                text: 'Manter', 
+                                class: 'btn-yes', 
+                                onClick: closeCustomModal 
+                            }
+                        ]
+                    );
+                } else if (disponiveis.length > 0) {
+                    // Data disponível para agendamento
+                    if (dateStr < todayStr) {
+                        showCustomModal(
+                            'Data Inválida',
+                            'Não é possível agendar para datas passadas.',
+                            [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                        );
+                        return;
+                    }
+                    if (dateStr > endStr) {
+                        showCustomModal(
+                            'Data Inválida',
+                            'Agendamento apenas para os próximos 30 dias.',
+                            [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                        );
+                        return;
+                    }
+                    
+                    const dataFormatada = formatDate(dateStr);
+                    showCustomModal(
+                        'Agendar Atendimento',
+                        'Deseja agendar um atendimento para ' + dataFormatada + '?',
+                        [
+                            { 
+                                text: 'Confirmar Agendamento', 
+                                class: 'btn-yes', 
+                                onClick: function() {
+                                    document.getElementById('input-data-agendamento').value = dateStr;
+                                    document.getElementById('form-agendar').submit();
+                                }
+                            },
+                            { 
+                                text: 'Cancelar', 
+                                class: 'btn-no', 
+                                onClick: closeCustomModal 
+                            }
+                        ]
+                    );
+                } else {
+                    // Nada nesta data
+                    showCustomModal(
+                        'Data Indisponível',
+                        'Este dia não está disponível para agendamento ou não há atividades programadas.',
+                        [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                    );
+                }
             }
         }
     });
+    calendar.render();
+    window.calendar = calendar;
 
-    window.onclick = function(e) {
-        if (e.target === document.getElementById('modalEdit')) closeEditModal();
-        if (e.target === document.getElementById('modalConfirm')) closeConfirmModal();
+    // Exibe a aba de calendário por padrão
+    alternarVisualizacao(areaCalendar, btnDoc);
+});
+
+// Funções auxiliares
+function formatDate(dateStr) {
+    return new Date(dateStr + 'T12:00:00').toLocaleDateString('pt-BR');
+}
+
+// Modal de edição
+function openEditModal() {
+    document.getElementById('modalEdit').style.display = 'flex';
+}
+
+function closeEditModal() {
+    document.getElementById('modalEdit').style.display = 'none';
+}
+
+// Modal de confirmação (teacher)
+let currentConfirmDate = '';
+
+function openConfirmModal(date, student, title) {
+    currentConfirmDate = date;
+    document.getElementById('modalConfirmTitle').innerText = 'Confirmar agendamento';
+    document.getElementById('modalConfirmText').innerText =
+        'Deseja confirmar ou cancelar o agendamento de ' + student +
+        ' no dia ' + formatDate(date) + '?';
+    document.getElementById('modalConfirm').style.display = 'flex';
+}
+
+function closeConfirmModal() {
+    document.getElementById('modalConfirm').style.display = 'none';
+    currentConfirmDate = '';
+}
+
+// Fechar modal ao clicar no X
+document.getElementById('closeConfirmModalX')?.addEventListener('click', function() {
+    closeConfirmModal();
+});
+
+document.getElementById('btnConfirmYes')?.addEventListener('click', function() {
+    if (currentConfirmDate) {
+        document.getElementById('input-date-action').value = currentConfirmDate;
+        document.getElementById('input-action-type').value = 'confirm';
+        document.getElementById('form-action').submit();
     }
-    </script>
+});
+
+document.getElementById('btnConfirmNo')?.addEventListener('click', function() {
+    if (currentConfirmDate) {
+        // Modal de confirmação para cancelar
+        showCustomModal(
+            'Confirmar Cancelamento',
+            'Tem certeza que deseja cancelar este agendamento?',
+            [
+                { 
+                    text: 'Sim, Cancelar', 
+                    class: 'btn-no', 
+                    onClick: function() {
+                        document.getElementById('input-date-action').value = currentConfirmDate;
+                        document.getElementById('input-action-type').value = 'cancel';
+                        document.getElementById('form-action').submit();
+                    }
+                },
+                { 
+                    text: 'Não', 
+                    class: 'btn-yes', 
+                    onClick: closeCustomModal 
+                }
+            ]
+        );
+    }
+});
+
+// NOVO: Modal personalizado genérico
+function showCustomModal(title, message, buttons) {
+    // Cria o modal dinamicamente
+    const modalHTML = `
+        <div id="customModal" class="modal-overlay" style="display: flex;">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeCustomModal()">&times;</span>
+                <h3>${title}</h3>
+                <p>${message}</p>
+                <div class="modal-footer">
+                    ${buttons.map((btn, index) => 
+                        `<button class="btn ${btn.class}" id="customBtn${index}">${btn.text}</button>`
+                    ).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Remove modal anterior se existir
+    const existingModal = document.getElementById('customModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Adiciona o novo modal
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Adiciona event listeners aos botões
+    buttons.forEach((btn, index) => {
+        const buttonEl = document.getElementById(`customBtn${index}`);
+        if (buttonEl && btn.onClick) {
+            buttonEl.addEventListener('click', btn.onClick);
+        }
+    });
+}
+
+function closeCustomModal() {
+    const modal = document.getElementById('customModal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Fechar modais ao clicar fora
+window.onclick = function(e) {
+    if (e.target === document.getElementById('modalEdit')) closeEditModal();
+    if (e.target === document.getElementById('modalConfirm')) closeConfirmModal();
+    if (e.target === document.getElementById('customModal')) closeCustomModal();
+}
+</script>
 </body>
 
 </html>

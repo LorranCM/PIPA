@@ -9,6 +9,9 @@ body {
     margin: 0;
 }
 
+/* =============================================
+   CABEÇALHO E PERFIL
+   ============================================= */
 .topo {
     background: linear-gradient(to right, #2f6f4f, #3c8a60);
     height: 200px;
@@ -38,7 +41,9 @@ body {
     margin-bottom: 25px;
 }
 
-/* Container dos ícones - ALINHAMENTO LADO A LADO */
+/* =============================================
+   ÍCONES DE NAVEGAÇÃO (ABAS)
+   ============================================= */
 .icons {
     display: flex;
     justify-content: center;
@@ -46,7 +51,6 @@ body {
     margin-bottom: 30px;
 }
 
-/* Feedback visual para os botões de ícone */
 .icons div {
     padding: 15px;
     border-radius: 12px;
@@ -58,23 +62,23 @@ body {
     width: fit-content;
 }
 
-/* Efeito ao passar o mouse */
 .icons div:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* Estado ativo (clicado) */
 .icons div.selected {
     background-color: rgba(0, 0, 0, 0.15);
     box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
 }
 
-/* Ajuste na imagem */
 .icons img {
     width: 100px;
     pointer-events: none;
 }
 
+/* =============================================
+   ÁREAS DE CONTEÚDO
+   ============================================= */
 .area {
     display: none;
 }
@@ -83,6 +87,7 @@ body {
     display: block;
 }
 
+/* Grid de documentos */
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -113,6 +118,7 @@ body {
     font-size: 40px;
 }
 
+/* Carteirinha */
 .carteirinha {
     display: flex;
     justify-content: center;
@@ -133,27 +139,31 @@ body {
     font-size: 18px;
 }
 
-/* ===== NOVOS ESTILOS (SALA DE AULA / CALENDÁRIO / MODAIS) ===== */
-
-/* Flash messages */
+/* =============================================
+   MENSAGENS FLASH
+   ============================================= */
 .flash-message {
     margin: 20px 50px;
     padding: 12px 20px;
     border-radius: 6px;
     font-weight: bold;
 }
+
 .flash-success {
     background: #e8f5e9;
     border-left: 4px solid #2E8E5A;
     color: #1b5e20;
 }
+
 .flash-error {
     background: #fdecea;
     border-left: 4px solid #e74c3c;
     color: #a71d2a;
 }
 
-/* Room card */
+/* =============================================
+   CARD DA SALA DE AULA
+   ============================================= */
 .room-card {
     background: white;
     border: 1px solid #ddd;
@@ -162,16 +172,19 @@ body {
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     margin: 0 50px 30px;
 }
+
 .room-header {
     border-bottom: 2px solid #2E8E5A;
     margin-bottom: 20px;
     padding-bottom: 10px;
 }
+
 .room-header h1 {
     margin: 0 0 5px;
     font-size: 2em;
     color: #1e3d2f;
 }
+
 .room-header p {
     margin: 0;
     font-size: 1.1em;
@@ -181,12 +194,14 @@ body {
 .info-group {
     margin-bottom: 15px;
 }
+
 .info-group label {
     font-weight: bold;
     color: #555;
     display: block;
     margin-bottom: 4px;
 }
+
 .info-group span {
     font-size: 1.1em;
     color: #222;
@@ -202,7 +217,9 @@ body {
     margin-top: 20px;
 }
 
-/* Botões genéricos */
+/* =============================================
+   BOTÕES
+   ============================================= */
 .btn {
     padding: 12px 25px;
     border-radius: 5px;
@@ -213,41 +230,52 @@ body {
     display: inline-block;
     font-size: 0.95em;
 }
+
 .btn-edit {
     background-color: #f39c12;
     color: white;
 }
+
 .btn-edit:hover {
     background-color: #e08e0b;
 }
+
 .btn-save {
     background-color: #2E8E5A;
     color: white;
 }
+
 .btn-save:hover {
     background-color: #1e6a41;
 }
+
 .btn-cancel {
     background: #ccc;
     color: #333;
 }
+
 .btn-cancel:hover {
     background: #b3b3b3;
 }
+
 .btn-yes {
     background: #2E8E5A;
     color: white;
 }
+
 .btn-no {
     background: #e74c3c;
     color: white;
 }
+
 .btn-yes:hover,
 .btn-no:hover {
     opacity: 0.9;
 }
 
-/* Legenda do calendário */
+/* =============================================
+   LEGENDA DO CALENDÁRIO
+   ============================================= */
 .legenda {
     display: flex;
     gap: 20px;
@@ -255,10 +283,12 @@ body {
     margin-bottom: 12px;
     font-size: 0.9em;
 }
+
 .legenda span {
     display: inline-flex;
     align-items: center;
 }
+
 .legenda span span {
     display: inline-block;
     width: 14px;
@@ -267,11 +297,14 @@ body {
     vertical-align: middle;
     margin-right: 5px;
 }
+
 .cor-disponivel { background: #2E8E5A; }
 .cor-pendente   { background: #f39c12; }
 .cor-confirmado { background: #3498db; }
 
-/* Calendário */
+/* =============================================
+   CALENDÁRIO
+   ============================================= */
 #calendar {
     background-color: white;
     margin: 0 50px;
@@ -285,97 +318,43 @@ body {
 .fc .fc-toolbar-title {
     font-size: 1.1em !important;
 }
+
 .fc .fc-button {
     padding: 0.3em 0.5em !important;
     font-size: 0.85em !important;
 }
+
 .fc .fc-daygrid-day-frame {
     min-height: 70px !important;
 }
+
 .fc .fc-daygrid-day {
     cursor: pointer;
 }
+
 .fc .fc-daygrid-day:hover {
     background-color: #f0f0f0;
     transition: background-color 0.2s ease;
 }
 
-/* Modais */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
+/* Remove estilos do Bootstrap nos links do calendário */
+#calendar a {
+    text-decoration: none !important;
+    color: inherit !important;
 }
-.modal-content {
-    background-color: #ffffff !important; /* 'white' com !important para vencer o Bootstrap */
-    border-radius: 12px;
-    width: 450px !important;             /* Força a largura correta */
-    max-width: 90%;
-    padding: 25px;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    animation: fadeIn 0.2s ease;
-    display: flex;                       /* Garante que o conteúdo interno se alinhe */
-    flex-direction: column;
+
+/* =============================================
+   BOTÃO DE LOGOUT
+   ============================================= */
+.logout {
+    display: block;
+    text-align: right;
+    margin: 10px 30px 0 0;
 }
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
-/* Botão fechar (X) */
-.modal-close {
-    position: absolute;
-    top: 12px;
-    right: 18px;
-    font-size: 28px;
+
+.logout a {
+    color: red !important;
+    font-size: 14px;
+    text-decoration: none;
     font-weight: bold;
-    color: #aaa;
-    cursor: pointer;
-    transition: color 0.2s;
-    line-height: 1;
-}
-.modal-close:hover {
-    color: #333;
-}
-.modal-content h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #2c3e2f;
-    padding-right: 20px;
-}
-.modal-content p {
-    margin-bottom: 20px;
-    color: #444;
-}
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 10px;
-}
-.modal-footer .btn {
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-}
-.btn-yes {
-    background-color: #2E8E5A;
-    color: white;
-}
-.btn-yes:hover {
-    background-color: #1e6a41;
-}
-.btn-no {
-    background-color: #e74c3c;
-    color: white;
-}
-.btn-no:hover {
-    background-color: #c0392b;
 }
