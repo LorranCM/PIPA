@@ -7,6 +7,7 @@
         header("Location: " . $redirect);
         exit;
     }
+    
 ?>
 
 <!DOCTYPE html>

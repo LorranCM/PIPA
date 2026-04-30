@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "061ce88622b88d4cc1415180c0c449a4",
+    "content-hash": "098d448459240d34fb1f28cd4deb1b80",
     "packages": [
         {
             "name": "beste/clock",
@@ -596,16 +596,16 @@
         },
         {
             "name": "google/cloud-firestore",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-cloud-php-firestore.git",
-                "reference": "ecac283386e88428b8ab8e14cc6e1216f18c6356"
+                "reference": "029dba99b9c8cdb3dc64e3e8f0e6351d9883bdf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-cloud-php-firestore/zipball/ecac283386e88428b8ab8e14cc6e1216f18c6356",
-                "reference": "ecac283386e88428b8ab8e14cc6e1216f18c6356",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-firestore/zipball/029dba99b9c8cdb3dc64e3e8f0e6351d9883bdf7",
+                "reference": "029dba99b9c8cdb3dc64e3e8f0e6351d9883bdf7",
                 "shasum": ""
             },
             "require": {
@@ -648,9 +648,9 @@
             ],
             "description": "Cloud Firestore Client for PHP",
             "support": {
-                "source": "https://github.com/googleapis/google-cloud-php-firestore/tree/v2.0.0"
+                "source": "https://github.com/googleapis/google-cloud-php-firestore/tree/v2.1.0"
             },
-            "time": "2026-04-09T21:01:46+00:00"
+            "time": "2026-04-28T15:44:32+00:00"
         },
         {
             "name": "google/cloud-storage",
@@ -771,16 +771,16 @@
         },
         {
             "name": "google/gax",
-            "version": "v1.42.2",
+            "version": "v1.42.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/gax-php.git",
-                "reference": "126bd80a8e2f76aa2cb5244c3edc856d708ceeb3"
+                "reference": "9dce5145169f2390ef2500d638c3cb5632054a96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/126bd80a8e2f76aa2cb5244c3edc856d708ceeb3",
-                "reference": "126bd80a8e2f76aa2cb5244c3edc856d708ceeb3",
+                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/9dce5145169f2390ef2500d638c3cb5632054a96",
+                "reference": "9dce5145169f2390ef2500d638c3cb5632054a96",
                 "shasum": ""
             },
             "require": {
@@ -822,9 +822,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/gax-php/issues",
-                "source": "https://github.com/googleapis/gax-php/tree/v1.42.2"
+                "source": "https://github.com/googleapis/gax-php/tree/v1.42.3"
             },
-            "time": "2026-04-10T17:40:39+00:00"
+            "time": "2026-04-30T20:59:42+00:00"
         },
         {
             "name": "google/grpc-gcp",
@@ -2384,7 +2384,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.36.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -2445,7 +2445,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.36.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.37.0"
             },
             "funding": [
                 {

@@ -251,6 +251,7 @@ $fc_events_json = json_encode($fc_events);
     <link rel="stylesheet" href="styles/navbar.css">
     <link rel="stylesheet" href="styles/teacher_profile.css">
     <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/modals.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
@@ -433,7 +434,7 @@ $fc_events_json = json_encode($fc_events);
     <?php endif; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+<script>
 // Alternância de abas (ícones)
 const areaDocs = document.getElementById("area-documentos");
 const areaCalendar = document.getElementById("area-calendar");
@@ -494,8 +495,6 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 'dayGridMonth'
         },
         events: events,
-        // Remove o eventClick para evitar conflitos com dateClick
-        // eventClick: function(info) { ... },  // REMOVIDO
         
         dateClick: function(info) {
             const dateStr = info.dateStr;
@@ -516,24 +515,107 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (agendados.length > 0) {
                     const ag = agendados[0];
                     const props = ag.extendedProps;
+                    const dataFormatada = formatDate(props.date || dateStr);
                     
                     if (props.status === 'pending') {
-                        // Usa modal personalizado em vez de confirm()
-                        openConfirmModal(props.date, props.student, ag.title);
+                        // Modal para agendamento pendente
+                        showCustomModal(
+                            'Agendamento Pendente',
+                            'Agendamento de <strong>' + props.student + '</strong> para o dia ' + dataFormatada + '.<br><br>O que deseja fazer?',
+                            [
+                                { 
+                                    text: '✓ Confirmar', 
+                                    class: 'btn-yes', 
+                                    onClick: function() {
+                                        closeCustomModal();
+                                        document.getElementById('input-date-action').value = props.date;
+                                        document.getElementById('input-action-type').value = 'confirm';
+                                        document.getElementById('form-action').submit();
+                                    }
+                                },
+                                { 
+                                    text: '✗ Cancelar Agendamento', 
+                                    class: 'btn-no', 
+                                    onClick: function() {
+                                        closeCustomModal();
+                                        showCustomModal(
+                                            'Confirmar Cancelamento',
+                                            'Tem certeza que deseja cancelar este agendamento?',
+                                            [
+                                                { 
+                                                    text: 'Sim, Cancelar', 
+                                                    class: 'btn-no', 
+                                                    onClick: function() {
+                                                        closeCustomModal();
+                                                        document.getElementById('input-date-action').value = props.date;
+                                                        document.getElementById('input-action-type').value = 'cancel';
+                                                        document.getElementById('form-action').submit();
+                                                    }
+                                                },
+                                                { 
+                                                    text: 'Não', 
+                                                    class: 'btn-secondary', 
+                                                    onClick: closeCustomModal 
+                                                }
+                                            ]
+                                        );
+                                    }
+                                },
+                                { 
+                                    text: 'Fechar', 
+                                    class: 'btn-secondary', 
+                                    onClick: closeCustomModal 
+                                }
+                            ]
+                        );
                     } else if (props.status === 'confirmed') {
+                        // Modal para agendamento confirmado
                         showCustomModal(
                             'Agendamento Confirmado',
-                            'Este agendamento já está confirmado para ' + props.student + 
-                            ' no dia ' + formatDate(props.date) + '.',
-                            [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                            'Este agendamento já está confirmado para <strong>' + props.student + '</strong> no dia ' + dataFormatada + '.',
+                            [
+                                { 
+                                    text: 'Cancelar Agendamento', 
+                                    class: 'btn-no', 
+                                    onClick: function() {
+                                        closeCustomModal();
+                                        showCustomModal(
+                                            'Confirmar Cancelamento',
+                                            'Tem certeza que deseja cancelar este agendamento confirmado?',
+                                            [
+                                                { 
+                                                    text: 'Sim, Cancelar', 
+                                                    class: 'btn-no', 
+                                                    onClick: function() {
+                                                        closeCustomModal();
+                                                        document.getElementById('input-date-action').value = props.date;
+                                                        document.getElementById('input-action-type').value = 'cancel';
+                                                        document.getElementById('form-action').submit();
+                                                    }
+                                                },
+                                                { 
+                                                    text: 'Não', 
+                                                    class: 'btn-secondary', 
+                                                    onClick: closeCustomModal 
+                                                }
+                                            ]
+                                        );
+                                    }
+                                },
+                                { 
+                                    text: 'Fechar', 
+                                    class: 'btn-secondary', 
+                                    onClick: closeCustomModal 
+                                }
+                            ]
                         );
                     }
                 } else {
                     // Nenhum agendamento nesta data
                     showCustomModal(
-                        'Nada nesta data',
+                        'Sem Agendamentos',
                         'Não há agendamentos para o dia ' + formatDate(dateStr) + '.',
-                        [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                        [{ text: 'OK', class: 'btn-primary', onClick: closeCustomModal }]
                     );
                 }
                 return;
@@ -549,14 +631,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Modal personalizado para cancelar
                     showCustomModal(
                         'Agendamento Encontrado',
-                        'Você tem um agendamento ' + 
+                        'Você tem um agendamento <strong>' + 
                         (props.status === 'confirmed' ? 'confirmado' : 'pendente') + 
-                        ' para o dia ' + dataFormatada + '. Deseja cancelar?',
+                        '</strong> para o dia ' + dataFormatada + '. Deseja cancelar?',
                         [
                             { 
                                 text: 'Cancelar Agendamento', 
                                 class: 'btn-no', 
                                 onClick: function() {
+                                    closeCustomModal();
                                     document.getElementById('input-cancelar-data').value = props.date;
                                     document.getElementById('form-cancelar').submit();
                                 }
@@ -574,7 +657,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         showCustomModal(
                             'Data Inválida',
                             'Não é possível agendar para datas passadas.',
-                            [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                            [{ text: 'OK', class: 'btn-secondary', onClick: closeCustomModal }]
                         );
                         return;
                     }
@@ -582,7 +665,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         showCustomModal(
                             'Data Inválida',
                             'Agendamento apenas para os próximos 30 dias.',
-                            [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                            [{ text: 'OK', class: 'btn-secondary', onClick: closeCustomModal }]
                         );
                         return;
                     }
@@ -590,12 +673,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     const dataFormatada = formatDate(dateStr);
                     showCustomModal(
                         'Agendar Atendimento',
-                        'Deseja agendar um atendimento para ' + dataFormatada + '?',
+                        'Deseja agendar um atendimento para <strong>' + dataFormatada + '</strong>?',
                         [
                             { 
                                 text: 'Confirmar Agendamento', 
                                 class: 'btn-yes', 
                                 onClick: function() {
+                                    closeCustomModal();
                                     document.getElementById('input-data-agendamento').value = dateStr;
                                     document.getElementById('form-agendar').submit();
                                 }
@@ -612,7 +696,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     showCustomModal(
                         'Data Indisponível',
                         'Este dia não está disponível para agendamento ou não há atividades programadas.',
-                        [{ text: 'OK', class: 'btn-yes', onClick: closeCustomModal }]
+                        [{ text: 'OK', class: 'btn-secondary', onClick: closeCustomModal }]
                     );
                 }
             }
@@ -639,64 +723,14 @@ function closeEditModal() {
     document.getElementById('modalEdit').style.display = 'none';
 }
 
-// Modal de confirmação (teacher)
-let currentConfirmDate = '';
-
-function openConfirmModal(date, student, title) {
-    currentConfirmDate = date;
-    document.getElementById('modalConfirmTitle').innerText = 'Confirmar agendamento';
-    document.getElementById('modalConfirmText').innerText =
-        'Deseja confirmar ou cancelar o agendamento de ' + student +
-        ' no dia ' + formatDate(date) + '?';
-    document.getElementById('modalConfirm').style.display = 'flex';
-}
-
-function closeConfirmModal() {
-    document.getElementById('modalConfirm').style.display = 'none';
-    currentConfirmDate = '';
-}
-
-// Fechar modal ao clicar no X
-document.getElementById('closeConfirmModalX')?.addEventListener('click', function() {
-    closeConfirmModal();
-});
-
-document.getElementById('btnConfirmYes')?.addEventListener('click', function() {
-    if (currentConfirmDate) {
-        document.getElementById('input-date-action').value = currentConfirmDate;
-        document.getElementById('input-action-type').value = 'confirm';
-        document.getElementById('form-action').submit();
-    }
-});
-
-document.getElementById('btnConfirmNo')?.addEventListener('click', function() {
-    if (currentConfirmDate) {
-        // Modal de confirmação para cancelar
-        showCustomModal(
-            'Confirmar Cancelamento',
-            'Tem certeza que deseja cancelar este agendamento?',
-            [
-                { 
-                    text: 'Sim, Cancelar', 
-                    class: 'btn-no', 
-                    onClick: function() {
-                        document.getElementById('input-date-action').value = currentConfirmDate;
-                        document.getElementById('input-action-type').value = 'cancel';
-                        document.getElementById('form-action').submit();
-                    }
-                },
-                { 
-                    text: 'Não', 
-                    class: 'btn-yes', 
-                    onClick: closeCustomModal 
-                }
-            ]
-        );
-    }
-});
-
-// NOVO: Modal personalizado genérico
+// FUNÇÕES DO MODAL CUSTOMIZADO (CORRIGIDAS)
 function showCustomModal(title, message, buttons) {
+    // Remove modal anterior se existir
+    const existingModal = document.getElementById('customModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
     // Cria o modal dinamicamente
     const modalHTML = `
         <div id="customModal" class="modal-overlay" style="display: flex;">
@@ -712,12 +746,6 @@ function showCustomModal(title, message, buttons) {
             </div>
         </div>
     `;
-    
-    // Remove modal anterior se existir
-    const existingModal = document.getElementById('customModal');
-    if (existingModal) {
-        existingModal.remove();
-    }
     
     // Adiciona o novo modal
     document.body.insertAdjacentHTML('beforeend', modalHTML);
@@ -741,7 +769,6 @@ function closeCustomModal() {
 // Fechar modais ao clicar fora
 window.onclick = function(e) {
     if (e.target === document.getElementById('modalEdit')) closeEditModal();
-    if (e.target === document.getElementById('modalConfirm')) closeConfirmModal();
     if (e.target === document.getElementById('customModal')) closeCustomModal();
 }
 </script>

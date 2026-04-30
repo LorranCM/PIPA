@@ -69,7 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
 </head>
 <body>
-    <?php include 'components/navbar.php'; ?>
+    <?php 
+        include 'components/navbar.php'; 
+        modular_nav();
+    ?>
 
     <div class="page-content">
         <img src="assets/images/boy_holding_book.png" alt="menino segurando um livro" class="side-image">

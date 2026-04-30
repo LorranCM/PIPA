@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => 'caea59e70a5c6189d779f2632e90a709669eef14',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
+        'reference' => '5a1303c8e41d7784a90bcfa8d5a62f5f48675b3c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => 'caea59e70a5c6189d779f2632e90a709669eef14',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => '5a1303c8e41d7784a90bcfa8d5a62f5f48675b3c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -101,9 +101,9 @@
             'dev_requirement' => false,
         ),
         'google/cloud-firestore' => array(
-            'pretty_version' => 'v2.0.0',
-            'version' => '2.0.0.0',
-            'reference' => 'ecac283386e88428b8ab8e14cc6e1216f18c6356',
+            'pretty_version' => 'v2.1.0',
+            'version' => '2.1.0.0',
+            'reference' => '029dba99b9c8cdb3dc64e3e8f0e6351d9883bdf7',
             'type' => 'library',
             'install_path' => __DIR__ . '/../google/cloud-firestore',
             'aliases' => array(),
@@ -128,9 +128,9 @@
             'dev_requirement' => false,
         ),
         'google/gax' => array(
-            'pretty_version' => 'v1.42.2',
-            'version' => '1.42.2.0',
-            'reference' => '126bd80a8e2f76aa2cb5244c3edc856d708ceeb3',
+            'pretty_version' => 'v1.42.3',
+            'version' => '1.42.3.0',
+            'reference' => '9dce5145169f2390ef2500d638c3cb5632054a96',
             'type' => 'library',
             'install_path' => __DIR__ . '/../google/gax',
             'aliases' => array(),
@@ -386,8 +386,8 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-mbstring' => array(
-            'pretty_version' => 'v1.36.0',
-            'version' => '1.36.0.0',
+            'pretty_version' => 'v1.37.0',
+            'version' => '1.37.0.0',
             'reference' => '6a21eb99c6973357967f6ce3708cd55a6bec6315',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',

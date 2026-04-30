@@ -49,6 +49,31 @@ foreach ($users as $id => $user) {
 
 $meus_agendamentos_json = json_encode($meus_agendamentos);
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $novo_nome  = $_POST['name'] ?? '';
+    $novo_email = $_POST['email'] ?? '';
+    $nova_senha = $_POST['password'] ?? '';
+
+    $users = json_decode(file_get_contents('users.json'), true) ?? [];
+
+    if (isset($users[$matricula_logada])) {
+        $users[$matricula_logada]['name']  = $novo_nome;
+        $users[$matricula_logada]['email'] = $novo_email;
+
+        // Atualiza senha só se foi preenchida, armazenando em texto puro
+        if (!empty($nova_senha)) {
+            $users[$matricula_logada]['password'] = $nova_senha;   // ✅ sem hash
+        }
+
+        file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT));
+
+        $student_name  = $novo_nome;
+        $student_email = $novo_email;
+
+        echo "<script>alert('Dados atualizados com sucesso!');</script>";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -243,6 +268,34 @@ $meus_agendamentos_json = json_encode($meus_agendamentos);
         var popup = document.getElementById('popup-menu');
         popup.style.display = popup.style.display === 'grid' ? 'none' : 'grid';
     }
+    function abrirModal() {
+        document.getElementById("modal").style.display = "flex";
+
+        // Preenche com valores atuais
+        inputNome.value = nome.innerText;
+        inputSemestre.value = semestre.innerText;
+        inputCurso.value = curso.innerText;
+    }
+
+    function fecharModal() {
+        document.getElementById("modal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+    const modal = document.getElementById("modal");
+
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+}
+
+    function salvar() {
+        nome.innerText = inputNome.value;
+        semestre.innerText = inputSemestre.value;
+        curso.innerText = inputCurso.value;
+
+        fecharModal();
+    }
     </script>
 </head>
 
@@ -294,18 +347,89 @@ $meus_agendamentos_json = json_encode($meus_agendamentos);
             <div class="card-wrapper">
                 <strong>Carteirinha PIPA</strong>
                 <div class="box">
-                    Aluno<br>
-                    Semestre<br>
-                    Curso
+                    <div class="card-part1">
+                        <div class="perfil1" onclick="abrirModal()">
+                            <button>
+                                <img class="avatar" src="assets/images/avatar_aluno.jpg" alt="perfil">
+                                <img class="edit-icon" src="assets/icons/pencil-svgrepo-com.svg" alt="lapis">
+                            </button>
+                        </div>
+                        <p class="n">
+                            <?php if ($is_own_profile): ?>
+                            <?php echo $student_name; ?>
+                            <?php else: ?>
+                            <?php echo ($disciplina ?? "Perfil") . " - " . $student_name; ?>
+                            <?php endif; ?>
+                        </p>
+                        <p>
+                            <?php if ($is_own_profile): ?>
+                            <?php echo $student_name; ?>
+                            <?php else: ?>
+                            <?php echo ($disciplina ?? "Perfil") . " - " . $student_name; ?>
+                            <?php endif; ?>
+                        </p>
+                        <p>
+                            <?php if ($is_own_profile): ?>
+                            <?php if (str_contains($matricula_logada, "tiimi")): ?>
+                            <?php echo "Informática para internet"; ?>
+                            <?php else: ?>
+                            <?php echo "Aluno"; ?>
+                            <?php endif; ?>
+                            <?php else: ?>
+                            <?php echo ($disciplina ?? "Perfil") . " - " . $student_name; ?>
+                            <?php endif; ?>
+                        </p>
+                    </div>
+                    <div class="modal" id="modal">
+                        <div class="modal-content">
+                            <form method="POST" action="">
+
+                                <label>Nome:</label>
+                                <input type="text" name="name" value="<?php echo htmlspecialchars($student_name); ?>" required>
+
+                                <label>Email:</label>
+                                <input type="email" name="email" placeholder="email do aluno" disabled>
+
+                                <label>Matrícula:</label>
+                                <input type="text" value="<?php echo htmlspecialchars($matricula_logada); ?>" disabled>
+
+                                <label>Curso:</label>
+                                <input type="text" value="Informática para internet" disabled>
+
+                                <label>Período:</label>
+                                <input type="text" value="<?php echo htmlspecialchars($matricula_logada); ?>" disabled>
+
+                                <label>Senha:</label>
+                                <input type="password" name="password" placeholder="Digite a nova senha">
+
+                                <button type="submit" class="botao">Salvar</button>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-part2">
+                        <p>
+                            <?php if ($is_own_profile): ?>
+                            Matrícula: <?php echo $matricula_logada; ?>
+                            <?php else: ?>
+                            <?php echo ($disciplina ?? "Perfil") . " - " . $matricula_logada; ?>
+                            <?php endif; ?>
+                        </p>
+                        <p class="qrc"></p>
+                        <p>
+                            Matrícula: ativa
+                        </p>
+                    </div>
                 </div>
             </div>
+            
             <div class="contato">
                 <strong>Contato institucional</strong><br><br>
                 Email
                 <div class="box1">
                     <input type="text" placeholder="xxxx@xxx.com" disabled>
                     Telefone
-                    <input type="text" placeholder="(27) 99999-9999">
+                    <input type="text" placeholder="(27) 99999-9999" disabled>
                 </div>
             </div>
         </section>
