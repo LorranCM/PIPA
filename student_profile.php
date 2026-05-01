@@ -20,6 +20,8 @@ $matricula_perfil = $_GET['id'] ?? $matricula_logada;
 // Verifica se o usuário logado é o dono da página
 $is_own_profile = ($matricula_logada === $matricula_perfil);
 $student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
+// Pega o email do aluno ou usa um valor padrão
+$student_email = $users[$matricula_perfil]['email'] ?? 'Email não disponível';
 
 // --- NOVA LÓGICA: FILTRAR PROFESSORES PARA AS SALAS ---
 $teachers = array_filter($users, function ($user) {
@@ -70,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_name  = $novo_nome;
         $student_email = $novo_email;
 
-        echo "<script>alert('Dados atualizados com sucesso!');</script>";
+        header("Location: " . $_SERVER['PHP_SELF'] . "?updated=1");
+exit;
     }
 }
 
@@ -136,63 +139,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     const evento = eventosDoDia[0];
                     const props = evento.extendedProps;
                     const dataFormatada = formatDate(dateStr);
-                    
+
                     showCustomModal(
                         'Agendamento Encontrado',
-                        'Você tem um agendamento <strong>' + 
-                        (props.status === 'confirmed' ? 'confirmado' : 'pendente') + 
-                        '</strong> com ' + props.professor + 
+                        'Você tem um agendamento <strong>' +
+                        (props.status === 'confirmed' ? 'confirmado' : 'pendente') +
+                        '</strong> com ' + props.professor +
                         ' para o dia ' + dataFormatada + '.<br><br>' +
                         'Deseja acessar a sala do professor ou cancelar este agendamento?',
-                        [
-                            { 
-                                text: 'Ir para Sala', 
-                                class: 'btn-primary', 
+                        [{
+                                text: 'Ir para Sala',
+                                class: 'btn-primary',
                                 onClick: function() {
-                                    window.location.href = 'teacher_profile.php?id=' + props.professor_id;
+                                    window.location.href = 'teacher_profile.php?id=' + props
+                                        .professor_id;
                                 }
                             },
-                            { 
-                                text: 'Cancelar Agendamento', 
-                                class: 'btn-danger', 
+                            {
+                                text: 'Cancelar Agendamento',
+                                class: 'btn-danger',
                                 onClick: function() {
                                     showCustomModal(
                                         'Confirmar Cancelamento',
-                                        'Tem certeza que deseja cancelar o agendamento com ' + 
-                                        props.professor + ' no dia ' + dataFormatada + '?',
-                                        [
-                                            { 
-                                                text: 'Sim, Cancelar', 
-                                                class: 'btn-danger', 
+                                        'Tem certeza que deseja cancelar o agendamento com ' +
+                                        props.professor + ' no dia ' + dataFormatada +
+                                        '?',
+                                        [{
+                                                text: 'Sim, Cancelar',
+                                                class: 'btn-danger',
                                                 onClick: function() {
                                                     // Cria um formulário dinâmico para cancelar
-                                                    var form = document.createElement('form');
+                                                    var form = document
+                                                        .createElement('form');
                                                     form.method = 'POST';
-                                                    form.action = 'teacher_profile.php?id=' + props.professor_id;
-                                                    
-                                                    var input = document.createElement('input');
+                                                    form.action =
+                                                        'teacher_profile.php?id=' +
+                                                        props.professor_id;
+
+                                                    var input = document
+                                                        .createElement('input');
                                                     input.type = 'hidden';
                                                     input.name = 'cancelar_data';
                                                     input.value = props.date;
-                                                    
+
                                                     form.appendChild(input);
                                                     document.body.appendChild(form);
                                                     form.submit();
                                                 }
                                             },
-                                            { 
-                                                text: 'Não', 
-                                                class: 'btn-secondary', 
-                                                onClick: closeCustomModal 
+                                            {
+                                                text: 'Não',
+                                                class: 'btn-secondary',
+                                                onClick: closeCustomModal
                                             }
                                         ]
                                     );
                                 }
                             },
-                            { 
-                                text: 'Fechar', 
-                                class: 'btn-secondary', 
-                                onClick: closeCustomModal 
+                            {
+                                text: 'Fechar',
+                                class: 'btn-secondary',
+                                onClick: closeCustomModal
                             }
                         ]
                     );
@@ -201,7 +208,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     showCustomModal(
                         'Nada nesta data',
                         'Não há agendamentos para o dia ' + formatDate(dateStr) + '.',
-                        [{ text: 'OK', class: 'btn-primary', onClick: closeCustomModal }]
+                        [{
+                            text: 'OK',
+                            class: 'btn-primary',
+                            onClick: closeCustomModal
+                        }]
                     );
                 }
             }
@@ -221,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (existingModal) {
             existingModal.remove();
         }
-        
+
         // Cria o modal dinamicamente
         const modalHTML = `
             <div id="customModal" class="modal-overlay" style="display: flex;">
@@ -237,10 +248,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         `;
-        
+
         // Adiciona o novo modal
         document.body.insertAdjacentHTML('beforeend', modalHTML);
-        
+
         // Adiciona event listeners aos botões
         buttons.forEach((btn, index) => {
             const buttonEl = document.getElementById(`customBtn${index}`);
@@ -268,6 +279,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         var popup = document.getElementById('popup-menu');
         popup.style.display = popup.style.display === 'grid' ? 'none' : 'grid';
     }
+
     function abrirModal() {
         document.getElementById("modal").style.display = "flex";
 
@@ -282,12 +294,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     window.onclick = function(event) {
-    const modal = document.getElementById("modal");
+        const modal = document.getElementById("modal");
 
-    if (event.target === modal) {
-        modal.style.display = "none";
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
     }
-}
 
     function salvar() {
         nome.innerText = inputNome.value;
@@ -384,11 +396,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="modal-content">
                             <form method="POST" action="">
 
+                                <h2>Editar Perfil</h2>
+
                                 <label>Nome:</label>
-                                <input type="text" name="name" value="<?php echo htmlspecialchars($student_name); ?>" required>
+                                <input type="text" name="name" placeholder="<?php echo htmlspecialchars($student_name); ?>"
+                                    required>
 
                                 <label>Email:</label>
-                                <input type="email" name="email" placeholder="email do aluno" disabled>
+                                <input type="email" name="email" placeholder="<?php echo $student_email; ?>">
 
                                 <label>Matrícula:</label>
                                 <input type="text" value="<?php echo htmlspecialchars($matricula_logada); ?>" disabled>
@@ -422,14 +437,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
             </div>
-            
+
             <div class="contato">
                 <strong>Contato institucional</strong><br><br>
                 Email
                 <div class="box1">
-                    <input type="text" placeholder="xxxx@xxx.com" disabled>
+                    <input type="text" value="<?php echo $student_email; ?>" disabled>
                     Telefone
-                    <input type="text" placeholder="(27) 99999-9999" disabled>
+                    <input type="text" value="(27) 99999-9999" disabled>
                 </div>
             </div>
         </section>

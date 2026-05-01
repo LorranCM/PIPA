@@ -6,9 +6,9 @@
         "role": "student"
     },
     "20232tiimi0195": {
-        "name": "Gabriel Lopes",
-        "email": "",
-        "password": "oitatu",
+        "name": "Gabriel Lopes Santana",
+        "email": "lopesifes123@gmail.com",
+        "password": "lopes123",
         "role": "student"
     },
     "matricula123": {
@@ -28,8 +28,8 @@
         "email": "professor123@gmail.com",
         "password": "prof123",
         "role": "teacher",
-        "materia": "Programação Web I",
-        "sala_fisica": "Laboratório 208 - Bloco 2",
+        "materia": "Programa\u00e7\u00e3o Web I",
+        "sala_fisica": "Laborat\u00f3rio 208 - Bloco 2",
         "horario": {
             "dias": [
                 "monday",
