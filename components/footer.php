@@ -1,4 +1,4 @@
-﻿<link rel="stylesheet" href="styles/footer.css">
+<link rel="stylesheet" href="styles/footer.css">
 <footer>
     <section id="footer-section1">
         <figure>

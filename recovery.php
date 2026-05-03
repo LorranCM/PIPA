@@ -1,5 +1,6 @@
 <?php
-session_start();
+require 'components/preset.php';
+loggedIn_verification();
 
     $error_message = "";
     $success_message = "";

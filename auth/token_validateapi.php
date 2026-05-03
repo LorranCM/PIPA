@@ -1,20 +1,19 @@
 <?php
 
-require __DIR__ . '/../packages/vendor/autoload.php';
+require __DIR__ . '/../packages/configdb.php';
 use Kreait\Firebase\Factory;
 
 $data = json_decode(file_get_contents("php://input"), true);
 $token = $data['token'] ?? null;
 
-if (!$token) {
-    http_response_code(400);
-    echo "Token não enviado";
-    exit;
-}
-    
+header("Content-Type: application/json");
+
 try {
+
+    if (!$token) throw new Exception("Missing token", 400);
         
     session_start();
+
     $factory = (new Factory)
     ->withServiceAccount(__DIR__ . '/../packages/credentials.json');
     
@@ -22,11 +21,17 @@ try {
     
     $verified = $auth->verifyIdToken($token);
     $uid = $verified->claims()->get('sub');
+
+    $db = getFirestore();
+
+    $docRef = $db->collection('Users')->document($uid);
+    $snapshot = $docRef->snapshot();
+    $role = $snapshot->get('role');
     
     $_SESSION['uid'] = $uid;
+    $_SESSION['role'] = $role;
+    $_SESSION['loggedin'] = true;
 
-    header("Content-Type: application/json");
-    
     echo json_encode([
         "ok" => true,
         "uid" => $uid,
@@ -34,6 +39,11 @@ try {
     ]);
 
 } catch (Exception $e) {
-    http_response_code(401);
-    echo "Erro: " . $e->getMessage();
+    $_SESSION = [];
+    session_destroy();
+
+    echo json_encode([
+        "ok" => false,
+        "error" => $e->getMessage(),
+    ]);
 }

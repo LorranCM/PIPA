@@ -1,14 +1,10 @@
-﻿<?php
-session_start();
+<?php
+require 'components/preset.php';
+loggedOut_verification();
 
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
-
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php");
-    exit;
-}
 
 $users = json_decode(file_get_contents('users.json'), true) ?? [];
 

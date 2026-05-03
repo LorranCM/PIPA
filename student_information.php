@@ -1,10 +1,7 @@
 <?php
-session_start();
+require 'components/preset.php';
+loggedOut_verification();
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php");
-    exit;
-}
 $matricula = $_SESSION['matricula'];
 $users = json_decode(file_get_contents('users.json'), true) ?? [];
 $student_name    = $users[$matricula]['name'] ?? 'Aluno';

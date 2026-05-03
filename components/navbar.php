@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 function modular_nav($pipa_header = "index.php") {
 

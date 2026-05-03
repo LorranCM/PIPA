@@ -1,13 +1,6 @@
 <?php
-    session_start();
-
-    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-        $role = $_SESSION['role'] ?? 'student';
-        $redirect = ($role === 'teacher') ? 'teacher_profile.php' : 'student_profile.php';
-        header("Location: " . $redirect);
-        exit;
-    }
-    
+    require 'components/preset.php';
+    loggedIn_verification();
 ?>
 
 <!DOCTYPE html>

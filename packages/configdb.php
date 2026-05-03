@@ -4,17 +4,15 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Google\Cloud\Firestore\FirestoreClient;
 
+function getFirestore() {
 
-$credentials = __DIR__ . '/../packages/credentials.json';
-
-if (!file_exists($credentials)) {
-    throw new Exception("Credenciais do Google não encontradas.");
-}
-
-putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $credentials);
-
-function getFirestore()
-{
+    $credentials = __DIR__ . '/../packages/credentials.json';
+    
+    if (!file_exists($credentials)) {
+        throw new Exception("Credenciais do Google não encontradas.");
+    }
+    
+    putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $credentials);
     static $db = null;
 
     if ($db === null) {
