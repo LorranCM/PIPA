@@ -14,8 +14,7 @@ try {
         
     session_start();
 
-    $factory = (new Factory)
-    ->withServiceAccount(__DIR__ . '/../packages/credentials.json');
+    $factory = (new Factory)->withServiceAccount(__DIR__ . '/../packages/credentials.json');
     
     $auth = $factory->createAuth();
     
@@ -23,27 +22,38 @@ try {
     $uid = $verified->claims()->get('sub');
 
     $db = getFirestore();
-
     $docRef = $db->collection('Users')->document($uid);
     $snapshot = $docRef->snapshot();
-    $role = $snapshot->get('role');
+
+    if (!$snapshot->exists()) {
+        throw new Exception("User not found", 404);
+    }
+
+    $data = $snapshot->data();
+
+    $role = $data['role'] ?? null;
+    $classrooms = $data['classrooms'] ?? [];
+
+    if (!$role) {
+        throw new Exception("User role not defined", 400);
+    }
     
     $_SESSION['uid'] = $uid;
     $_SESSION['role'] = $role;
     $_SESSION['loggedin'] = true;
+    $_SESSION['classrooms_ids'] = $classrooms;
 
     echo json_encode([
         "ok" => true,
         "uid" => $uid,
+        "role" => $role,
         "redirect" => "index.php"
     ]);
 
 } catch (Exception $e) {
-    $_SESSION = [];
-    session_destroy();
-
     echo json_encode([
         "ok" => false,
         "error" => $e->getMessage(),
     ]);
+    
 }

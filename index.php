@@ -1,6 +1,7 @@
 <?php
     require 'components/preset.php';
     loggedIn_verification();
+    
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +10,9 @@
 <head>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles/landing_style.css">
-    <link rel="stylesheet" href="styles/navbar.css"> <title>PIPA</title>
+    <link rel="stylesheet" href="styles/navbar.css"> 
+    <link rel="stylesheet" href="styles/footer.css"> 
+    <title>PIPA</title>
 </head>
 <body>
     <?php 

@@ -1,79 +1,67 @@
 <?php
-require 'components/preset.php';
+require "components/preset.php";
 loggedOut_verification();
 
-header("Cache-Control: no-cache, no-store, must-revalidate");
-header("Pragma: no-cache");
-header("Expires: 0");
+$profile_registration = $_GET['uid'] ?? $_SESSION['uid'];
+$is_own_profile = ($profile_registration === $_SESSION['uid']);
+$student_name = 'Aluno';
 
-$users = json_decode(file_get_contents('users.json'), true) ?? [];
-// Pega a matrícula de quem está LOGADO
-$matricula_logada = $_SESSION['matricula'];
+// Obter id de salas, professor, e disciplina
+// $teachers = array_filter($users, function ($user) {
+//     return isset($user['role']) && $user['role'] === 'teacher';
+// });
 
-// Pega a matrícula do DONO da página (via URL) ou assume que é o próprio logado
-$matricula_perfil = $_GET['id'] ?? $matricula_logada;
-
-// Verifica se o usuário logado é o dono da página
-$is_own_profile = ($matricula_logada === $matricula_perfil);
-$student_name = $users[$matricula_perfil]['name'] ?? 'Aluno';
-// Pega o email do aluno ou usa um valor padrão
-$student_email = $users[$matricula_perfil]['email'] ?? 'Email não disponível';
-
-// --- NOVA LÓGICA: FILTRAR PROFESSORES PARA AS SALAS ---
-$teachers = array_filter($users, function ($user) {
-    return isset($user['role']) && $user['role'] === 'teacher';
-});
-
-// NOVO: buscar agendamentos do aluno
+// obter os agendamentos do aluno logado
 $meus_agendamentos = [];
 
-foreach ($users as $id => $user) {
-    if (($user['role'] ?? '') === 'teacher' && !empty($user['agendamentos'])) {
-        foreach ($user['agendamentos'] as $ag) {
-            if (
-                isset($ag['student']) &&
-                $ag['student'] === $matricula_logada
-            ) {
-                $meus_agendamentos[] = [
-                    'date' => $ag['date'],
-                    'status' => $ag['status'],
-                    'professor' => $user['name'] ?? 'Professor',
-                    'professor_id' => $id
-                ];
-            }
-        }
-    }
-}
+// foreach ($users as $id => $user) {
+//     if (($user['role'] ?? '') === 'teacher' && !empty($user['agendamentos'])) {
+//         foreach ($user['agendamentos'] as $ag) {
+//             if (
+//                 isset($ag['student']) &&
+//                 $ag['student'] === $matricula_logada
+//             ) {
+//                 $meus_agendamentos[] = [
+//                     'date' => $ag['date'],
+//                     'status' => $ag['status'],
+//                     'professor' => $user['name'] ?? 'Professor',
+//                     'professor_id' => $id
+//                 ];
+//             }
+//         }
+//     }
+// }
 
 $meus_agendamentos_json = json_encode($meus_agendamentos);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $novo_nome  = $_POST['name'] ?? '';
-    $novo_email = $_POST['email'] ?? '';
-    $nova_senha = $_POST['password'] ?? '';
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     $novo_nome  = $_POST['name'] ?? '';
+//     $novo_email = $_POST['email'] ?? '';
+//     $nova_senha = $_POST['password'] ?? '';
 
-    $users = json_decode(file_get_contents('users.json'), true) ?? [];
+//     $users = json_decode(file_get_contents('users.json'), true) ?? [];
 
-    if (isset($users[$matricula_logada])) {
-        $users[$matricula_logada]['name']  = $novo_nome;
-        $users[$matricula_logada]['email'] = $novo_email;
+//     if (isset($users[$matricula_logada])) {
+//         $users[$matricula_logada]['name']  = $novo_nome;
+//         $users[$matricula_logada]['email'] = $novo_email;
 
-        // Atualiza senha só se foi preenchida, armazenando em texto puro
-        if (!empty($nova_senha)) {
-            $users[$matricula_logada]['password'] = $nova_senha;   // ✅ sem hash
-        }
+//         // Atualiza senha só se foi preenchida, armazenando em texto puro
+//         if (!empty($nova_senha)) {
+//             $users[$matricula_logada]['password'] = $nova_senha;   // ✅ sem hash
+//         }
 
-        file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT));
+//         file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT));
 
-        $student_name  = $novo_nome;
-        $student_email = $novo_email;
+//         $student_name  = $novo_nome;
+//         $student_email = $novo_email;
 
-        header("Location: " . $_SERVER['PHP_SELF'] . "?updated=1");
-exit;
-    }
-}
+//         header("Location: " . $_SERVER['PHP_SELF'] . "?updated=1");
+// exit;
+//     }
+// }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -91,6 +79,7 @@ exit;
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
+    
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -348,9 +337,11 @@ exit;
                 </div>
             </div>
         </section>
+        
         <section>
             <div id='calendar'></div>
         </section>
+
         <section class="carteirinha">
             <div class="card-wrapper">
                 <strong>Carteirinha PIPA</strong>

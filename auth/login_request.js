@@ -48,13 +48,13 @@ async function login() {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({ token })
         });
+
         const data = await response.json();
         
-        // DEBUG
-        // console.log(data.uid);
-        // console.log(data.role);
-        
         if (data.ok) {
+            // DEBUG
+            console.log(data.uid);
+            console.log(data.role);
             window.location.href = data.redirect;
         } else {
             throw {code: "token_validateapi-error", message: data.error };
@@ -62,15 +62,17 @@ async function login() {
 
     } catch (error) {
 
+        fetch("auth/abort.php");
+
         switch (error.code) {
             case "auth/invalid-credential":
                 alert("Credenciais inválidas");
                 break;
             case "token_validateapi-error":
-                alert("Erro: " + error.message);
+                console.error("Erro: " + error.message);
                 break;
             default:
-                alert("Erro: " + error.message);
+                console.error("Erro: " + error.message);
         }
     }
 
