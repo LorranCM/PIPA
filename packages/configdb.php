@@ -6,16 +6,18 @@ use Google\Cloud\Firestore\FirestoreClient;
 
 function getFirestore() {
 
-    $credentials = __DIR__ . '/../packages/credentials.json';
+    static $db;
     
-    if (!file_exists($credentials)) {
-        throw new Exception("Credenciais do Google não encontradas.");
-    }
-    
-    putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $credentials);
-    static $db = null;
-
     if ($db === null) {
+
+        $credentials = __DIR__ . '/../packages/credentials.json';
+        
+        if (!file_exists($credentials)) {
+            throw new Exception("Credenciais do Google não encontradas.");
+        }
+        
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $credentials);
+        
         $db = new FirestoreClient([
             'projectId' => 'pipa-35e1f', 
             'transport' => 'rest'

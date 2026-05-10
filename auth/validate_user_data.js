@@ -1,3 +1,4 @@
+// parametros de validação da matricula
 export function is_valid_registration(registration) {
     const validchars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     for (let i = 0; i < registration.length; i++) {
@@ -13,6 +14,7 @@ export function is_valid_registration(registration) {
     return "";
 }
 
+// parametros de validação da senha
 export function is_valid_password(password) {
     if (password.length < 8) {
         return "short password";
@@ -22,21 +24,6 @@ export function is_valid_password(password) {
 
     if (!password || password === "") {
         return "empty password";
-    }
-
-    return "";
-}
-
-export function is_valid_name(name) {
-    const validchars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZàáâãäåèéêëìíîïòóôõöùúûüçÀÁÂÃÄÅÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÇ\' ';
-    for (let i = 0; i < name.length; i++) {
-        if (!validchars.includes(name[i])) {
-            return "invalid characters";
-        }
-    }
-
-    if (!name || name === "") {
-        return "empty name";
     }
 
     return "";

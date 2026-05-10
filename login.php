@@ -50,7 +50,7 @@
                     <p><a href="recovery.php">Esqueci minha senha</a></p>
                     <!-- <p>Primeiro acesso? <a href="register.php">Registrar</a></p> -->
                     
-                    <button type="submit" class="button-login">Entrar</button>
+                    <button type="submit" id="button-login" class="button-login">Entrar</button>
 
                 </div>
 
