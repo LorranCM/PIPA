@@ -6,11 +6,13 @@ import { teacher_event_click } from "./teacher_featured_date.js";
 // const role = "..."
 // const events = [...];
 
+let dateClickfunction;
+
 if (role === "student" || role === "moderator") {
     dateClickfunction = student_event_click;
 } else if (role === "teacher") {
     dateClickfunction = teacher_event_click;
-}
+} 
 
 function set_calendar() {
     

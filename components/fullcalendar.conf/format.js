@@ -1,5 +1,8 @@
 export function format_event(event) {
     
+    let event_color;
+    let event_title;
+
     switch (event['status']) {
         case "pending":
             event_color = '#f39c12';
@@ -9,7 +12,7 @@ export function format_event(event) {
             event_color = '#3498db';
             event_title = 'Confirmado';
             break;
-        case "cancelled":
+        case "canceled":
             event_color = '#e74c3c';
             event_title = 'Cancelado';
             break;

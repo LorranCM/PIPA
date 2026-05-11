@@ -71,6 +71,7 @@ try {
 
     }
     
+    $_SESSION['role'] = $role;
     $_SESSION['uid'] = $uid;
     $_SESSION['loggedin'] = true;
 
