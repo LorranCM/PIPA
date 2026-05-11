@@ -6,6 +6,7 @@ import { teacher_event_click } from "./teacher_featured_date.js";
 // const role = "..."
 // const events = [...];
 
+export let calendar;
 let dateClickfunction;
 
 // define como o calendario se comporta dependendo do tipo de usuario
@@ -21,7 +22,7 @@ function set_calendar() {
     var calendarEl = document.getElementById('calendar');
     var formated_events = events.map(format_event);
     
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             locale: 'pt-br',
             height: 'auto',
@@ -32,7 +33,8 @@ function set_calendar() {
                 right: 'dayGridMonth'
             },
             
-            dateClick: dateClickfunction
+            dateClick: dateClickfunction,
+            eventClick: dateClickfunction
         }
     );
 
