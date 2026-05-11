@@ -1,12 +1,13 @@
 <?php
 
-function modular_nav($pipa_header = "index.php") {
+// a tratar
+function modular_nav($params = []) {
 
     echo "
     <nav id=\"navbar\">
         <ul>
             <li id=\"navbar-PIPA-clickable\">
-                <a href=\"$pipa_header\">
+                <a href=\"index.php\">
                     <img src=\"assets/icons/kite-origami-paper-svgrepo-com.svg\" alt=\"icone do pipa\">PIPA
                 </a>
             </li>

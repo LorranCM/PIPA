@@ -8,6 +8,8 @@ import { teacher_event_click } from "./teacher_featured_date.js";
 
 let dateClickfunction;
 
+// define como o calendario se comporta dependendo do tipo de usuario
+// ainda falta mudar o tratamento para caso o usuario seja o dono do calendario
 if (role === "student" || role === "moderator") {
     dateClickfunction = student_event_click;
 } else if (role === "teacher") {

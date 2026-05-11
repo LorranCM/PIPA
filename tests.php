@@ -11,5 +11,8 @@
         require "components/updates/get_calendar_data.php";
         print_r($_SESSION['calendar_data']);
     ?>
+    <ul>
+        <li><a href="components/updates/get_calendar_data.php">Update Calendar Data</a></li>
+    </ul>
 </body>
 </html>
