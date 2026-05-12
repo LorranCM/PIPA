@@ -35,7 +35,6 @@ export function format_event(event) {
     };
 };
 
-// nao sei o que e isso alvaro me explica depois por favor
 // (as datas no bd estao no formato yyyy-mm-dd)
 export function format_date(dateStr) {
     return new Date(dateStr + 'T12:00:00').toLocaleDateString('pt-BR');

@@ -7,9 +7,10 @@ export function show_modal_cancel_event(role, dateStr, props) {
     if (role === "student") {
         message = 'Tem certeza que deseja cancelar o agendamento com o(a) professor(a) ' +
         props.teacher + ' da disciplina de ' + props.curricular_unit + ' no dia ' + dateStr + '?';
+        
     } else if (role === "teacher") {
-        message = 'Tem certeza que deseja cancelar o agendamento da disciplina ' +
-        param + ' no dia ' + dateStr + '?';
+        message = 'Tem certeza que deseja cancelar o agendamento da disciplina de ' +
+        props.curricular_unit + ' no dia ' + dateStr + '?';
     }
 
     show_custom_modal(
