@@ -75,9 +75,7 @@
             <li>
                 <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 8V12L14.5 14.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path
-                        d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C twenty-one point five zero nine three four three eight two one two one point eight three five six five point eight zero six five five two one point nine four four nine eight"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <h3>Facilidade no Atendimento com Professor</h3>
             </li>
