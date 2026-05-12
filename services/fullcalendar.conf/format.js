@@ -14,10 +14,6 @@ export function format_event(event) {
             event_color = '#3498db';
             event_title = 'Confirmado';
             break;
-        case "canceled":
-            event_color = '#e74c3c';
-            event_title = 'Cancelado';
-            break;
         default:
             event_color = '#510a5a';
             event_title = 'Desconhecido';
@@ -29,9 +25,11 @@ export function format_event(event) {
         color: event_color,
         allDay: true,
         extendedProps: {
-            status: event.status,
+            status: event_title,
             teacher: event.teacher,
-            teacher_id: event['teacher-id'],
+            event_id: event['event-id'],
+            classroom_id: event['classroom-id'],
+            curricular_unit: event['curricular-unit'],
             date: event.date
         }
     };

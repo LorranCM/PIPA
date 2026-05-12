@@ -26,7 +26,7 @@ loggedOut_verification();
         const role = "<?php echo $_SESSION['role']?>";
         const events = <?php echo json_encode($_SESSION['calendar_data']); ?>;
     </script>
-    <script src="components/fullcalendar.conf/interactive_calendar.js" type='module'></script>
+    <script src="services/fullcalendar.conf/interactive_calendar.js" type='module'></script>
     
 </head>
 

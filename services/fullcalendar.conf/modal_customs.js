@@ -1,4 +1,3 @@
-
 // Modal personalizado genérico
 export function show_custom_modal(title, message, buttons) {
     // Remove modal anterior se existir
