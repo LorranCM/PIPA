@@ -33,8 +33,12 @@ function set_calendar() {
                 right: 'dayGridMonth'
             },
             
-            dateClick: dateClickfunction,
-            eventClick: dateClickfunction
+            dateClick(info) {
+                dateClickfunction(info.dateStr);
+            },
+            eventClick(info) {
+                dateClickfunction(info.event.startStr);
+            }
         }
     );
 

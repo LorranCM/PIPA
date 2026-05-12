@@ -3,11 +3,11 @@ $db = getFirestore();
 $uid = $_SESSION['uid'];
 
 // obtem o campo calendar do usuario, que e um array de eventIDs
-$doc_ref = $db->collection('Users')->document($uid);
-$snapshot = $doc_ref->snapshot();
-$data = $snapshot['calendar'] ?? [];
+$user_doc_ref = $db->collection('Users')->document($uid);
+$snapshot = $user_doc_ref->snapshot();
+$event_IDs = $snapshot['calendar'] ?? [];
 
-if (empty($data)) {
+if (empty($event_IDs)) {
     $_SESSION['calendar_data'] = [];
     return;
 }
@@ -15,19 +15,36 @@ if (empty($data)) {
 $events = [];
 
 // para cada eventID, obtem os dados na colecao Events e adiciona o nome do professor ao evento
-foreach ($data as $eventID) {
+foreach ($event_IDs as $eventID) {
     $doc_ref = $db->collection('Events')->document($eventID);
     $snapshot = $doc_ref->snapshot();
-    $data = $snapshot->data();
+    if (!$snapshot->exists()) {
+        unset($event_IDs[array_search($eventID, $event_IDs)]);
+        continue;
+    }
 
-    $doc_ref = $db->collection('Users')->document($data['teacher-id']);
+    $event_data = $snapshot->data();
+    $teacher_id = $event_data['teacher-id'] ?? "placeholder-teacher-id";
+    if ($teacher_id === "") {
+        $teacher_id = "placeholder-teacher-id";
+    }
+
+    $doc_ref = $db->collection('Users')->document($teacher_id);
     $snapshot = $doc_ref->snapshot();
-    $teacher_name = $snapshot['name'] ?? "Unknown Teacher";
+    if (!$snapshot->exists()) {
+        $teacher_name = "Unknown Teacher";       
+    } else {
+        $teacher_name = $doc_ref->snapshot()['name'] ?? "Unknown Teacher";
+    }
 
-    $data['teacher'] = $teacher_name;
+    $event_data['teacher'] = $teacher_name;
 
-    $events[] = $data;
+    $events[] = $event_data;
 }
+
+$user_doc_ref->update([
+    ['path' => 'calendar', 'value' => $event_IDs]
+]);
 
 // atualiza os dados da sessao
 $_SESSION['calendar_data'] = $events;
