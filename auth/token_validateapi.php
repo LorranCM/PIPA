@@ -25,8 +25,8 @@ try {
 
     // acessa os dados do usuario no firestore para obter seu papel(role)
     $db = getFirestore();
-    $docRef = $db->collection('Users')->document($uid);
-    $snapshot = $docRef->snapshot();
+    $doc_ref = $db->collection('Users')->document($uid);
+    $snapshot = $doc_ref->snapshot();
 
     if (!$snapshot->exists()) {
         throw new Exception("User not found", 404);

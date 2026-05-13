@@ -18,8 +18,8 @@ export function show_custom_modal(title, message, buttons = []) {
     <div id="customModal" class="modal-overlay" style="display: flex;">
     <div class="modal-content">
     <span class="modal-close">&times;</span>
-    <h3>${title}</h3>
-    <p>${message}</p>
+    <h3 id="modal-title">${title}</h3>
+    <p id="modal-message">${message}</p>
     <div class="modal-footer">
     ${buttons.map((btn, index) => 
         `<button class="modal-btn ${btn.class}" id="customBtn${index}">${btn.text}</button>`

@@ -53,8 +53,10 @@ export function show_modal_cancel_event(event_id) {
         .then(response => response.json())
         .then(data => {
                 if (data.success) {
-                    console.log(data['event-participants']);
                     toggle_enable_close();
+                    const modal_title = document.getElementById('modal-title');
+                    modal_title.textContent = "foi";
+
                 } else {
                     console.log(data.error);
                 }

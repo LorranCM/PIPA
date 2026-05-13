@@ -17,12 +17,36 @@ try {
 
     if ($role == "student") {
 
-        $event_docref = $db->collection("Events")->document($event_id);
-        $user_docref = $db->collection("Users")->document($uid);
+        $event_doc_ref = $db->collection("Events")->document($event_id);
+        $user_doc_ref = $db->collection("Users")->document($uid);
 
-        $snapshot = $event_docref->snapshot();
+        $snapshot = $user_doc_ref->snapshot();
+        $user_calendar = $snapshot["calendar"] ?? [];
+
+        $snapshot = $event_doc_ref->snapshot();
         $event_participants = $snapshot["participants"] ?? [];
-        // unset($event_participants[array_search($uid, $event_participants)]);
+        
+        if (($key = array_search($uid, $event_participants)) !== false) {
+            unset($event_participants[$key]);
+        }
+        if (($key = array_search($event_id, $user_calendar)) !== false) {
+            unset($user_calendar[$key]);
+        }
+
+        $user_calendar = array_values($user_calendar);
+        $event_participants = array_values($event_participants);
+
+        $user_doc_ref->update([
+            ["path" => "calendar", "value" => $user_calendar]
+        ]);
+     
+        if (count($event_participants) <= 0) {
+            $event_doc_ref->delete();
+        } else {
+            $event_doc_ref->update([
+                ["path" => "participants", "value" => $event_participants] 
+            ]);
+        }
 
     } else if ($role == "teacher") {
         // a tratar
@@ -32,7 +56,7 @@ try {
     echo json_encode(
         [   
             "success" => true,
-            "event-participants" => $event_participants
+            "user_calendar" => $user_calendar
         ]
     );
 
