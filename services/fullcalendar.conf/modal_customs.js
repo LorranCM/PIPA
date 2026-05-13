@@ -1,5 +1,11 @@
+let enable_close = true;
+
+export function toggle_enable_close() {
+    enable_close = !enable_close;
+};
+
 // Modal personalizado genérico
-export function show_custom_modal(title, message, buttons) {
+export function show_custom_modal(title, message, buttons = []) {
     // Remove modal anterior se existir
     const existingModal = document.getElementById('customModal');
     
@@ -29,15 +35,20 @@ export function show_custom_modal(title, message, buttons) {
     const modal = document.getElementById('customModal');
     
     modal.querySelector('.modal-close')
-    .addEventListener('click', close_custom_modal);
+    .addEventListener('click', function() {
+            if (!enable_close) return;
+            close_custom_modal()
+        }
+    );
     
     modal.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            close_custom_modal();
-        }
-    }
-);
+            if (!enable_close) return;
 
+            if (event.target === modal) {
+                close_custom_modal();
+            }
+        } 
+    );
 
 // Adiciona event listeners aos botões
 buttons.forEach((btn, index) => {

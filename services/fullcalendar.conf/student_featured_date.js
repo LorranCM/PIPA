@@ -2,7 +2,7 @@ import { calendar } from './interactive_calendar.js';
 import { format_date } from './format.js';
 import { show_modal_non_featured_date_click } from './modal_non_featured_date.js';
 import { show_custom_modal } from './modal_customs.js';
-import { show_modal_cancel_event } from './modal_cancel_scheduling.js';
+import { show_modal_confirm_cancel_event } from './modal_cancel_scheduling.js';
 
 export function student_event_click(info) {
     // obtem o a data clicada e os eventos desta data
@@ -37,7 +37,7 @@ export function student_event_click(info) {
                 {
                     text: 'Cancelar agendamento',
                     class: 'btn-danger',
-                    onClick: show_modal_cancel_event.bind(null, "student", formated_date, props)
+                    onClick: show_modal_confirm_cancel_event.bind(null, "student", formated_date, props)
                 }
             ]
         )
