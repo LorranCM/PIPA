@@ -22,7 +22,7 @@ export function show_modal_confirm_cancel_event(role, dateStr, props) {
             {
                 text: 'Sim, Cancelar', 
                 class: 'btn-danger',
-                onClick: show_modal_cancel_event
+                onClick: show_modal_cancel_event.bind(null, props.event_id)
             },
 
             {
@@ -34,7 +34,7 @@ export function show_modal_confirm_cancel_event(role, dateStr, props) {
     );
 }
 
-export function show_modal_cancel_event() {
+export function show_modal_cancel_event(event_id) {
 
     toggle_enable_close();
 
@@ -43,10 +43,21 @@ export function show_modal_cancel_event() {
         "<div class=\"loading\"></div>"
     );
 
-    fetch("services/db.reqs/cancel_event.php")
+    fetch(
+        "services/db.reqs/cancel_event.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({event_id})
+        }
+    )
         .then(response => response.json())
         .then(data => {
-                console.log(data.ok);
+                if (data.success) {
+                    console.log(data['event-participants']);
+                    toggle_enable_close();
+                } else {
+                    console.log(data.error);
+                }
             }
         );
 

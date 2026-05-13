@@ -21,7 +21,17 @@ foreach ($event_IDs as $eventID) {
     if (!$snapshot->exists()) {
         unset($event_IDs[array_search($eventID, $event_IDs)]);
         continue;
+    } 
+
+    $event_participants = $snapshot["participants"] ?? [];
+    if (!in_array($uid, $event_participants)) {
+        $event_participants[] = $uid;
     }
+    
+    $doc_ref->update([
+        ['path' => 'participants', 'value' => $event_participants]
+    ]);
+
     $event_data = $snapshot->data();
 
     // obtem o id da classe a partir dos dados do evento, caso nao exista a classe na colecao de classes
