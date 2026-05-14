@@ -1,5 +1,5 @@
 import { show_custom_modal, close_custom_modal } from './modal_customs.js';
-import {  toggle_enable_close } from './modal_customs.js';
+import { toggle_enable_close } from './modal_customs.js';
 
 export function show_modal_confirm_cancel_event(role, dateStr, props) {
 

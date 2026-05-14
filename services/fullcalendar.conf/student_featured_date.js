@@ -1,7 +1,7 @@
 import { calendar } from './interactive_calendar.js';
 import { format_date } from './format.js';
-import { show_modal_non_featured_date_click } from './modal_non_featured_date.js';
 import { show_custom_modal } from './modal_customs.js';
+import { show_modal_non_featured_date_click } from './modal_non_featured_date.js';
 import { show_modal_confirm_cancel_event } from './modal_cancel_scheduling.js';
 
 export function student_event_click(info) {

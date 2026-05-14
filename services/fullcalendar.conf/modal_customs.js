@@ -50,13 +50,18 @@ export function show_custom_modal(title, message, buttons = []) {
         } 
     );
 
-// Adiciona event listeners aos botões
-buttons.forEach((btn, index) => {
-    const buttonEl = document.getElementById(`customBtn${index}`);
-    if (buttonEl && btn.onClick) {
-        buttonEl.addEventListener('click', btn.onClick);
-    }
-});
+    // Adiciona event listeners aos botões
+    buttons.forEach((btn, index) => {
+        const buttonEl = document.getElementById(`customBtn${index}`);
+        var onClick;
+        if ("onClick" in btn) {
+            onClick = btn.onClick;
+        } else {
+            onClick = close_custom_modal;
+        }
+        buttonEl.addEventListener('click', onClick);
+        
+    });
 }
 
 export function close_custom_modal() {

@@ -71,8 +71,14 @@ foreach ($event_IDs as $eventID) {
     $events[] = $event_data;
 }
 
-$user_doc_ref->update([
-    ['path' => 'calendar', 'value' => $event_IDs]
-]);
+$user_doc_ref->update(
+    [
+        ['path' => 'calendar', 'value' => $event_IDs]
+    ]
+);
 
-echo json_encode($events);
+echo json_encode(
+    [
+        "events" => $events,
+    ]
+);

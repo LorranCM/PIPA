@@ -30,7 +30,6 @@ export function format_event(event) {
             event_id: event['event-id'],
             classroom_id: event['classroom-id'],
             curricular_unit: event['curricular-unit'],
-            date: event.date
         }
     };
 };

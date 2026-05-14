@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require "components/preset.php";
 loggedOut_verification();
 
@@ -22,10 +22,6 @@ loggedOut_verification();
         
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
-    <script>
-        const role = "<?php echo $_SESSION['role']?>";
-        const events = <?php echo json_encode($_SESSION['calendar_data']); ?>;
-    </script>
     <script src="services/fullcalendar.conf/interactive_calendar.js" type='module'></script>
     
 </head>
