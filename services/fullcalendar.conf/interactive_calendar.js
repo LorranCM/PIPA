@@ -1,4 +1,3 @@
-import { format_event } from "./format.js";
 import { student_event_click } from "./student_featured_date.js";
 import { teacher_event_click } from "./teacher_featured_date.js";
 
@@ -20,13 +19,12 @@ if (role === "student" || role === "moderator") {
 function set_calendar() {
     
     var calendarEl = document.getElementById('calendar');
-    var formated_events = events.map(format_event);
     
     calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             locale: 'pt-br',
             height: 'auto',
-            events: formated_events,
+            events: [],
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',

@@ -1,4 +1,8 @@
 <?php
+
+require __DIR__ . "/../../packages/configdb.php";
+
+session_start();
 $db = getFirestore();
 $uid = $_SESSION['uid'];
 
@@ -6,11 +10,6 @@ $uid = $_SESSION['uid'];
 $user_doc_ref = $db->collection('Users')->document($uid);
 $snapshot = $user_doc_ref->snapshot();
 $event_IDs = $snapshot['calendar'] ?? [];
-
-if (empty($event_IDs)) {
-    $_SESSION['calendar_data'] = [];
-    return;
-}
 
 $events = [];
 
@@ -76,5 +75,4 @@ $user_doc_ref->update([
     ['path' => 'calendar', 'value' => $event_IDs]
 ]);
 
-// atualiza os dados da sessao
-$_SESSION['calendar_data'] = $events;
+echo json_encode($events);
