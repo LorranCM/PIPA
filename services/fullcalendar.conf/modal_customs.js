@@ -1,4 +1,4 @@
-let enable_close = true;
+let enable_close;
 
 export function toggle_enable_close() {
     enable_close = !enable_close;
@@ -6,6 +6,7 @@ export function toggle_enable_close() {
 
 // Modal personalizado genérico
 export function show_custom_modal(title, message, buttons = []) {
+    enable_close = true;
     // Remove modal anterior se existir
     const existingModal = document.getElementById('customModal');
     

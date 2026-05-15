@@ -1,5 +1,6 @@
 import { show_custom_modal, close_custom_modal } from './modal_customs.js';
 import { toggle_enable_close } from './modal_customs.js';
+import { load_events } from './interactive_calendar.js';
 
 export function show_modal_confirm_cancel_event(role, dateStr, props) {
 
@@ -34,33 +35,46 @@ export function show_modal_confirm_cancel_event(role, dateStr, props) {
     );
 }
 
-export function show_modal_cancel_event(event_id) {
-
-    toggle_enable_close();
-
+async function show_modal_cancel_event(event_id) {
+    
     show_custom_modal(
         "Cancelando Agendamento",
         "<div class=\"loading\"></div>"
     );
 
-    fetch(
+    toggle_enable_close();
+
+    const modal = document.getElementById('customModal');
+
+    let response = await fetch(
         "services/db.reqs/cancel_event.php", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({event_id})
         }
-    )
-        .then(response => response.json())
-        .then(data => {
-                if (data.success) {
-                    toggle_enable_close();
-                    const modal_title = document.getElementById('modal-title');
-                    modal_title.textContent = "foi";
+    );
 
-                } else {
-                    console.log(data.error);
-                }
-            }
-        );
+    const data = await response.json();
+        
+    if (data.success) {
+        const modal_title = modal.querySelector('#modal-title');
+        modal_title.textContent = "Atualizando calendario";
+        
+        const load_response = await load_events();
+        if (load_response) {
+            show_custom_modal(
+                "Feito!",
+                "Agendamento cancelado com sucesso.",
+                [
+                    {
+                        text: 'OK',
+                        class: 'btn-primary',
+                    }
+                ]
+            )
+        }
 
+    } else {
+        console.log(data.error);
+    }
 }

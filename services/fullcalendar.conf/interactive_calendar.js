@@ -56,18 +56,13 @@ fetch("services/db.reqs/get_role.php")
     )
 
 
-async function load_events() {
-    
-    console.log("inicio");
+export async function load_events() {
+    const response = await fetch("services/db.reqs/get_calendar_data.php");
+    const data = await response.json();
 
-    fetch("services/db.reqs/get_calendar_data.php")
-        .then(response => response.json())
-        .then(data => {
-            const events = data.events;
-            const formated_events = format_event(events);
-            console.log(events);
-            calendar.setOption('events', formated_events);
-        }
-    )
+    const events = data.events;
+    const formated_events = events.map(format_event);
+    calendar.setOption('events', formated_events);
 
+    return true;
 }
