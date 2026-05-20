@@ -17,9 +17,6 @@ loggedOut_verification();
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/modals.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-        
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
     <script src="services/fullcalendar.conf/interactive_calendar.js" type='module'></script>
@@ -36,11 +33,18 @@ loggedOut_verification();
         <div class="perfil">
             <img src=<?php echo $_SESSION['pfp-rel']?> alt="perfil">
         </div>
+        <h2>Bem vindo, <?php echo $_SESSION['name']?>!</h2>
     </section>
 
-        
-    <section>
-        <div id='calendar'></div>
+    <section class="page-content">
+        <h2>Suas salas</h2>
+        <div id="classrooms-visualizer" >
+
+        </div>
+        <div id="calendar-wrapper">
+            <div id='calendar'>
+            </div>
+        </div>
     </section>
 
 </body>

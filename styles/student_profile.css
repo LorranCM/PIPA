@@ -14,8 +14,9 @@ body {
    ============================================= */
 .topo {
     background: linear-gradient(to right, #2f6f4f, #3c8a60);
-    height: 200px;
-    margin-top: 80px;
+    display: flex;
+    height: fit-content;
+    width: 100%;
 }
 
 .perfil {
@@ -339,4 +340,13 @@ h2.class {
 .modal h2 {
     text-align: center;
     margin-bottom: 20px;
+}
+
+.page-content {
+    padding-inline: 10%;
+}
+
+#classrooms-visualizer {
+    background-color: #c9c9c9;
+    height: 25vh;
 }
