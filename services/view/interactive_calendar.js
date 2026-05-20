@@ -1,5 +1,5 @@
-import { student_event_click } from "./student_featured_date.js";
-import { format_event } from "./format.js";
+import { student_event_click } from "../fullcalendar.conf/student_featured_date.js";
+import { format_event } from "../fullcalendar.conf/format.js";
 // import { teacher_event_click } from "./teacher_featured_date.js";
 
 export let calendar;

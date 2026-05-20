@@ -49,25 +49,15 @@ try {
         // nao trabalhar com instituicao por enquanto $instituitionID = $data['instituitionID'];
         
         // opicionais (pelo menos enquanto nao e o produto final)
-        $calendar_data = [];
         $email = $data['email'] ?? "missing-email";
         $contact_number = $data['contact_number'] ?? "missing-contact-number";
         $pfp_rel = $data['profile-picture-rel'] ?? "assets/images/default-pfp.jpg";
 
         $_SESSION['name'] = $name;
         $_SESSION['lastname'] = $lastname;
-        $_SESSION['calendar_data'] = $calendar_data;
         $_SESSION['email'] = $email;
         $_SESSION['contact_number'] = $contact_number;
         $_SESSION['pfp-rel'] = $pfp_rel;
-
-        if ($role === "student") {
-            $classrooms = $data['classrooms'] ?? [];
-            $_SESSION['classrooms'] = $classrooms;
-        }
-        else if ($role === "teacher") {
-            // a tratar
-        }
 
     }
     

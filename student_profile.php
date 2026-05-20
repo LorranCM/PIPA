@@ -19,16 +19,18 @@ loggedOut_verification();
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
-    <script src="services/fullcalendar.conf/interactive_calendar.js" type='module'></script>
+    <script src="services/view/interactive_calendar.js" type='module'></script>
     
 </head>
 
 <body>
+
     <?php 
         include 'components/navbar.php'; 
         modular_nav();
     ?>
-
+    <script src="services/view/classrooms.js"></script>
+    
     <section class="topo">
         <div class="perfil">
             <img src=<?php echo $_SESSION['pfp-rel']?> alt="perfil">

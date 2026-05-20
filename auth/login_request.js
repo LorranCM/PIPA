@@ -63,10 +63,6 @@ async function login() {
         const data = await response.json();
         
         if (data.success) {
-            // DEBUG
-            // console.log(data.uid);
-            // console.log(data.role);
-
             // Redireciona o usuario para a landing, que verificara se o usuario esta logado, redirecionando-o para sua pagina de
             // acordo com seu cargo
             window.location.href = data.redirect;

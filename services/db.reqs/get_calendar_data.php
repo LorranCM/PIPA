@@ -4,7 +4,8 @@ require __DIR__ . "/../../packages/configdb.php";
 
 session_start();
 $db = getFirestore();
-$uid = $_SESSION['uid'];
+$data = json_decode(file_get_contents("php://input"), true);
+$uid = $data["uid"] ?? $_SESSION["uid"];
 
 // obtem o campo calendar do usuario, que e um array de eventIDs
 $user_doc_ref = $db->collection('Users')->document($uid);
@@ -40,7 +41,7 @@ foreach ($event_IDs as $eventID) {
         $classroom_id = "placeholder-classroom-id";
     }
 
-    $doc_ref = $db->collection('Classroom')->document($classroom_id);
+    $doc_ref = $db->collection('Classrooms')->document($classroom_id);
     $snapshot = $doc_ref->snapshot();
     $curricular_unit = "Unknown unit";
     

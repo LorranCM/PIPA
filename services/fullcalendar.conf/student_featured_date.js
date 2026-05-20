@@ -1,4 +1,4 @@
-import { calendar } from './interactive_calendar.js';
+import { calendar } from '../view/interactive_calendar.js';
 import { format_date } from './format.js';
 import { show_custom_modal } from './modal_customs.js';
 import { show_modal_non_featured_date_click } from './modal_non_featured_date.js';

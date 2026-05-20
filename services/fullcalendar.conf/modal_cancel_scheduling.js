@@ -1,6 +1,6 @@
 import { show_custom_modal, close_custom_modal } from './modal_customs.js';
 import { toggle_enable_close } from './modal_customs.js';
-import { load_events } from './interactive_calendar.js';
+import { load_events } from '../view/interactive_calendar.js';
 
 export function show_modal_confirm_cancel_event(role, dateStr, props) {
 
