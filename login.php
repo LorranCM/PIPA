@@ -16,11 +16,8 @@
     <link rel="stylesheet" href="styles/navbar.css">
 </head>
 <body>
-    <?php 
-        include 'components/navbar.php'; 
-        modular_nav();
-        
-    ?>
+    
+    <?php include 'components/navbar.php' ?>
 
     <div class="page-content">
         <img src="assets/images/boy_holding_book.png" alt="menino segurando um livro" class="side-image">

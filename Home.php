@@ -24,10 +24,7 @@ loggedOut_verification();
 
 <body>
     
-    <?php 
-        include 'components/navbar.php'; 
-        modular_nav();
-        ?>
+    <?php include 'components/navbar.php' ?>
     
     <section class="topo">
         <div class="perfil">
@@ -47,8 +44,8 @@ loggedOut_verification();
                 </div>
             </section>
             
-    <script src="services/view/classrooms.js"></script>
     <script src="services/view/interactive_calendar.js" type='module'></script>
+    <script src="services/view/classrooms.js"></script>
     
 </body>
 

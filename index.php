@@ -15,10 +15,7 @@
     <title>PIPA</title>
 </head>
 <body>
-    <?php 
-        include 'components/navbar.php'; 
-        modular_nav()
-    ?>
+    <?php include 'components/navbar.php' ?>
     <section class="hero">
         <header>
             <h1 id="header-title">A organização pessoal do estudante do <strong>Instituto Federal</strong> nunca foi tão
