@@ -19,17 +19,15 @@ loggedOut_verification();
     <link rel="icon" type="image/svg+xml" href="assets/icons/kite-origami-paper-svgrepo-com.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
-    <script src="services/view/interactive_calendar.js" type='module'></script>
     
 </head>
 
 <body>
-
+    
     <?php 
         include 'components/navbar.php'; 
         modular_nav();
-    ?>
-    <script src="services/view/classrooms.js"></script>
+        ?>
     
     <section class="topo">
         <div class="perfil">
@@ -37,18 +35,21 @@ loggedOut_verification();
         </div>
         <h2>Bem vindo, <?php echo $_SESSION['name']?>!</h2>
     </section>
-
+    
     <section class="page-content">
         <h2>Suas salas</h2>
         <div id="classrooms-visualizer" >
-
-        </div>
-        <div id="calendar-wrapper">
-            <div id='calendar'>
+            
             </div>
-        </div>
-    </section>
-
+            <div id="calendar-wrapper">
+                <div id='calendar'>
+                    </div>
+                </div>
+            </section>
+            
+    <script src="services/view/classrooms.js"></script>
+    <script src="services/view/interactive_calendar.js" type='module'></script>
+    
 </body>
 
 </html>
