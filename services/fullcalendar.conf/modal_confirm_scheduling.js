@@ -2,28 +2,22 @@ import { show_custom_modal, close_custom_modal } from './modal_customs.js';
 import { toggle_enable_close } from './modal_customs.js';
 import { load_events } from '../view/interactive_calendar.js';
 
-export function show_modal_confirm_cancel_event(role, dateStr, props) {
+export function show_modal_confirm_scheduling(dateStr, props) {
 
     let message;
 
-    if (role === "student") {
-        message = 'Tem certeza que deseja cancelar o agendamento com o(a) professor(a) ' +
-        props.teacher + ' da disciplina de ' + props.curricular_unit + ' no dia ' + dateStr + '?';
-        
-    } else if (role === "teacher") {
-        message = 'Tem certeza que deseja cancelar o agendamento da disciplina de ' +
-        props.curricular_unit + ' no dia ' + dateStr + '?';
-    }
+    message = 'Tem certeza que deseja confirmar o agendamento da disciplina de ' 
+    + props.curricular_unit + ' no dia ' + dateStr + '?';
 
     show_custom_modal(
-        'Confirmar Cancelamento',
+        'Confirmar Agendamento',
         message,
 
         [
             {
-                text: 'Sim, Cancelar', 
-                class: 'btn-danger',
-                onClick: show_modal_canceling_event.bind(null, props.event_id)
+                text: 'Sim, Confirmar', 
+                class: 'btn-primary',
+                onClick: show_modal_confirming_event.bind(null, props.event_id)
             },
 
             {
@@ -35,10 +29,10 @@ export function show_modal_confirm_cancel_event(role, dateStr, props) {
     );
 }
 
-async function show_modal_canceling_event(event_id) {
+async function show_modal_confirming_event(event_id) {
     
     show_custom_modal(
-        "Cancelando Agendamento",
+        "Confirmando Agendamento",
         "<div class=\"loading\"></div>"
     );
 
@@ -47,7 +41,7 @@ async function show_modal_canceling_event(event_id) {
     const modal = document.getElementById('customModal');
 
     let response = await fetch(
-        "services/db.reqs/cancel_event.php", {
+        "services/db.reqs/confirm_event.php", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({event_id})
@@ -64,7 +58,7 @@ async function show_modal_canceling_event(event_id) {
         if (load_response) {
             show_custom_modal(
                 "Feito!",
-                "Agendamento cancelado com sucesso.",
+                "Agendamento confirmado com sucesso.",
                 [
                     {
                         text: 'OK',

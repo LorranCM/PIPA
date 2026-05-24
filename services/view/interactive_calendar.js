@@ -1,6 +1,6 @@
 import { student_event_click } from "../fullcalendar.conf/student_featured_date.js";
+import { teacher_event_click } from "../fullcalendar.conf/teacher_featured_date.js";
 import { format_event } from "../fullcalendar.conf/format.js";
-// import { teacher_event_click } from "./teacher_featured_date.js";
 
 export let calendar;
 
@@ -36,9 +36,9 @@ function set_calendar() {
                 if (role === "student") {
                     dateClickfunction = student_event_click;
                 } 
-                // else if (role === "teacher") {
-                //     dateClickfunction = teacher_event_click;
-                // } 
+                else if (role === "teacher") {
+                    dateClickfunction = teacher_event_click;
+                } 
     
                 calendar.setOption("dateClick", function(info){
                         dateClickfunction(info.dateStr);

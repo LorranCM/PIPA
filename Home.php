@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require "components/preset.php";
 loggedOut_verification();
 

@@ -12,15 +12,12 @@ $role = $_SESSION["role"];
 if (!$event_id) throw new Exception("Missing eventID", 400);
 
 $db = getFirestore();
+$event_doc_ref = $db->collection("Events")->document($event_id);
+$user_doc_ref = $db->collection("Users")->document($uid);
+$snapshot = $user_doc_ref->snapshot();
+$user_calendar = $snapshot["calendar"] ?? [];
 
 if ($role == "student") {
-
-    $event_doc_ref = $db->collection("Events")->document($event_id);
-    $user_doc_ref = $db->collection("Users")->document($uid);
-
-    $snapshot = $user_doc_ref->snapshot();
-    $user_calendar = $snapshot["calendar"] ?? [];
-
     $snapshot = $event_doc_ref->snapshot();
     $event_participants = $snapshot["participants"] ?? [];
     
@@ -47,7 +44,10 @@ if ($role == "student") {
     }
 
 } else if ($role == "teacher") {
-    // a tratar
+    $event_doc_ref->delete();
+    if (($key = array_search($event_id, $user_calendar)) !== false) {
+        unset($user_calendar[$key]);
+    }
 }
 
 header("Content-Type: application/json");

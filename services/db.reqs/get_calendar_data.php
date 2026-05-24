@@ -11,6 +11,7 @@ $uid = $data["uid"] ?? $_SESSION["uid"];
 $user_doc_ref = $db->collection('Users')->document($uid);
 $snapshot = $user_doc_ref->snapshot();
 $event_IDs = $snapshot['calendar'] ?? [];
+$role = $snapshot['role'];
 
 $events = [];
 
@@ -24,7 +25,7 @@ foreach ($event_IDs as $eventID) {
     } 
 
     $event_participants = $snapshot["participants"] ?? [];
-    if (!in_array($uid, $event_participants)) {
+    if (!in_array($uid, $event_participants) && $role == "student") {
         $event_participants[] = $uid;
     }
     
