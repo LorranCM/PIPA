@@ -19,7 +19,7 @@ async function set_classrooms_list() {
                     </p>
                 `;
                 redirect_button.addEventListener("click", () => {
-                        window.location.href = `index.php`; // mudar redirect
+                        window.location.href = `Classroom.php?id=${classroom.id}`; // mudar redirect
                     }
                 );
                 classrooms_container.appendChild(redirect_button);

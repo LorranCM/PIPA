@@ -1,8 +1,10 @@
 // funcao que recolhe os dados do calendario do usuario e formata para o formato do fullcalendar
-export function format_event(event) {
+export function format_event(event, uid) {
     
     let event_color;
     let event_title;
+
+    let is_participant = event.participants.includes(uid);
 
     // titulo e cor do evento de acordo com o status da data
     switch (event['status']) {
@@ -25,6 +27,7 @@ export function format_event(event) {
         color: event_color,
         allDay: true,
         extendedProps: {
+            is_participant: is_participant,
             status: event_title,
             teacher: event.teacher,
             event_id: event['event-id'],

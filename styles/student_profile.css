@@ -350,3 +350,17 @@ h2.class {
     background-color: #c9c9c9;
     height: 25vh;
 }
+
+#content-selector {
+    display: flex;
+    justify-content: space-around;
+}
+
+#content-selector img{
+    width: 10%;
+    height: 10%;
+}
+
+#content-selector img:hover{
+    cursor: pointer;
+}

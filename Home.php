@@ -35,14 +35,11 @@ loggedOut_verification();
     
     <section class="page-content">
         <h2>Suas salas</h2>
-        <div id="classrooms-visualizer" >
-            
-            </div>
-            <div id="calendar-wrapper">
-                <div id='calendar'>
-                    </div>
-                </div>
-            </section>
+        <div id="classrooms-visualizer"></div>
+        <div id="calendar-wrapper">
+            <div id='calendar'></div>
+        </div>
+    </section>
             
     <script src="services/view/interactive_calendar.js" type='module'></script>
     <script src="services/view/classrooms.js"></script>

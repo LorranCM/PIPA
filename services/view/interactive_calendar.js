@@ -1,6 +1,6 @@
 import { student_event_click } from "../fullcalendar.conf/student_featured_date.js";
 import { teacher_event_click } from "../fullcalendar.conf/teacher_featured_date.js";
-import { format_event } from "../fullcalendar.conf/format.js";
+import { load_calendar_data } from "../fullcalendar.conf/load_calendar_data.js";
 
 export let calendar;
 
@@ -24,15 +24,26 @@ function set_calendar() {
         }
     );
 
-    calendar.render();
-    load_events();          
+    calendar.render();  
 
+    
+    setDateclickfunc();
+    
+}
+
+function setDateclickfunc() {
+    const params = new URLSearchParams(window.location.search);
+    const page = window.location.pathname
+                    .split("/")
+                    .pop()
+                    .replace(".php", "");
+                    
     fetch("services/db.reqs/get_role.php")
         .then(response => response.json())
         .then(data => {
                 let role = data.role;
                 let dateClickfunction;
-    
+
                 if (role === "student") {
                     dateClickfunction = student_event_click;
                 } 
@@ -40,28 +51,25 @@ function set_calendar() {
                     dateClickfunction = teacher_event_click;
                 } 
     
-                calendar.setOption("dateClick", function(info){
-                        dateClickfunction(info.dateStr);
-                    }   
-                );
-                calendar.setOption("eventClick", function(info){
-                        dateClickfunction(info.event.startStr);
-                    }   
-                );
+                calendar.setOption("dateClick", function(info){dateClickfunction(info.dateStr);});
+                calendar.setOption("eventClick", function(info){dateClickfunction(info.event.startStr);});
             }
         )
 
+    if (params.get("id") === null) {
+        if (page === "Home") {
+            load_calendar_data();
+
+        } else if (page === "Classroom") {
+            window.location.href = "index.php";
+        }
+        
+    } else {
+        if (page == "Classroom") {
+            load_calendar_data(params.get("id"));
+        }
+    };
+    
 }
 
 document.addEventListener("DOMContentLoaded", set_calendar);
-
-export async function load_events() {
-    const response = await fetch("services/db.reqs/get_calendar_data.php");
-    const data = await response.json();
-
-    const events = data.events;
-    const formated_events = events.map(format_event);
-    calendar.setOption('events', formated_events);
-
-    return true;
-}

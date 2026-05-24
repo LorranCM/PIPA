@@ -1,6 +1,6 @@
 import { show_custom_modal, close_custom_modal } from './modal_customs.js';
 import { toggle_enable_close } from './modal_customs.js';
-import { load_events } from '../view/interactive_calendar.js';
+import { load_calendar_data } from './load_calendar_data.js';
 
 export function show_modal_confirm_cancel_event(role, dateStr, props) {
 
@@ -60,7 +60,7 @@ async function show_modal_canceling_event(event_id) {
         const modal_title = modal.querySelector('#modal-title');
         modal_title.textContent = "Atualizando calendario";
         
-        const load_response = await load_events();
+        const load_response = await load_calendar_data();
         if (load_response) {
             show_custom_modal(
                 "Feito!",

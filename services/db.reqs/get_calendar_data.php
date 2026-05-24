@@ -5,82 +5,108 @@ require __DIR__ . "/../../packages/configdb.php";
 session_start();
 $db = getFirestore();
 $data = json_decode(file_get_contents("php://input"), true);
-$uid = $data["uid"] ?? $_SESSION["uid"];
+$data_classroom_id = $data["classroom_id"];
+if ($data_classroom_id === null) {
+    $uid = $_SESSION["uid"];
+} else {
+    $doc_ref = $db->collection("Classrooms")->document($data_classroom_id);
+    $snapshot = $doc_ref->snapshot();
+    if ($snapshot->exists()) {
+        $uid = $snapshot["tenured-teacher"] ?? "placeholder-uid";
+        if ($uid === "") {
+            $uid = "placeholder-uid";
+        }
+    } else {
+        $uid = "placeholder-uid";
+    }
+}
 
 // obtem o campo calendar do usuario, que e um array de eventIDs
 $user_doc_ref = $db->collection('Users')->document($uid);
 $snapshot = $user_doc_ref->snapshot();
-$event_IDs = $snapshot['calendar'] ?? [];
-$role = $snapshot['role'];
 
-$events = [];
+if ($snapshot->exists()) {
+    $event_IDs = $snapshot['calendar'] ?? [];
+    $role = $snapshot['role'];
 
-foreach ($event_IDs as $eventID) {
-    // obtem dados do evento a partir do eventID, caso o id nao exista na colecao de eventos, remove o id do array de eventos do usuario
-    $doc_ref = $db->collection('Events')->document($eventID);
-    $snapshot = $doc_ref->snapshot();
-    if (!$snapshot->exists()) {
-        unset($event_IDs[array_search($eventID, $event_IDs)]);
-        continue;
-    } 
+    $events = [];
 
-    $event_participants = $snapshot["participants"] ?? [];
-    if (!in_array($uid, $event_participants) && $role == "student") {
-        $event_participants[] = $uid;
-    }
-    
-    $doc_ref->update([
-        ['path' => 'participants', 'value' => $event_participants]
-    ]);
-
-    $event_data = $snapshot->data();
-
-    // obtem o id da classe a partir dos dados do evento, caso nao exista a classe na colecao de classes
-    // define o nome do professor como "Unknown Teacher"
-    $classroom_id = $event_data['classroom-id'] ?? "placeholder-classroom-id";
-    if ($classroom_id === "") {
-        $classroom_id = "placeholder-classroom-id";
-    }
-
-    $doc_ref = $db->collection('Classrooms')->document($classroom_id);
-    $snapshot = $doc_ref->snapshot();
-    $curricular_unit = "Unknown unit";
-    
-    if (!$snapshot->exists()) {
-        $teacher_name = "Unknown Teacher";      
-
-    } else {       
-        $curricular_unit = $snapshot['curricular-unit'] ?? "Unknown unit";
-        $teacher_id = $snapshot['tenured-teacher'] ?? "placeholder-teacher-id";
-        if ($teacher_id === "") {
-            $teacher_id = "placeholder-teacher-id";
-        }
-
-        $doc_ref = $db->collection('Users')->document($teacher_id);
+    foreach ($event_IDs as $eventID) {
+        // obtem dados do evento a partir do eventID, caso o id nao exista na colecao de eventos, remove o id do array de eventos do usuario
+        $doc_ref = $db->collection('Events')->document($eventID);
         $snapshot = $doc_ref->snapshot();
         if (!$snapshot->exists()) {
-            $teacher_name = "Unknown Teacher";       
-        } else {
-            $teacher_name = $snapshot['name'] ?? "Unkown Teacher";
+            unset($event_IDs[array_search($eventID, $event_IDs)]);
+            continue;
+        } 
+
+        $event_participants = $snapshot["participants"] ?? [];
+        if (!in_array($uid, $event_participants) && $role == "student") {
+            $event_participants[] = $uid;
         }
+        
+        $doc_ref->update([
+            ['path' => 'participants', 'value' => $event_participants]
+        ]);
+
+        $event_data = $snapshot->data();
+
+        // obtem o id da classe a partir dos dados do evento, caso nao exista a classe na colecao de classes
+        // define o nome do professor como "Unknown Teacher"
+        $classroom_id = $event_data['classroom-id'] ?? "placeholder-classroom-id";
+        if ($classroom_id === "") {
+            $classroom_id = "placeholder-classroom-id";
+        }
+
+        $doc_ref = $db->collection('Classrooms')->document($classroom_id);
+        $snapshot = $doc_ref->snapshot();
+        $curricular_unit = "Unknown unit";
+        
+        if (!$snapshot->exists()) {
+            $teacher_name = "Unknown Teacher";      
+
+        } else {       
+            $curricular_unit = $snapshot['curricular-unit'] ?? "Unknown unit";
+            $teacher_id = $snapshot['tenured-teacher'] ?? "placeholder-teacher-id";
+            if ($teacher_id === "") {
+                $teacher_id = "placeholder-teacher-id";
+            }
+
+            $doc_ref = $db->collection('Users')->document($teacher_id);
+            $snapshot = $doc_ref->snapshot();
+            if (!$snapshot->exists()) {
+                $teacher_name = "Unknown Teacher";       
+            } else {
+                $teacher_name = $snapshot['name'] ?? "Unkown Teacher";
+            }
+        }
+        
+        $event_data['curricular-unit'] = $curricular_unit;
+        $event_data['classroom-id'] = $classroom_id;
+        $event_data['teacher'] = $teacher_name;
+        $event_data['event-id'] = $eventID;
+
+        $events[] = $event_data;
     }
-    
-    $event_data['curricular-unit'] = $curricular_unit;
-    $event_data['classroom-id'] = $classroom_id;
-    $event_data['teacher'] = $teacher_name;
-    $event_data['event-id'] = $eventID;
 
-    $events[] = $event_data;
+    $user_doc_ref->update(
+        [
+            ['path' => 'calendar', 'value' => $event_IDs]
+        ]
+    );
+
+    echo json_encode(
+        [
+            "events" => $events,
+            "uid" => $_SESSION["uid"]
+        ]
+    );
+
+} else {
+    echo json_encode(
+        [
+            "events" => [],
+            "uid" => $_SESSION["uid"]
+        ]
+    );
 }
-
-$user_doc_ref->update(
-    [
-        ['path' => 'calendar', 'value' => $event_IDs]
-    ]
-);
-
-echo json_encode(
-    [
-        "events" => $events,
-    ]
-);

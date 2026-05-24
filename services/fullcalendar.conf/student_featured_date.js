@@ -31,7 +31,9 @@ export function student_event_click(info) {
                 {
                     text: 'Ir para a sala',
                     class: 'btn-primary',
-                    onClick: null
+                    onClick: function () {
+                        window.location.href = `Classroom.php?id=${props.classroom_id}`;
+                    }
                 },
 
                 {
