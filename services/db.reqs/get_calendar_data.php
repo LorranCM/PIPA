@@ -24,12 +24,19 @@ if ($data_classroom_id === null) {
 // obtem o campo calendar do usuario, que e um array de eventIDs
 $user_doc_ref = $db->collection('Users')->document($uid);
 $snapshot = $user_doc_ref->snapshot();
+$events = [];
+$teacher_availability = [];
+$tenured_teacher_name = "undefined";
 
 if ($snapshot->exists()) {
+
+    if ($data_classroom_id !== null) {
+        $teacher_availability = $snapshot['availability'] ?? [];
+        $tenured_teacher_name = $snapshot['name'] ?? "undefined";
+    }
+
     $event_IDs = $snapshot['calendar'] ?? [];
     $role = $snapshot['role'];
-
-    $events = [];
 
     foreach ($event_IDs as $eventID) {
         // obtem dados do evento a partir do eventID, caso o id nao exista na colecao de eventos, remove o id do array de eventos do usuario
@@ -57,13 +64,14 @@ if ($snapshot->exists()) {
         if ($classroom_id === "") {
             $classroom_id = "placeholder-classroom-id";
         }
-
+        
         $doc_ref = $db->collection('Classrooms')->document($classroom_id);
         $snapshot = $doc_ref->snapshot();
         $curricular_unit = "Unknown unit";
         
         if (!$snapshot->exists()) {
-            $teacher_name = "Unknown Teacher";      
+            $teacher_id = "placeholder-teacher-id";
+            $teacher_name = "Unknown Teacher";    
 
         } else {       
             $curricular_unit = $snapshot['curricular-unit'] ?? "Unknown unit";
@@ -75,7 +83,7 @@ if ($snapshot->exists()) {
             $doc_ref = $db->collection('Users')->document($teacher_id);
             $snapshot = $doc_ref->snapshot();
             if (!$snapshot->exists()) {
-                $teacher_name = "Unknown Teacher";       
+                $teacher_name = "Unknown Teacher";
             } else {
                 $teacher_name = $snapshot['name'] ?? "Unkown Teacher";
             }
@@ -84,6 +92,7 @@ if ($snapshot->exists()) {
         $event_data['curricular-unit'] = $curricular_unit;
         $event_data['classroom-id'] = $classroom_id;
         $event_data['teacher'] = $teacher_name;
+        $event_data['teacher-id'] = $teacher_id;
         $event_data['event-id'] = $eventID;
 
         $events[] = $event_data;
@@ -95,18 +104,13 @@ if ($snapshot->exists()) {
         ]
     );
 
-    echo json_encode(
-        [
-            "events" => $events,
-            "uid" => $_SESSION["uid"]
-        ]
-    );
-
-} else {
-    echo json_encode(
-        [
-            "events" => [],
-            "uid" => $_SESSION["uid"]
-        ]
-    );
-}
+    
+} 
+echo json_encode(
+    [
+        "events" => $events,
+        "uid" => $_SESSION["uid"],
+        "teacher-availability" => $teacher_availability,
+        "tenured-teacher-name" => $tenured_teacher_name
+    ]
+);

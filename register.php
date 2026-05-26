@@ -71,8 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <?php 
-        include 'components/navbar.php'; 
-        modular_nav();
+        include 'components/navbar.php';
     ?>
 
     <div class="page-content">
