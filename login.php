@@ -19,7 +19,6 @@
     <title>PIPA - Login</title>
     <link rel="stylesheet" href="colors.css">
     <link rel="stylesheet" href="styles/login_style.css">
-    <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/navbar.css">
     <base href="./">
 </head>
@@ -56,7 +55,7 @@
                         <label for="show-password">Mostrar senha</label>
                     </div>
                     <p><a href="recovery.php">Esqueci minha senha</a></p>
-                    <p>Primeiro acesso? <a href="register.php">Registrar</a></p>
+                    <p>Primeiro acesso? <a href="register.php">Clique aqui!</a></p>
                     
                     <button type="submit" class="button-login">Entrar</button>
                 </div>
@@ -64,7 +63,6 @@
         </form>
     </div>
 
-    <?php include 'components/footer.php'; ?>
     <script>
     // Seleciona os elementos
     const passwordField = document.getElementById('password');

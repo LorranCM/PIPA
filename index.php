@@ -25,13 +25,13 @@
     ?>
     <section class="hero">
         <header>
-            <h1 id="header-title">A organização pessoal do estudante do <strong>Instituto Federal</strong> nunca foi tão
-                fácil</h1>
-            <a href="./login.php" class="select-button">SELECIONAR IF</a>
+            <h1 id="header-title">Organize a sua vida dentro do <strong>Instituto Federal</strong> de maneira simples!</h1>
+            
             <h3 id="header-description">
                 Uma plataforma didática que conecta professores e alunos, centralizando informações acadêmicas e
                 facilitando a organização do aluno.
             </h3>
+            <a href="./login.php" class="select-button">SELECIONAR IF</a>
         </header>
 
         <figure id="hero-figure1">
@@ -122,7 +122,6 @@
 
     </section>
 
-    <?php include 'components/footer.php'; ?>
 </body>
 
 </html>
