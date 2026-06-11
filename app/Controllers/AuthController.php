@@ -43,12 +43,13 @@ class AuthController extends BaseController {
 
         return $this->response->setJSON([
             'success' => true,
-            'redirect' => url_to('home')
+            'redirect' => url_to('welcome')
         ]);
     }
 
     public function logout() {
         // Encerramento da sessão
         session()->destroy();
+        return redirect()->to(url_to('index'));
     }
 }

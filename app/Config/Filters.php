@@ -34,6 +34,11 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+
+        // Custom filters
+        'verifyLogin'   => \App\Filters\VerifyLogin::class,
+        'verifyLogout'  => \App\Filters\VerifyLogout::class,
+
     ];
 
     /**
