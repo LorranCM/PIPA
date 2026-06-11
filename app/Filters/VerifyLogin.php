@@ -12,7 +12,7 @@ class VerifyLogin implements FilterInterface
        
         $session = session();
         if ($session->get('loggedin')) {
-            return redirect()->to(url_to('user_management'));
+            return redirect()->to(url_to('home'));
         }
         
     }

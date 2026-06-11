@@ -4,6 +4,8 @@ use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
 
+$routes->set404Override('App\Controllers\HomeController::error404');
+
 #--------------------------------------------------------------------
 #   1 - Home (não logado)
 #--------------------------------------------------------------------
@@ -11,8 +13,6 @@ use CodeIgniter\Router\RouteCollection;
 $routes->group('/', function($routes) {
     $routes->get('welcome', 'HomeController::welcome', ['as' => 'welcome', 'filter' => 'verifyLogin']);
     $routes->get('', 'HomeController::index',          ['as' => 'index']);
-
-    $routes->get('user_management', 'HomeController::user_management', ['as' => 'user_management', 'filter' => 'verifyLogout']);
 });
 
 #--------------------------------------------------------------------
@@ -28,24 +28,28 @@ $routes->group('auth', ['filter' => 'verifyLogin'], function($routes) {
 $routes->get('auth/logout', 'AuthController::logout', ['as' => 'logout']);
 
 #--------------------------------------------------------------------
-#   2 - Home (logado)
+#   2 - Usuário (logado)
 #--------------------------------------------------------------------
+
 $routes->group('my', ['filter' => 'verifyLogout'], function($routes) {
-    $routes->get('', 'HomeController::home', ['as' => 'home']);
+    $routes->get('', 'HomeController::user_home_management', ['as' => 'home']);
+
 #--------------------------------------------------------------------
 #   2.1 - Student
 #--------------------------------------------------------------------
 
-
+    $routes->get('student', 'StudentController::index', ['as' => 'student_home', 'filter' => 'preventNonRolePage']);
 
 #--------------------------------------------------------------------
 #   2.1 - Teacher
 #--------------------------------------------------------------------
 
-
+    $routes->get('teacher', 'TeacherController::index', ['as' => 'teacher_home', 'filter' => 'preventNonRolePage']);
 
 #--------------------------------------------------------------------
 #   2.1 - Admin
 #--------------------------------------------------------------------
+
+    $routes->get('admin', 'AdminController::index', ['as' => 'admin_home', 'filter' => 'preventNonRolePage']);
 
 });

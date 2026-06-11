@@ -38,6 +38,7 @@ class Filters extends BaseFilters
         // Custom filters
         'verifyLogin'   => \App\Filters\VerifyLogin::class,
         'verifyLogout'  => \App\Filters\VerifyLogout::class,
+        'preventNonRolePage' => \App\Filters\PreventNonRolePage::class,
 
     ];
 
