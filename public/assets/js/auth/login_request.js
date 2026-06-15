@@ -17,7 +17,6 @@ const auth = getAuth(app);
 
 const buttonLogin = document.getElementById("button-login");
 const buttonLogin_default_message = buttonLogin.textContent;
-const baseUrl = window.location.origin
 
 // Ao apertar o botão de login a função login é chamada e não é instantânea. Afim de evitar que múltiplos clíques
 // enquanto a função ainda está processando causem problemas, a variável "running" é usada para garantir que a função 

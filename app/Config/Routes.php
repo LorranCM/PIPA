@@ -20,9 +20,9 @@ $routes->group('/', function($routes) {
 #--------------------------------------------------------------------
 
 $routes->group('auth', ['filter' => 'verifyLogin'], function($routes) {
-    $routes->get('login', 'AuthController::login',                       ['as' => 'login']);
-    $routes->get('recovery', 'AuthController::recovery',                 ['as' => 'recovery']);
-    $routes->post('login/validation', 'AuthController::validation',      ['as' => 'validation']);
+    $routes->get('login', 'AuthController::login',                  ['as' => 'login']);
+    $routes->get('recovery', 'AuthController::recovery',            ['as' => 'recovery']);
+    $routes->post('login/validation', 'AuthController::validation', ['as' => 'validation']);
 });
 
 $routes->get('auth/logout', 'AuthController::logout', ['as' => 'logout']);
@@ -31,7 +31,16 @@ $routes->get('auth/logout', 'AuthController::logout', ['as' => 'logout']);
 #   2 - Usuário (logado)
 #--------------------------------------------------------------------
 
+$routes->group('requires', ['filter' => 'verifyLogout'], function($routes) {
+
+    $routes->get('refresh_self_data', 'HomeController::refresh_user_data',                         ['as' => 'refresh_user_data']);
+    $routes->post('get_calendar_data', 'CalendarController::get_user_calendar_data',                ['as' => 'get_self_calendar_data']);
+    $routes->post('get_calendar_data/(:alphanum)', 'CalendarController::get_user_calendar_data/$1', ['as' => 'get_calendar_data']);
+
+});
+
 $routes->group('my', ['filter' => 'verifyLogout'], function($routes) {
+    
     $routes->get('', 'HomeController::user_home_management', ['as' => 'home']);
 
 #--------------------------------------------------------------------

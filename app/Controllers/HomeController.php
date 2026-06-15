@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
+
 class HomeController extends BaseController {
     
     public function index() {
@@ -32,6 +34,17 @@ class HomeController extends BaseController {
                 return redirect()->to(url_to('logout'));
         }
         
+    }
+
+    public function refresh_user_data() {
+        $uid = session()->get('user_data')['uid'];
+        $users = new UserModel();
+        $user = $users->find($uid);
+        $user_data = $user->data();
+        $user_data['uid'] = $uid;
+
+        session()->set('user_data', $user_data);
+        return redirect()->to(url_to('home'));
     }
 
     public function error404() {

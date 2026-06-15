@@ -34,8 +34,8 @@ class AuthController extends BaseController {
         }
 
         $users = new UserModel();
-        $user_snapshot = $users->find($uid, true);
-        $user_data = $user_snapshot->data();
+        $user = $users->find($uid);
+        $user_data = $user->data();
         $user_data['uid'] = $uid;
 
         session()->set('user_data', $user_data);

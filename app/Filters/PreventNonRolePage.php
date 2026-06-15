@@ -13,6 +13,7 @@ class PreventNonRolePage implements FilterInterface
         $routeName = service('router')->getMatchedRouteOptions()['as'];
         $session = session();
         $role = $session->get('user_data')['role'];
+        $expectedRoute = 'home';
         switch ($role) {
             case 'student':
                 $expectedRoute = 'student_home';

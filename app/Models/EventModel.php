@@ -5,7 +5,7 @@ namespace App\Models;
 use Google\Cloud\Firestore\FirestoreClient;
 use App\Libraries\FirestoreService;
 
-class UserModel {
+class EventModel {
 
     public FirestoreClient $db;
 
@@ -15,7 +15,7 @@ class UserModel {
 
     public function find($id) {
         // buscar o documento do usuario no firestore usando o uid
-        $doc_ref = $this->db->collection('Users')->document($id);
+        $doc_ref = $this->db->collection('Events')->document($id);
         $snapshot = $doc_ref->snapshot();
         return $snapshot;
     }
@@ -26,13 +26,13 @@ class UserModel {
 
     public function update($id, $data) {
         // atualizar o documento do usuario no firestore usando o uid
-        $doc_ref = $this->db->collection('Users')->document($id);
+        $doc_ref = $this->db->collection('Events')->document($id);
         $doc_ref->set($data, ['merge' => true]);
     }
 
     public function delete($id) {
         // deletar o documento do usuario no firestore usando o uid
-        $doc_ref = $this->db->collection('Users')->document($id);
+        $doc_ref = $this->db->collection('Events')->document($id);
         $doc_ref->delete();
     }
 

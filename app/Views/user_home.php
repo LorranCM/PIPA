@@ -24,8 +24,11 @@
 <?= $this->section('scripts-ref'); ?>
 
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
-    <script src="services/view/interactive_calendar.js" type='module'></script>
-    <script src="services/view/classrooms.js"></script>
+    <script type='module'>
+        import { get_self_calendar } from '<?= base_url("assets/js/fullcalendar/load_calendar_data.js") ?>';
+        window.load_calendar_data = get_self_calendar
+    </script>
+    <script src=<?= base_url("assets/js/fullcalendar/interactive_calendar.js") ?> type='module'></script>
 
 <?= $this->endSection(); ?>
 
@@ -39,9 +42,16 @@
     
     <section class="topo">
         <div class="perfil">
-            <img src='' alt="perfil">
+            <img src='<?php
+                $image_url = session()->get('user_data')['profile-picture-rel'];
+                if (file_exists($image_url)) {
+                    echo $image_url;
+                } else {
+                    echo base_url("assets/images/default-pfp.jpg");
+                }
+            ?>' alt="pfp">
         </div>
-        <h2>Bem vindo, <?php echo session()->get('user_data')['name'] ?>!</h2>
+        <h2>Bem vindo, <?= session()->get('user_data')['name'] ?>!</h2>
     </section>
     
     <section class="page-content">
