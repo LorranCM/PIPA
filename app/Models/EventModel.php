@@ -41,7 +41,7 @@ class EventModel {
             'calendar' => $self_calendar
         ]);
         $users->update($teacher_id, [
-            'calendar' => $self_calendar
+            'calendar' => $teacher_calendar
         ]);
 
     }

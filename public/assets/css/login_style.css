@@ -25,6 +25,7 @@ body {
     justify-content: center;
     gap: 5rem; /* Espaço entre o rapaz da foto e o card de login */
     padding: 4rem 2rem;
+    padding-top: 0;
     box-sizing: border-box;
     min-height: calc(100vh - 160px); /* Ajuste para não colidir com header/footer */
 }

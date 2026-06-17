@@ -4,7 +4,7 @@ use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
 
-// $routes->set404Override('App\Controllers\HomeController::error404');
+$routes->set404Override('App\Controllers\HomeController::error404');
 
 #--------------------------------------------------------------------
 #   1 - Home (não logado)

@@ -56,12 +56,14 @@
     
     <section class="page-content">
         <h2>Suas salas</h2>
-        <div id="classrooms-visualizer">
-            <button>
-                <div class="loader-dots">
-                    <span></span><span></span><span></span>
-                </div>
-            </button>
+        <div class="visualizer-wrapper">
+            <div id="classrooms-visualizer">
+                <button>
+                    <div class="loader-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </button>
+            </div>
         </div>
         <div id="calendar-wrapper">
             <div id='calendar'></div>

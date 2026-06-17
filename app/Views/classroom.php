@@ -58,6 +58,7 @@
 <?= $this->section('content'); ?>
     
     <section class="page-content">
+        <h2>Sala : <?= $curricular_unit ?? "" ?></h2>
         <div id="content-selector"> 
             <img id="btn-calendar" src= <?= base_url("assets/icons/calendar-days-svgrepo-com.svg") ?> alt="Calendário">
             <img id="btn-documents" src= <?= base_url("assets/icons/list-paper-school-svgrepo-com.svg") ?> alt="Documentos">

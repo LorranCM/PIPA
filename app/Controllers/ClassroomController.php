@@ -50,7 +50,9 @@ class ClassroomController extends BaseController {
         session()->setFlashdata('isOwner', $isOwner);
         session()->setFlashdata('classroom_id', $id);
 
-        return $load_data_script. $script . view('classroom');
+        return $load_data_script. $script . view('classroom', [
+            'curricular_unit' => $classroom['curricular-unit'],
+        ]);
 
     }
 

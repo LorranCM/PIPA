@@ -336,44 +336,50 @@ h2.class {
     text-align: center;
 }
 
+/* Container Pai (O que centraliza) */
+.visualizer-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Container de Scroll (O que gerencia os itens) */
 #classrooms-visualizer {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     gap: 15px;
     
-    /* ESSENCIAL PARA O CENTRO QUANDO PEQUENO */
-    justify-content: center; 
-    
+    /* Scroll Horizontal */
     overflow-x: auto;
-    padding: 10px;
     
-    /* TRUQUE PARA O SCROLL FUNCIONAR QUANDO ESTÁ CENTRALIZADO */
-    min-width: 100%; 
+    /* Garante que o scroll comece do início e não corte itens */
+    padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    
+    /* Isso permite que o scroll comece do começo da lista */
+    scroll-behavior: smooth;
 }
 
 #classrooms-visualizer button {
-    /* Define o tamanho fixo para todos */
-    flex: 0 0 20vw; /* Não cresce, não encolhe, largura de 150px */
-    height: 80px;    /* Altura fixa */
+    /* flex: 0 0 [tamanho] evita que o item encolha */
+    flex: 0 0 200px; 
+    height: 80px;
     
-    /* Centraliza o conteúdo dentro do botão */
     display: flex;
     justify-content: center;
     align-items: center;
     
-    /* Estilo */
     border: 1px solid #ddd;
     border-radius: 8px;
     background: white;
     cursor: pointer;
     transition: transform 0.2s, background 0.2s;
     font-weight: bold;
-}
-
-#classrooms-visualizer button:hover {
-    background: #f0f0f0;
-    transform: translateY(-2px);
+    
+    /* Evita que o texto quebre o botão */
+    white-space: nowrap;
 }
 
 #content-selector {
@@ -381,7 +387,7 @@ h2.class {
     justify-content: space-around;
     height: auto;
     width: 100%;
-    margin-block: 25vh 10vh;
+    margin-block: 10vh;
 }
 
 #content-selector img{
