@@ -1,6 +1,5 @@
 import { show_custom_modal, close_custom_modal } from './modal_customs.js';
 import { toggle_enable_close } from './modal_customs.js';
-import { load_calendar_data } from './load_calendar_data.js';
 
 export function show_modal_confirm_cancel_event(role, dateStr, props) {
 
@@ -47,11 +46,7 @@ async function show_modal_canceling_event(event_id) {
     const modal = document.getElementById('customModal');
 
     let response = await fetch(
-        "services/db.reqs/cancel_event.php", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({event_id})
-        }
+        baseUrl + `/requires/cancel_event/${event_id}`, {method: "POST",}
     );
 
     const data = await response.json();
@@ -60,7 +55,7 @@ async function show_modal_canceling_event(event_id) {
         const modal_title = modal.querySelector('#modal-title');
         modal_title.textContent = "Atualizando calendario";
         
-        const load_response = await load_calendar_data();
+        const load_response = await window.load_calendar_data();
         if (load_response) {
             show_custom_modal(
                 "Feito!",

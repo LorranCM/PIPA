@@ -67,7 +67,6 @@
                         <input type="checkbox" id="show-password">
                         <label for="show-password">Exibir senha</label>
                     </div>
-                    <p><a href="<?= url_to('recovery') ?>">Esqueci minha senha</a></p>
                     
                     <button type="submit" id="button-login" class="button-login">Entrar</button>
 

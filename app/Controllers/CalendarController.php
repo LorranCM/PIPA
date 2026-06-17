@@ -69,9 +69,24 @@ class CalendarController extends BaseController {
 
     }
 
-    public function get_calendar_data_by_classroomID($id) {
+    public function get_calendar_data_by_classroom_id($id) {
 
-        return 1;
+        $classrooms = new ClassroomModel();
+        $users = new UserModel();
+
+        $classroom = $classrooms->find($id);
+        $tenured_teacher_id = $classroom['tenured-teacher'];
+        $tenured_teacher = $users->find($tenured_teacher_id);
+        $tenured_teacher_name = $tenured_teacher['name'];
+        $tenured_teacher_availability = $tenured_teacher['availability'];
+        $events = $this->get_calendar_data_by_userID($tenured_teacher_id);
+
+        return $this->response->setJSON([
+            'events' => $events,
+            'uid' => session()->get('user_data')['uid'],
+            'teacher-availability' => $tenured_teacher_availability,
+            'tenured-teacher-name' => $tenured_teacher_name
+        ]);
 
     }
 

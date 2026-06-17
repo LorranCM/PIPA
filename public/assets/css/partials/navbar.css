@@ -19,7 +19,13 @@ html, body {
     display: block;
     margin: 0; 
     top: 0;
-    float: left; /* Ajuda a ocupar o espaço do topo sem gaps de linha */
+    float: left; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    
+    /* Importante para a sombra não ficar "por baixo" de outros elementos */
+    position: relative;
+    z-index: 1000;
+    margin-bottom: 10vh;
 }
 
 #navbar ul {
@@ -82,3 +88,7 @@ html, body {
     text-decoration: none;
     color: black;
 }
+
+/* #logout {
+    justify-self: flex-end;
+} */

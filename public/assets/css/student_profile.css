@@ -14,8 +14,15 @@ body {
    ============================================= */
 .topo {
     background: linear-gradient(to right, #2f6f4f, #3c8a60);
-    height: 200px;
-    margin-top: 80px;
+    display: flex;
+    height: fit-content;
+    width: 100%;
+}
+
+.topo h2 {
+    color: white;
+    height: fit-content;
+    margin-block: auto;
 }
 
 .perfil {
@@ -74,7 +81,7 @@ h2.class {
     border-radius: 8px;
 }
 
-.cards {
+/* .cards {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -83,7 +90,7 @@ h2.class {
     gap: 25px;
     margin-top: 10px;
     width: 100%;
-}
+} */
 
 .sala-link {
     text-decoration: none !important;
@@ -97,7 +104,7 @@ h2.class {
 }
 
 /* Cards personalizados (vence o Bootstrap) */
-.cards .card {
+/* .cards .card {
     background-color: #6f9f89;
     width: 349px;
     height: 225px;
@@ -113,17 +120,17 @@ h2.class {
     font-size: 1.2em;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: box-shadow 0.3s ease;
-}
+} */
 
-.cards .card:hover {
+/* .cards .card:hover {
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
+} */
 
-.cards .card small {
+/* .cards .card small {
     font-size: 0.9em;
     opacity: 0.9;
     margin-top: 5px;
-}
+} */
 
 /* =============================================
    CALENDÁRIO
@@ -275,26 +282,8 @@ h2.class {
 /* =============================================
    RESPONSIVIDADE
    ============================================= */
-@media (max-width: 768px) {
-    .cards .card {
-        width: 100%;
-        height: 180px;
-    }
-    
-    .salas {
-        padding: 10px;
-    }
-    
-    #calendar {
-        margin: 20px 10px;
-    }
-    
-    .carteirinha {
-        padding: 0 10px;
-    }
-}
 
-.modal {
+/* .modal {
     display: none;
     position: fixed;
     inset: 0;
@@ -339,4 +328,270 @@ h2.class {
 .modal h2 {
     text-align: center;
     margin-bottom: 20px;
+} */
+
+.page-content {
+    padding-inline: 20%;
+    justify-content: center;
+    text-align: center;
+}
+
+#classrooms-visualizer {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 15px;
+    
+    /* ESSENCIAL PARA O CENTRO QUANDO PEQUENO */
+    justify-content: center; 
+    
+    overflow-x: auto;
+    padding: 10px;
+    
+    /* TRUQUE PARA O SCROLL FUNCIONAR QUANDO ESTÁ CENTRALIZADO */
+    min-width: 100%; 
+}
+
+#classrooms-visualizer button {
+    /* Define o tamanho fixo para todos */
+    flex: 0 0 20vw; /* Não cresce, não encolhe, largura de 150px */
+    height: 80px;    /* Altura fixa */
+    
+    /* Centraliza o conteúdo dentro do botão */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Estilo */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    font-weight: bold;
+}
+
+#classrooms-visualizer button:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+#content-selector {
+    display: flex;
+    justify-content: space-around;
+    height: auto;
+    width: 100%;
+    margin-block: 25vh 10vh;
+}
+
+#content-selector img{
+    width: 5rem;
+    height: auto;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block; /* Necessário para aplicar transform */
+}
+
+#content-selector img:hover{
+    transform: scale(1.2) translateY(-5px);
+    color: #2E8E5A; /* Muda para a sua cor principal */
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+}
+
+.hidden {
+    display: none !important;
+}
+
+#documents-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+#documents-wrapper > * {
+    flex: 1 1 220px;
+    min-width: 400px;
+    max-width: 500px;
+
+    min-height: 120px;
+
+    background: white;
+    border: 1px solid #d8dee4;
+    border-radius: 14px;
+    padding: 16px;
+
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+}
+
+.modal-content {
+    background: white;
+
+    padding: 24px;
+
+    border-radius: 12px;
+
+    max-width: 500px;
+    width: 90%;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+}
+
+.modal-content button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.document-create-card {
+    min-height: 120px;
+
+    border: 2px dashed #3c8a60;
+    border-radius: 14px;
+
+    background: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+.document-create-card:hover {
+    background: #f4fbf7;
+    transform: translateY(-2px);
+}
+
+.plus-icon {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #3c8a60;
+}
+.document-modal-content {
+    width: min(600px, 90vw);
+
+    background: white;
+    border-radius: 16px;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.document-modal-content input,
+.document-modal-content textarea {
+    width: 100%;
+
+    border: 1px solid #d5d5d5;
+    border-radius: 10px;
+
+    padding: 12px;
+
+    font-size: 1rem;
+
+    box-sizing: border-box;
+}
+
+.document-modal-content textarea {
+    resize: vertical;
+}
+
+.file-upload-area {
+    border: 2px dashed #bdbdbd;
+    border-radius: 12px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.file-upload-area:hover {
+    background: #f7f7f7;
+}
+
+.file-upload-area label {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.document-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.loader-dots span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #2E8E5A;
+  border-radius: 50%;
+  margin: 0 4px;
+  animation: bounce 0.6s infinite alternate;
+}
+
+.loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  to { transform: translateY(-10px); }
+}
+
+/* Remove margens e força o evento a preencher a célula */
+.fc .fc-daygrid-day-frame {
+    position: relative;
+    min-height: 100px; /* Ajuste a altura mínima da célula conforme necessário */
+}
+
+.fc .fc-daygrid-event-harness {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 2px; /* Espaço para não ficar colado na borda */
+}
+
+.fc-event {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px !important;
+    cursor: pointer;
+}
+
+/* Opcional: Estilo de texto se o evento for grande */
+.fc-event-title {
+    font-weight: bold;
+    text-align: center;
+    white-space: normal; /* Permite quebra de linha se o nome for longo */
 }

@@ -17,16 +17,16 @@ export function show_custom_modal(title, message, buttons = []) {
     // Cria o modal dinamicamente
     const modalHTML = `
     <div id="customModal" class="modal-overlay" style="display: flex;">
-    <div class="modal-content">
-    <span class="modal-close">&times;</span>
-    <h3 id="modal-title">${title}</h3>
-    <p id="modal-message">${message}</p>
-    <div class="modal-footer">
-    ${buttons.map((btn, index) => 
-        `<button class="modal-btn ${btn.class}" id="customBtn${index}">${btn.text}</button>`
-    ).join('')}
-    </div>
-    </div>
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 id="modal-title">${title}</h3>
+            <p id="modal-message">${message}</p>
+            <div class="modal-footer">
+                ${buttons.map((btn, index) => 
+                    `<button class="modal-btn ${btn.class}" id="customBtn${index}">${btn.text}</button>`
+                ).join('')}
+            </div>
+        </div>
     </div>
     `;
     

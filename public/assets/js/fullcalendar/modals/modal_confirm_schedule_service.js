@@ -1,6 +1,5 @@
 import { show_custom_modal, close_custom_modal } from './modal_customs.js';
 import { toggle_enable_close } from './modal_customs.js';
-import { load_calendar_data } from './load_calendar_data.js';
 
 export function show_modal_confirm_schedule_event(dateStr, formated_date, props) {
     show_custom_modal(
@@ -36,16 +35,7 @@ async function show_modal_scheduling_event(dateStr, classroom_id) {
     const modal = document.getElementById('customModal');
 
     let response = await fetch(
-        "services/db.reqs/schedule_event.php", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(
-                {
-                    classroom_id: classroom_id,
-                    date: dateStr
-                }
-            )
-        }
+        baseUrl + `/requires/schedule_event/${classroom_id}/${dateStr}`, {method: "POST",}
     );
 
     const data = await response.json();
@@ -55,7 +45,7 @@ async function show_modal_scheduling_event(dateStr, classroom_id) {
         modal_title.textContent = "Atualizando calendario";
 
         const params = new URLSearchParams(window.location.search);
-        const load_response = await load_calendar_data(params.get("id"));
+        const load_response = await window.load_calendar_data();
         if (load_response) {
             show_custom_modal(
                 "Feito!",

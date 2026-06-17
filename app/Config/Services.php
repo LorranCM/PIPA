@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Libraries\FirestoreService;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -29,5 +30,15 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+    public static function firestore($getShared = true) {
+
+        if ($getShared) {
+            return static::getSharedInstance('firestore');
+        }
+
+        return new \App\Libraries\FirestoreService();
+
+    }
 
 }

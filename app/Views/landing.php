@@ -25,7 +25,7 @@
         <header>
             <h1 id="header-title">A organização pessoal do estudante do <strong>Instituto Federal</strong> nunca foi tão
                 fácil</h1>
-            <a href=<?= url_to('login') ?> class="select-button">SELECIONAR IF</a>
+            <a href=<?= url_to('login') ?> class="select-button">ENTRAR</a>
             <h3 id="header-description">
                 Uma plataforma didática que conecta professores e alunos, centralizando informações acadêmicas e
                 facilitando a organização do aluno.
@@ -114,7 +114,7 @@
             </li>
         </ul>
 
-        <a href=<?= url_to('login') ?> class="select-button">SELECIONAR IF</a>
+        <a href=<?= url_to('login') ?> class="select-button">COMECE AGORA</a>
 
     </section>
 

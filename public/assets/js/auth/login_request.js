@@ -28,8 +28,7 @@ async function login() {
 
     if (running) return;
     running = true;
-    buttonLogin.textContent = "..."; // MUDAR: improviso de loading, mudar para algo mais elegante depois
-
+    buttonLogin.textContent = "...";
     // Coleta os dados do formulário
     const registration = document.getElementById("registration").value.trim();
     const password = document.getElementById("password").value.trim();

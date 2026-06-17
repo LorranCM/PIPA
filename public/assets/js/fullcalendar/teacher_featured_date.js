@@ -1,9 +1,9 @@
-import { calendar } from '../view/interactive_calendar.js';
+import { calendar } from './interactive_calendar.js';
 import { format_date } from './format.js';
-import { show_custom_modal, close_custom_modal } from './modal_customs.js';
-import { show_modal_non_featured_date_click } from './modal_non_featured_date.js';
-import { show_modal_confirm_cancel_event } from './modal_cancel_scheduling.js';
-import { show_modal_confirm_scheduling } from './modal_confirm_scheduling.js';
+import { show_custom_modal, close_custom_modal } from './modals/modal_customs.js';
+import { show_modal_non_featured_date_click } from './modals/modal_non_featured_date.js';
+import { show_modal_confirm_cancel_event } from './modals/modal_cancel_scheduling.js';
+import { show_modal_confirm_scheduling } from './modals/modal_confirm_scheduling.js';
 
 export function teacher_event_click(info) {
     // obtem o a data clicada e os eventos desta data
@@ -31,8 +31,8 @@ export function teacher_event_click(info) {
                     text: 'Ir para a sala',
                     class: 'btn-primary',
                     onClick: function () {
-                            window.location.href = `Classroom.php?id=${props.classroom_id}`;
-                        }
+                        window.location.href = baseUrl + `/my/search/classroom/${props.classroom_id}`
+                    }
                 },
     
                 {

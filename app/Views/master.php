@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PIPA</title>
+    <link rel="icon" type="image/svg+xml" href=<?= base_url("assets/icons/kite-origami-paper-svgrepo-com.svg") ?>>
     <link rel="stylesheet" href=<?= base_url("assets/css/partials/navbar.css") ?>>
 
     <?php echo $this->renderSection('styles-ref'); ?>

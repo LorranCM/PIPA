@@ -29,6 +29,7 @@
         window.load_calendar_data = get_self_calendar
     </script>
     <script src=<?= base_url("assets/js/fullcalendar/interactive_calendar.js") ?> type='module'></script>
+    <script src=<?= base_url("assets/js/display_classrooms.js") ?> type='module'></script>
 
 <?= $this->endSection(); ?>
 
@@ -39,24 +40,29 @@
 -->
 
 <?= $this->section('content'); ?>
-    
-    <section class="topo">
-        <div class="perfil">
-            <img src='<?php
+<section class="topo">
+    <div class="perfil">
+        <img src='<?php
                 $image_url = session()->get('user_data')['profile-picture-rel'];
-                if (file_exists($image_url)) {
+                if ($image_url !== "") {
                     echo $image_url;
-                } else {
-                    echo base_url("assets/images/default-pfp.jpg");
-                }
-            ?>' alt="pfp">
+                    } else {
+                        echo base_url("assets/images/default-pfp.jpg");
+                        }
+                        ?>' alt="pfp">
         </div>
         <h2>Bem vindo, <?= session()->get('user_data')['name'] ?>!</h2>
     </section>
     
     <section class="page-content">
         <h2>Suas salas</h2>
-        <div id="classrooms-visualizer"></div>
+        <div id="classrooms-visualizer">
+            <button>
+                <div class="loader-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </div>
         <div id="calendar-wrapper">
             <div id='calendar'></div>
         </div>

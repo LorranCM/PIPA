@@ -21,6 +21,9 @@ function set_calendar() {
     );
 
     calendar.render(); 
+    window.calendar = calendar;
+    calendar.setOption("dateClick", function(info){window.date_click_function(info.dateStr);});
+    calendar.setOption("eventClick", function(info){window.date_click_function(info.event.startStr);});
     window.load_calendar_data();
 
 }
