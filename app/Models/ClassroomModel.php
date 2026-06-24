@@ -41,6 +41,23 @@ class ClassroomModel {
 
     }
 
+    public function update_fields($id, $data) {
+        
+        $doc_ref = $this->db->collection('Classrooms')->document($id);
+        
+        // Converte o array associativo do PHP para o formato exigido pelo SDK do Firestore
+        $formattedData = [];
+        foreach ($data as $path => $value) {
+            $formattedData[] = [
+                'path'  => $path,
+                'value' => $value
+            ];
+        }
+        
+        // Agora o SDK vai aceitar sem erros
+        $doc_ref->update($formattedData);
+    }
+
     public function delete($id) {
         
         $doc_ref = $this->db->collection('Classrooms')->document($id);

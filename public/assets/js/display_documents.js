@@ -152,49 +152,6 @@ function openDocumentModal(doc) {
     documentModal.style.display = "flex";
 }
 
-async function deleteDocument() {
-
-    const confirmed = await createConfirmModal(
-        "Tem certeza que deseja excluir este documento?"
-    );
-
-    if (!confirmed) return;
-
-    const loading = createLoadingModal("Excluindo documento...");
-
-    try {
-        const response = await fetch(
-            baseUrl + "/requires/delete_document",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    link: currentDocument.link,
-                    classroom_id: currentClassroomId
-                })
-            }
-        );
-
-        const result = await response.json();
-
-        loading.remove();
-
-        if (result.success) {
-
-            documentModal.style.display = "none";
-            currentDocument = null;
-
-            await renderDocuments(result.classroom_id);
-        }
-
-    } catch (err) {
-        loading.remove();
-        console.error(err);
-    }
-}
-
 function createConfirmModal(message) {
 
     const modal = document.createElement("div");
@@ -230,7 +187,6 @@ function createConfirmModal(message) {
 }
 
 function createLoadingModal(text = "Processando...") {
-
     const modal = document.createElement("div");
     modal.classList.add("modal");
 
@@ -241,6 +197,53 @@ function createLoadingModal(text = "Processando...") {
     `;
 
     document.body.appendChild(modal);
+    modal.style.display = "flex"; 
 
     return modal;
+}
+
+async function deleteDocument() {
+    const confirmed = await createConfirmModal(
+        "Tem certeza que deseja excluir este documento?"
+    );
+
+    if (!confirmed) return;
+
+    const loading = createLoadingModal("Excluindo documento...");
+
+    try {
+        const response = await fetch(
+            baseUrl + "/requires/delete_document",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    link: currentDocument.link,
+                    classroom_id: currentClassroomId
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        loading.remove(); // Remove o loading assim que a resposta chega
+
+        if (result.success) {
+            documentModal.style.display = "none";
+            currentDocument = null;
+
+            // CORREÇÃO: Mantém o 'currentrole' ativo ao renderizar novamente
+            console.log(result.ext);
+            await renderDocuments(result.classroom_id, currentrole); 
+        } else {
+            alert("Não foi possível excluir o documento. Tente novamente.");
+        }
+
+    } catch (err) {
+        loading.remove(); // Garante que o loading some se o servidor cair
+        console.error(err);
+        alert("Erro de conexão ao tentar excluir o documento.");
+    }
 }

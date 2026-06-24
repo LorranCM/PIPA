@@ -86,7 +86,9 @@ class ImgBBController extends BaseController {
         $documents = $classroom['documents'];
 
         $deleteUrl = $documents[$link]['deleteUrl'];
-        unset($documents[$link]);
+        if (isset($documents[$link])) {
+            unset($documents[$link]);
+        }
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $deleteUrl);
@@ -94,13 +96,14 @@ class ImgBBController extends BaseController {
         curl_exec($ch);
         curl_close($ch);
 
-        $classrooms->update($classroom_id, [
+        $classrooms->update_fields($classroom_id, [
             'documents' => $documents
         ]);
 
         return $this->response->setJSON([
             'success' => true,
-            'classroom_id' => $classroom_id
+            'classroom_id' => $classroom_id,
+            'ext' => isset($documents[$link])
         ]);
     }
     
